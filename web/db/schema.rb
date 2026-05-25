@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_25_084057) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_25_084907) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,18 +42,54 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_25_084057) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "companies", force: :cascade do |t|
+    t.text "analysis"
+    t.datetime "created_at", null: false
+    t.text "flags"
+    t.datetime "last_checked"
+    t.string "name"
+    t.float "risk_score"
+    t.text "summary"
+    t.datetime "updated_at", null: false
+    t.string "url"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.bigint "registration_id", null: false
+    t.string "role"
+    t.datetime "updated_at", null: false
+    t.index ["registration_id"], name: "index_messages_on_registration_id"
+  end
+
+  create_table "registrations", force: :cascade do |t|
+    t.bigint "company_id", null: false
+    t.datetime "created_at", null: false
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["company_id"], name: "index_registrations_on_company_id"
+    t.index ["user_id"], name: "index_registrations_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "nickname"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
     t.datetime "updated_at", null: false
+    t.string "username"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "messages", "registrations"
+  add_foreign_key "registrations", "companies"
+  add_foreign_key "registrations", "users"
 end
