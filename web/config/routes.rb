@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   root to: "pages#home"
   resources :companies, only: [:index, :show] do
     resources :messages, only: [:create]
+    resources :registrations, only: [:create]
   end
   resources :registrations, only: [:update]
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :companies, only: [:show, :create] do
