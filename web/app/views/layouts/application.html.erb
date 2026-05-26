@@ -23,9 +23,16 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body><%= render "shared/navbar" %>
-<%= render "shared/flashes" %>
+  <body>
+    <div class="sidebar-layout">
+      <%= render 'shared/sidebar' %>
+      <%= render "shared/flashes" %>
+      <main class="sidebar-main">
+        <%= yield %>
+      </main>
+    </div>
 
-    <%= yield %>
+
+
   </body>
 </html>

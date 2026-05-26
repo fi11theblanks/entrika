@@ -1,0 +1,224 @@
+/* ============================================================
+   Collapsible Icon-Strip Sidebar
+   Drop into app/assets/stylesheets/sidebar.css
+   ============================================================ */
+
+/* ── Layout shell ── */
+.sidebar-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar-main {
+  flex: 1;
+  padding: 2rem;
+  transition: margin-left 0.3s ease;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background-color: white;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+/* Collapsed state */
+.sidebar.collapsed {
+  width: 60px;
+}
+
+/* ── Toggle button ── */
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  cursor: pointer;
+  width: 100%;
+  color: #513745;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle:hover {
+  background-color: #f3f4f6;
+}
+
+.sidebar-toggle .toggle-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.sidebar-toggle .toggle-icon span {
+  display: block;
+  height: 2px;
+  background-color: #374151;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.sidebar-toggle .toggle-label {
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar.collapsed .toggle-label {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+/* ── Nav sections ── */
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.5rem 1.5rem;
+}
+
+/* ── Section toggle buttons ── */
+.btn-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #374151;
+  background: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  gap: 0.625rem;
+  transition: background-color 0.15s ease;
+}
+
+.btn-toggle:hover,
+.btn-toggle:focus {
+  background-color: #f3f4f6;
+  outline: none;
+}
+
+
+/* Section icon (FontAwesome <i> tag) */
+.btn-toggle .nav-icon {
+  width: 20px;
+  flex-shrink: 0;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.btn-toggle .nav-label {
+  opacity: 1;
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+/* Chevron (FontAwesome <i> tag) */
+.btn-toggle .chevron {
+  font-size: 0.7rem;
+  margin-left: auto;
+  opacity: 0.5;
+  transition: transform 0.3s ease;
+}
+
+.btn-toggle[aria-expanded="true"] .chevron {
+  transform: rotate(90deg);
+}
+
+.sidebar.collapsed .btn-toggle .nav-label,
+.sidebar.collapsed .btn-toggle .chevron {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar.collapsed .btn-toggle {
+  justify-content: center;
+  padding: 0.75rem;
+}
+
+/* ── Child nav links ── */
+.btn-toggle-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.btn-toggle-nav a {
+  display: block;
+  padding: 0.35rem 1rem 0.35rem 3rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 0;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-toggle-nav a:hover,
+.btn-toggle-nav a:focus {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.btn-toggle-nav a.active {
+  color: #2563eb;
+  background-color: #eff6ff;
+  font-weight: 500;
+}
+
+/* Hide child links when collapsed */
+.sidebar.collapsed .btn-toggle-nav,
+.sidebar.collapsed .collapse {
+  display: none !important;
+}
+
+/* ── Tooltip on collapsed icons ── */
+.sidebar.collapsed .btn-toggle {
+  position: relative;
+}
+
+.sidebar.collapsed .btn-toggle:hover::after {
+  content: attr(data-label);
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1f2937;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* ── Divider ── */
+.sidebar-divider {
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 0.5rem 0;
+}
