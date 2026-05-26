@@ -22,38 +22,26 @@
     <p>Example 3</p>
   </div>
   <h2>View More Analyses</h2>
-  <p class="d-inline-flex gap-1">
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1">
-      All Sites
-    </button>
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">
-      Signed-Up Sites
-    </button>
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3">
-      Rejected Sites
-    </button>
-  </p>
-  <div class="row">
-    <div class="col">
-      <div class="collapse multi-collapse" id="multiCollapseExample1">
-        <div class="card card-body">
-          To display all analyses from all sites
-        </div>
-      </div>
+  <ul class="nav tabs-underlined" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <span class="nav-link tab-underlined active" id="sites-tab" data-bs-toggle="tab" data-bs-target="#sites-tab-pane" role="tab" aria-controls="sites-tab-pane" aria-selected="true">All Sites</span>
+    </li>
+    <li class="nav-item" role="presentation">
+      <span class="nav-link tab-underlined" id="signedup-tab" data-bs-toggle="tab" data-bs-target="#signedup-tab-pane" role="tab" aria-controls="signedup-tab-pane" aria-selected="false">Signed-Up Sites</span>
+    </li>
+    <li class="nav-item" role="presentation">
+      <span class="nav-link tab-underlined" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected-tab-pane" role="tab" aria-controls="rejected-tab-pane" aria-selected="false">Rejected Sites</span>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade py-3 show active" id="sites-tab-pane" role="tabpanel" aria-labelledby="sites-tab" tabindex="0">
+      To display all analyses from all sites
     </div>
-    <div class="col">
-      <div class="collapse multi-collapse" id="multiCollapseExample2">
-        <div class="card card-body">
-          To display analyses from sign-uped sites
-        </div>
-      </div>
+    <div class="tab-pane fade py-3" id="signedup-tab-pane" role="tabpanel" aria-labelledby="signedup-tab" tabindex="0">
+      To display analyses from signed-up sites
     </div>
-    <div class="col">
-      <div class="collapse multi-collapse" id="multiCollapseExample3">
-        <div class="card card-body">
-          To display analyses from rejected sites
-        </div>
-      </div>
+    <div class="tab-pane fade py-3" id="rejected-tab-pane" role="tabpanel" aria-labelledby="rejected-tab" tabindex="0">
+      To display analyses from rejected sites
     </div>
   </div>
 </div>
