@@ -9,3 +9,4 @@
 #   end
 Company.destroy_all
 TosScraper.scrape_all
+TosAnalyzer.analyze_all
