@@ -1,0 +1,117 @@
+<nav class="sidebar ml-3" id="appSidebar">
+  <%# ── Hamburger toggle ── %>
+  <button class="sidebar-toggle" id="sidebarToggleBtn" aria-label="Toggle sidebar">
+    <span class="toggle-icon" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span class="toggle-label">Menu</span>
+  </button>
+
+  <div class="sidebar-nav">
+    <ul class="list-unstyled mb-0">
+
+      <%# ── Home ── %>
+      <li class="mb-1">
+        <button class="btn-toggle"
+                data-bs-toggle="collapse"
+                data-bs-target="#home-collapse"
+                aria-expanded="true"
+                data-label="Home">
+          <i class="fa-solid fa-house nav-icon"></i>
+          <span class="nav-label">Home</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </button>
+        <div class="collapse show" id="home-collapse">
+          <ul class="btn-toggle-nav list-unstyled">
+            <li><a href="#">Overview</a></li>
+            <li><a href="#">Updates</a></li>
+            <li><a href="#">Reports</a></li>
+          </ul>
+        </div>
+      </li>
+
+      <%# ── Dashboard ── %>
+      <li class="mb-1">
+        <button class="btn-toggle"
+                data-bs-toggle="collapse"
+                data-bs-target="#dashboard-collapse"
+                aria-expanded="false"
+                data-label="Dashboard">
+          <i class="fa-solid fa-gauge nav-icon"></i>
+          <span class="nav-label">Dashboard</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </button>
+        <div class="collapse" id="dashboard-collapse">
+          <ul class="btn-toggle-nav list-unstyled">
+            <li><a href="#">Risk Overview</a></li>
+            <li><a href="#">Sites Analyzed</a></li>
+            <li><a href="#">Recents</a></li>
+          </ul>
+        </div>
+      </li>
+
+
+      <%# ── Companies ── %>
+      <li class="mb-1">
+        <button class="btn-toggle"
+                aria-expanded="false"
+                data-label="Account">
+          <i class="fa-solid fa-city nav-icon"></i>
+          <span class="nav-label">Companies</span>
+          <i class="fa-solid hidden"></i>
+        </button>
+      </li>
+
+      <%# ── NewsFeed── %>
+      <li class="mb-1">
+        <button class="btn-toggle"
+                aria-expanded="false"
+                data-label="Account">
+          <i class="fa-solid fa-rss nav-icon"></i>
+          <span class="nav-label">News Feed</span>
+          <i class="fa-solid hidden"></i>
+        </button>
+      </li>
+
+      <li class="sidebar-divider"></li>
+
+      <%# ── Settings ── %>
+      <li class="mb-1">
+        <button class="btn-toggle"
+                data-bs-toggle="collapse"
+                data-bs-target="#account-collapse"
+                aria-expanded="false"
+                data-label="Account">
+          <i class="fa-solid fa-gear nav-icon"></i>
+          <span class="nav-label">Settings</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </button>
+        <div class="collapse" id="account-collapse">
+          <ul class="btn-toggle-nav list-unstyled">
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Sign out</a></li>
+          </ul>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+
+<%# ── Toggle JS ── %>
+<script>
+  const sidebar = document.getElementById('appSidebar');
+  const toggleBtn = document.getElementById('sidebarToggleBtn');
+
+  if (localStorage.getItem('sidebarCollapsed') === 'true') {
+    sidebar.classList.add('collapsed');
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+    localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+  });
+</script>
