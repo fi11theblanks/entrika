@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_26_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_26_063054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -48,9 +48,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_26_000000) do
     t.text "flags"
     t.datetime "last_checked"
     t.string "name"
+    t.text "privacy_text"
+    t.string "privacy_url"
     t.float "risk_score"
     t.text "summary"
     t.text "tos_text"
+    t.string "tos_url"
     t.datetime "updated_at", null: false
     t.string "url"
   end
