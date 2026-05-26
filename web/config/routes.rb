@@ -19,5 +19,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get "dashboard", to: "registration#index", as: :dashboard
+  get "dashboard", to: "registrations#index", as: :dashboard
 end
