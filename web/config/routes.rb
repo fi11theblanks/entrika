@@ -10,15 +10,10 @@ Rails.application.routes.draw do
       resources :companies, only: [:show, :create] do
         resources :registrations, only: [:create]
       end
-      devise_for :users,
-        path: "",
-        path_name_names: {
-          sign_in: "login",
-          sign_out: "logout"
-        },
-        controllers: {
-          sessions: "api/v1/users/sessions"
-      }
+      devise_scope :user do
+        post "login", to: "users/sessions#create"
+        delete "logout", to: "users/sessions#destroy"
+      end
     end
   end
 
