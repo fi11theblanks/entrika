@@ -97,14 +97,17 @@ class SeedCompanyAnalysis < ActiveRecord::Migration[8.1]
     ANALYSIS_DATA.each do |name, data|
       company = Company.find_by(name: name)
       next unless company
-      company.update!(data)
+      company.update!(data.merge(
+        summary: "Terms of Service Summary:\n#{data[:tos_summary]}\n\nPrivacy Policy Summary:\n#{data[:privacy_summary]}",
+        analysis: "Terms of Service Analysis:\n#{data[:tos_analysis]}\n\nPrivacy Policy Analysis:\n#{data[:privacy_analysis]}"
+      ))
     end
   end
 
   def down
     Company.where(name: ANALYSIS_DATA.keys).update_all(
       risk_score: nil, tos_summary: nil, privacy_summary: nil,
-      tos_analysis: nil, privacy_analysis: nil
+      tos_analysis: nil, privacy_analysis: nil, summary: nil, analysis: nil
     )
   end
 end
