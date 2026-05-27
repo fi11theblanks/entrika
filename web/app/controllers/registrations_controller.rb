@@ -1,6 +1,8 @@
 class RegistrationsController < ApplicationController
   def index
     @registrations = policy_scope(Registration)
+    @statuses = @registrations.pluck(:status).uniq
+    @sorted_registrations = @registrations.sort_by(&:updated_at).last(3).reverse
     # query function might be needed at some point
   end
 
