@@ -1,1 +1,48 @@
-<%= render "company_card", company: @company %>
+<div class="row">
+  <div class="col-7">
+    <div>
+    <%= render "company_card", company: @company %>
+    </div>
+
+    <div class="col-7 align-content-start">
+      <h5>Plain-language Summary</h5>
+      <div class="col-7">
+        <p><%= @company.summary %></p>
+      </div>
+      <div class="col-7">
+        <ul>
+          <li><strong>Risk Score:</strong> <%= @company.risk_score %></li>
+          <li><strong>Privacy Policy:</strong> <%= link_to @company.privacy_url, @company.privacy_url, target: "_blank" %></li>
+          <li><strong>Terms of Service:</strong> <%= link_to @company.tos_url, @company.tos_url, target: "_blank" %></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-7">
+      <h5>Flagged Clauses</h5>
+    </div>
+    <div class="col-7">
+      <p>They do something with your data</p>
+    </div>
+    <div class="col-7">
+      <p>They do something with your data</p>
+    </div>
+    <div class="col-7">
+      <p>They do something with your data</p>
+    </div>
+  </div>
+
+  <div class="col-5 mb-5" style="height:90vh">
+    <div class="card p-3 h-100 d-flex flex-column gap-3">
+      <h5>Company Chat</h5>
+      <p class="text-muted small">Start a conversation about this company.</p>
+      <%# <%= form_with url: company_chats_path(@company), method: :post, local: true do |form| %>
+        <%# <div class="mb-3"> %>
+          <%# <%= form.label :message, "Your Message", class: "form-label" %>
+          <%# <%= form.text_area :message, class: "form-control", rows: 4 %>
+        <%# </div> %>
+        <%# <%= form.submit "Start Chat", class: "btn btn-primary" %>
+      <%# <% end %>
+    </div>
+  </div>
+</div>
