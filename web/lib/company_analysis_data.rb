@@ -1,6 +1,7 @@
 COMPANY_ANALYSIS_DATA = {
   "TikTok" => {
     risk_score: 3.0,
+    url: "https://www.tiktok.com",
     tos_url: "https://www.tiktok.com/legal/page/us/terms-of-service/en",
     privacy_url: "https://www.tiktok.com/legal/page/us/privacy-policy/en",
     tos_summary: "TikTok's Terms of Service explain the rules and conditions for using the platform.",
@@ -10,6 +11,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "Facebook" => {
     risk_score: 2.0,
+    url: "https://www.facebook.com",
     tos_url: "https://www.facebook.com/legal/terms",
     privacy_url: "https://www.facebook.com/privacy/policy/",
     tos_summary: "Facebook's Terms of Service outline the rules for using their platform, the rights users grant to Facebook when sharing content, and the guidelines on what behavior is acceptable. Users agree to only post content they have the right to, and Facebook may use this content within the scope of the platform's functionality. Additionally, the terms describe the limitations on liability and the process for resolving disputes.",
@@ -19,6 +21,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "Spotify" => {
     risk_score: 2.0,
+    url: "https://www.spotify.com",
     tos_url: "https://www.spotify.com/us/legal/end-user-agreement/",
     privacy_url: "https://www.spotify.com/us/legal/privacy-policy/",
     tos_summary: "Spotify's Terms of Service set the rules for using their service. By agreeing, you comply with how Spotify manages accounts, content usage, and restrictions like copyright adherence. Failure to abide may lead to account suspension or termination.",
@@ -28,6 +31,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "Tinder" => {
     risk_score: 3.0,
+    url: "https://www.tinder.com",
     tos_url: "https://policies.tinder.com/terms/intl/en",
     privacy_url: "https://policies.tinder.com/privacy/intl/en",
     tos_summary: "The Terms of Service outline the rules for using the app, user responsibilities, acceptable behaviors, how disputes are handled, and the rights of the service.",
@@ -37,6 +41,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "Shein" => {
     risk_score: 2.0,
+    url: "https://www.shein.com",
     tos_url: "https://us.shein.com/Terms-and-Conditions-a-281.html",
     privacy_url: "https://us.shein.com/Privacy-Security-Policy-a-282.html",
     tos_summary: "Shein's Terms of Service outlines the rules and conditions for accessing and using their website; it covers user account responsibilities, acceptable usage, prohibited activities, and intellectual property rights. The document also addresses dispute resolution, limitations of liability, and the user's agreement to be bound by these conditions by using their site. Lastly, it includes details on how the terms might change and recommends users check for updates regularly.",
@@ -46,6 +51,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "Roblox" => {
     risk_score: 2.0,
+    url: "https://www.roblox.com",
     tos_url: "https://en.help.roblox.com/hc/en-us/articles/115004647846",
     privacy_url: "https://en.help.roblox.com/hc/en-us/articles/115004630823",
     tos_summary: "Roblox's Terms of Service outlines the rules and responsibilities users agree to when using the platform. It includes details about acceptable use, user-generated content, intellectual property, and what happens if the rules are violated. By using Roblox, you agree to these terms.",
@@ -55,6 +61,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "LinkedIn" => {
     risk_score: 2.0,
+    url: "https://www.linkedin.com",
     tos_url: "https://www.linkedin.com/legal/user-agreement",
     privacy_url: "https://www.linkedin.com/legal/privacy-policy",
     tos_summary: "The LinkedIn Terms of Service outline the rules and conditions for using LinkedIn's platform, including responsibilities like providing accurate information and not engaging in prohibited activities. They describe LinkedIn's rights regarding the content you share, such as licenses to display your public profile information. The document also covers ways you can close your account and limitations of LinkedIn's liability.",
@@ -64,6 +71,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "Apple" => {
     risk_score: 1.0,
+    url: "https://www.apple.com",
     tos_url: "https://www.apple.com/legal/internet-services/terms/site.html",
     privacy_url: "https://www.apple.com/legal/privacy/",
     tos_summary: "Apple's Terms of Service explain the rules for using Apple's website and associated services.",
@@ -73,6 +81,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "Wikipedia" => {
     risk_score: 1.0,
+    url: "https://www.wikipedia.org",
     tos_url: "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use",
     privacy_url: "https://foundation.wikimedia.org/wiki/Policy:Privacy_policy",
     tos_summary: "The Terms of Service for Wikimedia describe the foundational rules for using their platforms, like Wikipedia. Users are encouraged to share knowledge freely while agreeing not to engage in malicious activities, copyright violations, or disrupt the services. A collaborative community effort is emphasized, and edits are made under specific licenses for public use.",
@@ -82,6 +91,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "Signal" => {
     risk_score: 1.0,
+    url: "https://signal.org",
     tos_url: "https://signal.org/legal/",
     privacy_url: "https://signal.org/legal/",
     tos_summary: "Signal's Terms of Service outline the use of their application, specifying that the service is designed for messaging securely with mutual respect. It makes it clear users are responsible for their account security and usage. Additionally, it details the limitations of Signal's liability and the process for any disputes.",
@@ -91,6 +101,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "ProtonMail" => {
     risk_score: 1.0,
+    url: "https://proton.me",
     tos_url: "https://proton.me/legal/terms",
     privacy_url: "https://proton.me/legal/privacy",
     tos_summary: "Proton's Terms of Service establish the rules and guidelines for using Proton's services. Offers transparency on user rights, prohibited activities, and the handling of accounts. Important to refer to these terms to understand the service agreement between Proton and its users.",
@@ -100,6 +111,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "DuckDuckGo" => {
     risk_score: 1.0,
+    url: "https://duckduckgo.com",
     tos_url: "https://duckduckgo.com/terms",
     privacy_url: "https://duckduckgo.com/privacy",
     tos_summary: "DuckDuckGo's Terms of Service outline the conditions for using their services.",
@@ -109,6 +121,7 @@ COMPANY_ANALYSIS_DATA = {
   },
   "Mozilla" => {
     risk_score: 1.0,
+    url: "https://www.mozilla.org",
     tos_url: "https://www.mozilla.org/en-US/about/legal/terms/firefox/",
     privacy_url: "https://www.mozilla.org/en-US/privacy/firefox/",
     tos_summary: "The Firefox Terms of Service outline the conditions under which Mozilla offers its web browser and associated services. Users agree to follow the user guidelines and are responsible for their own actions when using Firefox. Mozilla is not liable for damages arising from the use of their services.",
