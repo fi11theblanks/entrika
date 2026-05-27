@@ -19,5 +19,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get "dashboard", to: "registrations#index", as: :dashboard
+  get "dashboard", to: "pages#dashboard", as: :dashboard
+  get "sitesanalyzed", to: "registrations#index", as: :sitesanalyzed
 end
