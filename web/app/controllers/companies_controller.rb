@@ -1,7 +1,12 @@
 class CompaniesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [ :index, :show ]
+  skip_before_action :authenticate_user!, only: %i[index show]
   def index
     @companies = policy_scope(Company)
+    if params[:query].present?
+      @companies = Company.search(params[:query])
+    else
+      @companies = Company.all
+    end
     # query function might be needed at some point
   end
 
