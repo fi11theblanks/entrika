@@ -2,7 +2,7 @@ class RegistrationsController < ApplicationController
   def index
     @registrations = policy_scope(Registration)
     @statuses = @registrations.pluck(:status).uniq
-    @sorted_registrations = @registrations.sort_by(&:updated_at).last(3).reverse
+    @sorted_registrations = @registrations.order(updated_at: :desc).first(3)
     # query function might be needed at some point
   end
 
