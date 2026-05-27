@@ -18,7 +18,7 @@ gem "jbuilder"
 
 # Nokogiri for HTML parsing in the TOS scraper
 gem 'nokogiri'
-#HTTP client for making requests in the TOS scraper
+# HTTP client for making requests in the TOS scraper
 gem 'httparty'
 gem 'ruby_llm'
 
@@ -80,3 +80,5 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "pg_search"
