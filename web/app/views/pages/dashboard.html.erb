@@ -1,0 +1,19 @@
+<div class="container">
+  <h1>Welcome!</h1>
+  <div class="card">
+    <p>Overall Risk Profile</p>
+    <p>insert rating here</p>
+    <p>insert explanation here</p>
+    <p>insert status bar here</p>
+  </div>
+  <div class="card">
+    <p>AI Compliance Agent</p>
+    <p>Customize how Entrika analyzes your documents. Set specific keywords
+      or clause you care about most.</p>
+  </div>
+  <h2>Recent Analyses</h2>
+  <% @sorted_registrations.each do |registration| %>
+    <%= render "companies/company_card", company: registration.company, registration: registration %>
+  <% end %>
+  <%= link_to "View More Analyses", sitesanalyzed_path %>
+</div>

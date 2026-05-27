@@ -1,21 +1,5 @@
 <div class="container">
-  <h1>Welcome!</h1>
-  <div class="card">
-    <p>Overall Risk Profile</p>
-    <p>insert rating here</p>
-    <p>insert explanation here</p>
-    <p>insert status bar here</p>
-  </div>
-  <div class="card">
-    <p>AI Compliance Agent</p>
-    <p>Customize how Entrika analyzes your documents. Set specific keywords
-      or clause you care about most.</p>
-  </div>
-  <h2>Recent Analyses</h2>
-  <% @sorted_registrations.each do |registration| %>
-    <%= render "companies/company_card", company: registration.company, registration: registration %>
-  <% end %>
-  <h2>View More Analyses</h2>
+  <h2>Sites Analyzed</h2>
   <ul class="nav tabs-underlined" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
       <span class="nav-link tab-underlined active" id="sites-tab" data-bs-toggle="tab" data-bs-target="#sites-tab-pane" role="tab" aria-controls="sites-tab-pane" aria-selected="true">All Sites</span>
