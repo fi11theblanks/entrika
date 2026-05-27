@@ -21,7 +21,7 @@ class TosScraper
       puts "Scraping #{name}..."
       tos_response = HTTParty.get(data[:tos_url], headers: {
         "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)"
-      })
+      }, timeout: 10, open_timeout: 5)
       next unless tos_response.success?
 
       tos_doc = Nokogiri::HTML(tos_response.body)
@@ -32,7 +32,7 @@ class TosScraper
       if data[:privacy_url] && data[:privacy_url] != data[:tos_url]
         privacy_response = HTTParty.get(data[:privacy_url], headers: {
           "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)"
-        })
+        }, timeout: 10, open_timeout: 5)
         if privacy_response.success?
           privacy_doc = Nokogiri::HTML(privacy_response.body)
           privacy_doc.css("script, style, nav, header, footer").remove

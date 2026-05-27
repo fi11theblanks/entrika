@@ -1,18 +1,21 @@
 class TosAnalyzer
-  PROMPT = <<~PROMPT
-    Analyze the following Terms of Service and Privacy Policy. Use exactly these section headers, in this order:
+  SYSTEM_PROMPT = <<~PROMPT
+    You are a privacy and legal analyst. Analyze Terms of Service and Privacy Policy documents.
+    Be direct, plain-spoken, and useful to a non-technical user. Never use em dashes.
+  PROMPT
 
-    [SUMMARY]
-    3 sentences explaining the key points to a non-technical user.
+  USER_PROMPT = <<~PROMPT
+    Analyze the following Terms of Service and Privacy Policy.
 
-    [ANALYSIS]
-    What the company can do: for each point, translate it into a concrete real-world scenario starting with "This means they can..." rather than stating it as a legal right.
-    Top 3 concerning clauses: paraphrase each clause, explain why it matters, and give a real-world example of how it could affect a regular user. Skip this section entirely if there are no significant concerns.
-    Third-party data sharing: what specifically is shared, with whom, and describe a realistic scenario where this creates risk for the user.
-    Privacy advocate verdict: one sentence.
+    Summary: 3 sentences explaining the key points to a non-technical user.
 
-    [RISK_SCORE]
-    Low, Moderate, or High — one word only.
+    Analysis:
+    - What the company can do: for each point, translate it into a concrete real-world scenario starting with "This means they can..." rather than stating it as a legal right.
+    - Top 3 concerning clauses: paraphrase each clause, explain why it matters, and give a real-world example of how it could affect a regular user. Skip if there are no significant concerns.
+    - Third-party data sharing: what specifically is shared, with whom, and describe a realistic scenario where this creates risk for the user.
+    - Privacy advocate verdict: one sentence.
+
+    Risk score: Low, Moderate, or High — one word only.
 
     Terms of Service:
     %{tos_text}
@@ -21,7 +24,18 @@ class TosAnalyzer
     %{privacy_text}
   PROMPT
 
-  RISK_SCORES = { "low" => 1.0, "moderate" => 2.0, "high" => 3.0 }
+  RESPONSE_SCHEMA = {
+    type: "object",
+    properties: {
+      summary: { type: "string" },
+      analysis: { type: "string" },
+      risk_score: { type: "string", enum: ["Low", "Moderate", "High"] }
+    },
+    required: ["summary", "analysis", "risk_score"],
+    additionalProperties: false
+  }.freeze
+
+  RISK_SCORES = { "low" => 1.0, "moderate" => 2.0, "high" => 3.0 }.freeze
   FETCH_HEADERS = { "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)" }.freeze
 
   def self.analyze_all
@@ -42,25 +56,23 @@ class TosAnalyzer
     tos_text = fetch_text(@company.tos_url)
     privacy_text = fetch_text(@company.privacy_url)
 
-    prompt = PROMPT % {
+    prompt = USER_PROMPT % {
       tos_text: tos_text.truncate(20_000),
       privacy_text: privacy_text.truncate(10_000)
     }
 
-    text = RubyLLM.chat(model: "gpt-4o").ask(prompt).content
+    chat = RubyLLM.chat(model: "gpt-4o")
+    chat.with_instructions(SYSTEM_PROMPT).with_schema(RESPONSE_SCHEMA)
+    result = chat.ask(prompt).content
 
     @company.update!(
-      summary: extract_section(text, "SUMMARY"),
-      analysis: extract_section(text, "ANALYSIS"),
-      risk_score: RISK_SCORES[extract_section(text, "RISK_SCORE")&.downcase]
+      summary: result["summary"],
+      analysis: result["analysis"],
+      risk_score: RISK_SCORES[result["risk_score"]&.downcase]
     )
   end
 
   private
-
-  def extract_section(text, tag)
-    text[/\[#{tag}\]\s*(.*?)(?=\n\[|\z)/m, 1]&.strip
-  end
 
   def fetch_text(url)
     return "" if url.blank?
