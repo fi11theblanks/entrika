@@ -1,21 +1,19 @@
-<% @companies.each do |company| %>
-        <div class="card p-3 d-flex flex-row align-items-center gap-3 mb-3 position-relative">
-          <!-- Risk Badge -->
-          <% if company.risk_score %>
-            <%= render "risk_badge", icon: "⚠", score: "Medium Risk" %>
-          <% else %>
-            <%= render "risk_badge", icon: "❔", score: "No risk score" %>
-          <% end %>
-          <!-- Company Info -->
-          <div class="flex-grow-1">
-            <h5 class="mb-1"><%= company.name %></h5>
-            <p class="mb-1 text-muted small">🌐 <%= link_to company.url, company.url, class: "position-relative z-3", target: "_blank" %></p>
-            <p class="mb-2 text-muted small">Updated 2 days ago</p>
-            <div class="d-flex gap-2">
-              <button class="btn btn-outline-secondary btn-sm rounded-pill">💾 Save Analysis</button>
-              <button class="btn btn-sm">⬇️ Download PDF Report</button>
-            </div>
-          </div>
-          <%= link_to "", company_path(company), class: "position-absolute top-0 bottom-0 start-0 w-100 z-0"%>
-        </div>
-      <% end %>
+<div class="card p-3 d-flex flex-row align-items-center gap-3 mb-3 position-relative">
+  <!-- Risk Badge -->
+  <% if company.risk_score %>
+    <%= render "companies/risk_badge", icon: "⚠", score: "Medium Risk" %>
+  <% else %>
+    <%= render "companies/risk_badge", icon: "❔", score: "No risk score" %>
+  <% end %>
+  <!-- Company Info -->
+  <div class="flex-grow-1">
+    <h5 class="mb-1"><%= company.name %></h5>
+    <p class="mb-1 text-muted small">🌐 <%= link_to company.url, company.url, class: "position-relative z-3", target: "_blank" %></p>
+    <p class="mb-2 text-muted small">Updated 2 days ago</p>
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-secondary btn-sm rounded-pill">💾 Save Analysis</button>
+      <button class="btn btn-sm">⬇️ Download PDF Report</button>
+    </div>
+  </div>
+  <%= link_to "", company_path(company), class: "position-absolute top-0 bottom-0 start-0 w-100 z-0"%>
+</div>
