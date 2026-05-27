@@ -1,9 +1,11 @@
+<% @companies.each do |company| %>
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">
       <h1>Welcome!</h1>
       <h5>Managed data and Terms of Service oversight</h5>
-      <%= render "company_card" %>
+      <%= render "company_card", company: company, registration: nil %>
     </div>
   </div>
 </div>
+<% end %>
