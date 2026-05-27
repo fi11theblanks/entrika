@@ -222,3 +222,43 @@
   background-color: #e5e7eb;
   margin: 0.5rem 0;
 }
+
+/* collapsed state: show only the icon */
+.sidebar.collapsed .search-form {
+  display: none;
+}
+.sidebar.collapsed .search-icon-collapsed {
+  display: block;
+}
+
+/* expanded state: show only the form */
+.sidebar:not(.collapsed) .search-icon-collapsed {
+  display: none;
+}
+.sidebar:not(.collapsed) .search-form {
+  display: flex;
+}
+
+.search-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+}
+
+.search-input {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-submit {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #6c757d;
+}

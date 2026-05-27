@@ -19,7 +19,9 @@
                 data-bs-target="#home-collapse"
                 aria-expanded="true"
                 data-label="Home">
-          <i class="fa-solid fa-house nav-icon"></i>
+          <%= link_to root_path do %>
+            <i class="fa-solid fa-house nav-icon"></i>
+          <% end %>
           <span class="nav-label">Home</span>
           <i class="fa-solid fa-chevron-right chevron"></i>
         </button>
@@ -39,8 +41,10 @@
                 data-bs-target="#dashboard-collapse"
                 aria-expanded="false"
                 data-label="Dashboard">
-          <i class="fa-solid fa-gauge nav-icon"></i>
-          <span class="nav-label">Dashboard</span>
+          <%= link_to "dashboard" do %>
+            <i class="fa-solid fa-gauge nav-icon"></i>
+          <% end %>
+            <span class="nav-label">Dashboard</span>
           <i class="fa-solid fa-chevron-right chevron"></i>
         </button>
         <div class="collapse" id="dashboard-collapse">
@@ -58,11 +62,29 @@
         <button class="btn-toggle"
                 aria-expanded="false"
                 data-label="Account">
-          <i class="fa-solid fa-city nav-icon"></i>
+          <%= link_to companies_path do %>
+            <i class="fa-solid fa-city nav-icon"></i>
+          <% end %>
           <span class="nav-label">Companies</span>
           <i class="fa-solid hidden"></i>
         </button>
       </li>
+
+      <%# ── Search ── %>
+      <li class="mb-1 sidebar-search">
+        <div class="btn-toggle">
+          <i class="fa-solid fa-magnifying-glass nav-icon search-icon-collapsed" id="searchIconCollapsed"></i>
+          <%= form_with url: companies_path, method: :get, class: "search-form" do |f| %>
+            <div class="search-input-wrapper">
+              <%= f.text_field :query, placeholder: "Search companies", class: "search-input" %>
+              <button type="submit" class="search-submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
+          <% end %>
+        </div>
+      </li>
+
 
       <%# ── NewsFeed── %>
       <li class="mb-1">
@@ -92,7 +114,13 @@
           <ul class="btn-toggle-nav list-unstyled">
             <li><a href="#">Profile</a></li>
             <li><a href="#">Settings</a></li>
-            <li><a href="#">Sign out</a></li>
+            <li>
+              <% if user_signed_in? %>
+              <%= link_to "Sign Out", destroy_user_session_path, data: {turbo_method: :delete} %>
+              <% else %>
+              <%= link_to "Sign In", new_user_session_path %>
+              <% end %>
+            </li>
           </ul>
         </div>
       </li>
@@ -103,8 +131,8 @@
 
 <%# ── Toggle JS ── %>
 <script>
-  const sidebar = document.getElementById('appSidebar');
-  const toggleBtn = document.getElementById('sidebarToggleBtn');
+  var sidebar = document.getElementById('appSidebar');
+  var toggleBtn = document.getElementById('sidebarToggleBtn');
 
   if (localStorage.getItem('sidebarCollapsed') === 'true') {
     sidebar.classList.add('collapsed');
@@ -114,4 +142,14 @@
     sidebar.classList.toggle('collapsed');
     localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
   });
+
+  document.getElementById('searchIconCollapsed').addEventListener('click', () => {
+    sidebar.classList.remove('collapsed');
+    localStorage.setItem('sidebarCollapsed', 'false');
+  });
+
 </script>
+
+
+<%=  %>
+<er></er>
