@@ -40,7 +40,8 @@ module TosAnalyzer
 
     def analyze
       result = ask(SCHEMA, "Summarize each document in 3 sentences for a non-technical user.\n\nTerms of Service: #{@company.tos_url}\nPrivacy Policy: #{@company.privacy_url}")
-      @company.update!(tos_summary: result["tos_summary"], privacy_summary: result["privacy_summary"])
+      combined = "Terms of Service Summary:\n#{result["tos_summary"]}\n\nPrivacy Policy Summary:\n#{result["privacy_summary"]}"
+      @company.update!(tos_summary: result["tos_summary"], privacy_summary: result["privacy_summary"], summary: combined)
     end
   end
 
@@ -65,7 +66,8 @@ module TosAnalyzer
 
     def analyze
       result = ask(SCHEMA, "#{INSTRUCTIONS}\n\nTerms of Service: #{@company.tos_url}\nPrivacy Policy: #{@company.privacy_url}")
-      @company.update!(tos_analysis: result["tos_analysis"], privacy_analysis: result["privacy_analysis"])
+      combined = "Terms of Service Analysis:\n#{result["tos_analysis"]}\n\nPrivacy Policy Analysis:\n#{result["privacy_analysis"]}"
+      @company.update!(tos_analysis: result["tos_analysis"], privacy_analysis: result["privacy_analysis"], analysis: combined)
     end
   end
 
