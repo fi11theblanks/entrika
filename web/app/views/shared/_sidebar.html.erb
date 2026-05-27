@@ -68,14 +68,18 @@
       <li class="mb-1 sidebar-search">
         <div class="btn-toggle">
           <i class="fa-solid fa-magnifying-glass nav-icon search-icon-collapsed" id="searchIconCollapsed"></i>
-          <%= form_with url: companies_path, method: :get, class: "d-flex" do %>
-            <%= label_tag :query, "Search companies", class: "visually-hidden" %>
-            <%= text_field_tag :query,
+          <%= form_with url: companies_path, method: :get, class: "search-form" do %>
+            <div class="search-input-wrapper">
+              <%= label_tag :query, "Search companies", class: "visually-hidden" %>
+              <%= text_field_tag :query,
               params[:query],
               class: "form-control",
               placeholder: "Type here"
             %>
-            <%= submit_tag "Search", name: "", class: "btn btn-primary" %>
+              <button type="submit" class="search-submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+            </div>
           <% end %>
         </div>
       </li>
