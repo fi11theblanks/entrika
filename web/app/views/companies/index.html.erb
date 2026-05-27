@@ -1,11 +1,20 @@
-<% @companies.each do |company| %>
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-6">
-      <h1>Welcome!</h1>
-      <h5>Managed data and Terms of Service oversight</h5>
-      <%= render "company_card", company: company, registration: nil %>
+<% if params[:query].present? %>
+  <h2>Results for "<%= params[:query] %>"</h2>
+<% else %>
+  <h2>Companies</h2>
+<% end %>
+<% if @companies.any? %>
+  <% @companies.each do |company| %>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+          <%# <h1>Welcome!</h1>
+        <h5>Managed data and Terms of Service oversight</h5> %>
+          <%= render "company_card", company: company, registration: nil %>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  <% end %>
+<% else %>
+  <h3>No companies found</h3>
 <% end %>

@@ -8,10 +8,8 @@
     </span>
     <span class="toggle-label">Menu</span>
   </button>
-
   <div class="sidebar-nav">
     <ul class="list-unstyled mb-0">
-
       <%# ── Home ── %>
       <li class="mb-1">
         <button class="btn-toggle"
@@ -33,7 +31,6 @@
           </ul>
         </div>
       </li>
-
       <%# ── Dashboard ── %>
       <li class="mb-1">
         <button class="btn-toggle"
@@ -44,7 +41,7 @@
           <%= link_to "dashboard" do %>
             <i class="fa-solid fa-gauge nav-icon"></i>
           <% end %>
-            <span class="nav-label">Dashboard</span>
+          <span class="nav-label">Dashboard</span>
           <i class="fa-solid fa-chevron-right chevron"></i>
         </button>
         <div class="collapse" id="dashboard-collapse">
@@ -55,8 +52,6 @@
           </ul>
         </div>
       </li>
-
-
       <%# ── Companies ── %>
       <li class="mb-1">
         <button class="btn-toggle"
@@ -69,14 +64,18 @@
           <i class="fa-solid hidden"></i>
         </button>
       </li>
-
       <%# ── Search ── %>
       <li class="mb-1 sidebar-search">
-        <div class="btn-toggle">
+        <div class="btn-toggle" data-label="Search">
           <i class="fa-solid fa-magnifying-glass nav-icon search-icon-collapsed" id="searchIconCollapsed"></i>
-          <%= form_with url: companies_path, method: :get, class: "search-form" do |f| %>
+          <%= form_with url: companies_path, method: :get, class: "search-form" do %>
             <div class="search-input-wrapper">
-              <%= f.text_field :query, placeholder: "Search companies", class: "search-input" %>
+              <%= label_tag :query, "Search companies", class: "visually-hidden" %>
+              <%= text_field_tag :query,
+              params[:query],
+              class: "form-control",
+              placeholder: "Type here"
+            %>
               <button type="submit" class="search-submit">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </button>
@@ -84,8 +83,6 @@
           <% end %>
         </div>
       </li>
-
-
       <%# ── NewsFeed── %>
       <li class="mb-1">
         <button class="btn-toggle"
@@ -96,9 +93,7 @@
           <i class="fa-solid hidden"></i>
         </button>
       </li>
-
       <li class="sidebar-divider"></li>
-
       <%# ── Settings ── %>
       <li class="mb-1">
         <button class="btn-toggle"
@@ -116,19 +111,17 @@
             <li><a href="#">Settings</a></li>
             <li>
               <% if user_signed_in? %>
-              <%= link_to "Sign Out", destroy_user_session_path, data: {turbo_method: :delete} %>
+                <%= link_to "Sign Out", destroy_user_session_path, data: {turbo_method: :delete} %>
               <% else %>
-              <%= link_to "Sign In", new_user_session_path %>
+                <%= link_to "Sign In", new_user_session_path %>
               <% end %>
             </li>
           </ul>
         </div>
       </li>
-
     </ul>
   </div>
 </nav>
-
 <%# ── Toggle JS ── %>
 <script>
   var sidebar = document.getElementById('appSidebar');
@@ -147,9 +140,6 @@
     sidebar.classList.remove('collapsed');
     localStorage.setItem('sidebarCollapsed', 'false');
   });
-
 </script>
-
-
 <%=  %>
 <er></er>
