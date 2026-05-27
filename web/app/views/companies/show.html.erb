@@ -5,9 +5,18 @@
     </div>
 
     <div class="col-7 align-content-start">
-      <h5>Plain-language Summary</h5>
+      <h5>Terms of Service Summary</h5>
       <div class="col-7">
-        <p><%= @company.summary %></p>
+        <p><%= @company.tos_summary %></p>
+      </div>
+      <h5>Privacy Policy Summary</h5>
+      <div class="col-7">
+        <p><%= @company.privacy_summary %></p>
+      </div>
+      <h5>Analysis</h5>
+      <div class="col-7">
+        <p><%= @company.tos_analysis %></p>
+        <p><%= @company.privacy_analysis %></p>
       </div>
       <div class="col-7">
         <ul>
