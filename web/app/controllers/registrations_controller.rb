@@ -1,6 +1,7 @@
 class RegistrationsController < ApplicationController
   def index
     @registrations = policy_scope(Registration)
+    @statuses = @registrations.pluck(:status).uniq
     # query function might be needed at some point
   end
 

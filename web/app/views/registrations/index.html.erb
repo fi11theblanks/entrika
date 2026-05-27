@@ -26,22 +26,24 @@
     <li class="nav-item" role="presentation">
       <span class="nav-link tab-underlined active" id="sites-tab" data-bs-toggle="tab" data-bs-target="#sites-tab-pane" role="tab" aria-controls="sites-tab-pane" aria-selected="true">All Sites</span>
     </li>
-    <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined" id="signedup-tab" data-bs-toggle="tab" data-bs-target="#signedup-tab-pane" role="tab" aria-controls="signedup-tab-pane" aria-selected="false">Signed-Up Sites</span>
-    </li>
-    <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected-tab-pane" role="tab" aria-controls="rejected-tab-pane" aria-selected="false">Rejected Sites</span>
-    </li>
+    <% @statuses.each do |status| %>
+      <li class="nav-item" role="presentation">
+        <span class="nav-link tab-underlined" id="<%= status %>-tab" data-bs-toggle="tab" data-bs-target="#<%= status %>-tab-pane" role="tab" aria-controls="<%= status %>-tab-pane" aria-selected="false"><%= status.capitalize %> Sites</span>
+      </li>
+    <% end %>
   </ul>
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade py-3 show active" id="sites-tab-pane" role="tabpanel" aria-labelledby="sites-tab" tabindex="0">
-      To display all analyses from all sites
+      <% @registrations.each do |registration| %>
+        <%= render "companies/company_card", company: registration.company, registration: registration %>
+      <% end %>
     </div>
-    <div class="tab-pane fade py-3" id="signedup-tab-pane" role="tabpanel" aria-labelledby="signedup-tab" tabindex="0">
-      To display analyses from signed-up sites
-    </div>
-    <div class="tab-pane fade py-3" id="rejected-tab-pane" role="tabpanel" aria-labelledby="rejected-tab" tabindex="0">
-      To display analyses from rejected sites
-    </div>
+    <% @statuses.each do |status| %>
+      <div class="tab-pane fade py-3" id="<%= status %>-tab-pane" role="tabpanel" aria-labelledby="<%= status %>-tab" tabindex="0">
+        <% @registrations.where(status: status).each do |registration| %>
+          <%= render "companies/company_card", company: registration.company, registration: registration %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
