@@ -21,8 +21,8 @@
       <div class="col-7">
         <ul>
           <li><strong>Risk Score:</strong> <%= @company.risk_score %></li>
-          <li><strong>Privacy Policy:</strong> <%= link_to @company.privacy_url, @company.privacy_url, target: "_blank" %></li>
-          <li><strong>Terms of Service:</strong> <%= link_to @company.tos_url, @company.tos_url, target: "_blank" %></li>
+          <li><strong>Privacy Policy:</strong> <%= @company.privacy_url.present? ? link_to(@company.privacy_url, @company.privacy_url, target: "_blank") : "Not available" %></li>
+          <li><strong>Terms of Service:</strong> <%= @company.tos_url.present? ? link_to(@company.tos_url, @company.tos_url, target: "_blank") : "Not available" %></li>
         </ul>
       </div>
     </div>
