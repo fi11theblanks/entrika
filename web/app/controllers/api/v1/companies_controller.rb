@@ -1,0 +1,7 @@
+class Api::V1::CompaniesController < ApplicationController
+  def show
+    @company = Company.find(params[:id])
+    authorize @company
+    render json: @company
+  end
+end
