@@ -12,15 +12,9 @@
       or clause you care about most.</p>
   </div>
   <h2>Recent Analyses</h2>
-  <div class="card">
-    <p>Example 1</p>
-  </div>
-  <div class="card">
-    <p>Example 2</p>
-  </div>
-  <div class="card">
-    <p>Example 3</p>
-  </div>
+  <% @sorted_registrations.each do |registration| %>
+    <%= render "companies/company_card", company: registration.company, registration: registration %>
+  <% end %>
   <h2>View More Analyses</h2>
   <ul class="nav tabs-underlined" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
