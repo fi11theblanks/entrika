@@ -1,17 +1,18 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+require_relative "../lib/company_analysis_data"
+
 User.find_or_create_by!(email: "test@example.com") do |user|
   user.password = "password"
   user.password_confirmation = "password"
   user.username = "testuser"
 end
 
-Company.destroy_all
 TosScraper.scrape_all
+
+COMPANY_ANALYSIS_DATA.each do |name, data|
+  company = Company.find_by(name: name)
+  next unless company
+  company.update!(data.merge(
+    summary: "Terms of Service Summary:\n#{data[:tos_summary]}\n\nPrivacy Policy Summary:\n#{data[:privacy_summary]}",
+    analysis: "Terms of Service Analysis:\n#{data[:tos_analysis]}\n\nPrivacy Policy Analysis:\n#{data[:privacy_analysis]}"
+  ))
+end

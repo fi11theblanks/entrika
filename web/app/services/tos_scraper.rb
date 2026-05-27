@@ -49,7 +49,6 @@ class TosScraper
         tos_url: data[:tos_url],
         privacy_text: privacy_text,
         privacy_url: data[:privacy_url],
-        summary: nil,
         last_checked: Time.current
       )
 
