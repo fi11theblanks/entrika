@@ -1,2 +1,42 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="home-hero">
+<h1 class="home-hero__headline">Know what<br>you agree to.</h1>
+  <p class="home-hero__sub">Entrika reads the fine print so you don't have to. It tells you exactly how risky it is.</p>
+
+  <%= form_with url: companies_path, method: :get, class: "home-search" do %>
+    <%= text_field_tag :query, nil,
+          class: "home-search__input",
+          placeholder: "Search a company: TikTok, Spotify, Apple...",
+          autocomplete: "off" %>
+    <button type="submit" class="home-search__btn">
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  <% end %>
+</div>
+
+<div class="home-watchlist">
+  <div class="home-watchlist__header">
+    <span class="home-watchlist__label">Highest Risk</span>
+    <%= link_to "View all →", companies_path, class: "home-watchlist__all" %>
+  </div>
+
+  <% Company.order(risk_score: :desc).first(5).each do |company| %>
+    <%= link_to company_path(company), class: "company-row" do %>
+      <div class="company-row__left">
+        <span class="company-row__name"><%= company.name %></span>
+        <span class="company-row__url"><%= company.url %></span>
+      </div>
+      <div class="company-row__right">
+        <% risk_level = company.risk_label&.split(' ')&.first&.downcase %>
+        <span class="company-row__risk company-row__risk--<%= risk_level %>">
+          <% if risk_level == 'low' %>
+            <i class="fa-solid fa-circle-check"></i>
+          <% else %>
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          <% end %>
+          <%= company.risk_label %>
+        </span>
+        <span class="company-row__arrow">↗</span>
+      </div>
+    <% end %>
+  <% end %>
+</div>
