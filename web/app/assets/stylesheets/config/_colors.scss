@@ -1,10 +1,27 @@
-// Define variables for your color scheme
+// Core palette
+$black:      #000000;
+$near-black: #0D0D0D;
+$gray-900:   #1C1C1C;
+$gray-700:   #404040;
+$gray-500:   #6B6B6B;
+$gray-300:   #B0B0B0;
+$gray-100:   #E8E8E8;
+$gray-50:    #F5F5F5;
+$white:      #FFFFFF;
 
-// For example:
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// Semantic
+$risk-high:     #C42B2B;
+$risk-moderate: #B45309;
+$risk-low:      #1A7A42;
+$accent-blue:   #0066CC;
+
+// Aliases
+$dark-navy:       $near-black;
+$dark-navy-light: $gray-50;
+$light-gray:      $gray-300;
+$mid-gray:        $gray-500;
+$dark-gray:       $gray-700;
+$muted-red:       $risk-high;
+$forest-green:    $risk-low;
+$golden:          $risk-moderate;
+$background:      $white;
