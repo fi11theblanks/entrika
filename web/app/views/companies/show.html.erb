@@ -30,36 +30,65 @@
   </div>
 
   <div class="col-5">
-    <div class="chat-card p-4 d-flex flex-column gap-3" style="height: 90vh; position: sticky; top: 2rem;">
-      <h4>Company Chat</h4>
+    <div class="chat-card" style="height: 90vh; position: sticky; top: 2rem;">
 
-      <% if @registration %>
-        <% @registration.messages.each do |message| %>
-          <% if message.role == "user" %>
-            <div class="d-flex justify-content-end mb-2">
-              <div class="bg-white px-3 pb-0 pt-3 rounded-pill">
-              <%= message.content %>
-              </div>
-            </div>
-          <% elsif message.role == "assistant" %>
-            <div class="d-flex justify-content-start mb-5">
-              <div class="px-3 pb-0 pt-3">
+      <%# Header %>
+      <div class="chat-header">
+        <div class="chat-header__avatar logo-sprite"></div>
+        <div>
+          <div class="chat-header__name">Entrika</div>
+          <div class="chat-header__sub">Ask about this company's policies</div>
+        </div>
+      </div>
+
+      <%# Messages %>
+      <div class="chat-messages">
+        <% if @registration&.messages&.any? %>
+          <% @registration.messages.each do |message| %>
+            <% if message.role == "user" %>
+              <div class="chat-bubble chat-bubble--user">
                 <%= message.content %>
               </div>
-            </div>
+            <% elsif message.role == "assistant" %>
+              <div class="chat-bubble-row chat-bubble-row--assistant">
+                <div class="chat-avatar">
+                  <%= image_tag "logo.svg", alt: "e", class: "chat-avatar__logo" %>
+                </div>
+                <div class="chat-bubble chat-bubble--assistant">
+                  <%= message.content %>
+                </div>
+              </div>
+            <% end %>
           <% end %>
+        <% else %>
+          <div class="chat-bubble-row chat-bubble-row--assistant">
+            <div class="chat-avatar logo-sprite--sm"></div>
+            <div class="chat-bubble chat-bubble--assistant">
+              Ask me anything about <%= @company.name %>'s terms or privacy policy.
+            </div>
+          </div>
         <% end %>
+      </div>
 
+      <%# Input %>
+      <% if user_signed_in? %>
+        <%= simple_form_for [@company, @message], html: { class: "chat-form" } do |f| %>
+          <%= f.input :content,
+                label: false,
+                input_html: {
+                  class: "chat-input",
+                  placeholder: "Ask a question...",
+                  rows: 1
+                } %>
+          <%= f.submit "Send", class: "chat-send-btn" %>
+        <% end %>
       <% else %>
-      <p class="text-muted small">Start a conversation about this company.</p>
+        <div class="chat-form chat-form--locked">
+          <span class="chat-input chat-input--placeholder">Sign in to ask questions</span>
+          <%= link_to "Sign in", new_user_session_path, class: "chat-send-btn" %>
+        </div>
       <% end %>
 
-     <%= simple_form_for [@company, @message] do |f| %>
-        <%= f.input :content %>
-        <%= f.submit "Ask", class: "btn btn-primary" %>
-     <% end %>
-
+    </div>
   </div>
-
-
 </div>

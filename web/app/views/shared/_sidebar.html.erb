@@ -19,6 +19,25 @@
         <% end %>
       </li>
 
+      <%# ── Dashboard ── %>
+      <li class="mb-1">
+        <button class="sidebar-link"
+                data-bs-toggle="collapse"
+                data-bs-target="#dashboard-collapse"
+                aria-expanded="false"
+                data-label="Dashboard">
+          <i class="fa-solid fa-gauge nav-icon"></i>
+          <span class="sidebar-link__label">Dashboard</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </button>
+        <div class="collapse" id="dashboard-collapse">
+          <ul class="btn-toggle-nav list-unstyled">
+            <li><a href="#">Overview</a></li>
+            <li><a href="#">Sites Analyzed</a></li>
+          </ul>
+        </div>
+      </li>
+
       <%# ── My Sites ── %>
       <li class="mb-1">
         <%= link_to sitesanalyzed_path,
