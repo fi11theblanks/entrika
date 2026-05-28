@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :companies, only: [:show, :create] do
+        collection do
+          get :search
+        end
         resources :registrations, only: [:create]
       end
       devise_scope :user do

@@ -1,41 +1,37 @@
-<div class="row">
+<div class="row g-4">
   <div class="col-7">
-    <div>
     <%= render "company_card", company: @company %>
-    </div>
 
-    <div class="align-content-start">
-      <h4 class="fw-bold">Terms of Service Summary</h4>
-      <p><%= @company.tos_summary %></p>
-      <h4 class="fw-bold">Privacy Policy Summary</h4>
-      <p><%= @company.privacy_summary %></p>
-      <h4 class="fw-bold">Analysis</h4>
-      <p><%= @company.tos_analysis %></p>
-      <p><%= @company.privacy_analysis %></p>
-      <ul>
-        <li><strong>Risk Score:</strong> <%= @company.risk_label %></li>
-        <li><strong>Privacy Policy:</strong> <%= @company.privacy_url.present? ? link_to(@company.privacy_url, @company.privacy_url, target: "_blank") : "Not available" %></li>
-        <li><strong>Terms of Service:</strong> <%= @company.tos_url.present? ? link_to(@company.tos_url, @company.tos_url, target: "_blank") : "Not available" %></li>
-      </ul>
-    </div>
+    <h4 class="section-heading">Terms of Service Summary</h4>
+    <p><%= @company.tos_summary %></p>
 
-    <div class="col-7">
-      <h4 class="fw-bold">Flagged Clauses</h4>
-    </div>
-    <div class="col-7">
-      <p>They do something with your data</p>
-    </div>
-    <div class="col-7">
-      <p>They do something with your data</p>
-    </div>
-    <div class="col-7">
-      <p>They do something with your data</p>
-    </div>
+    <h4 class="section-heading">Privacy Policy Summary</h4>
+    <p><%= @company.privacy_summary %></p>
+
+    <h4 class="section-heading">Analysis</h4>
+    <p><%= @company.tos_analysis %></p>
+    <p><%= @company.privacy_analysis %></p>
+    <ul class="company-meta-list">
+      <li><strong>Risk Score:</strong> <%= @company.risk_label %></li>
+      <li>
+        <strong>Privacy Policy:</strong>
+        <%= @company.privacy_url.present? ? link_to(@company.privacy_url, @company.privacy_url, target: "_blank") : "Not available" %>
+      </li>
+      <li>
+        <strong>Terms of Service:</strong>
+        <%= @company.tos_url.present? ? link_to(@company.tos_url, @company.tos_url, target: "_blank") : "Not available" %>
+      </li>
+    </ul>
+
+    <h4 class="section-heading">Flagged Clauses</h4>
+    <div class="flagged-clause">They do something with your data</div>
+    <div class="flagged-clause">They do something with your data</div>
+    <div class="flagged-clause">They do something with your data</div>
   </div>
 
-  <div class="col-5 mb-5" style="height:90vh">
-    <div class="card p-3 h-100 d-flex flex-column gap-3">
-      <h4 class="fw-bold">Company Chat</h4>
+  <div class="col-5">
+    <div class="chat-card p-4 d-flex flex-column gap-3" style="height: 90vh; position: sticky; top: 2rem;">
+      <h4>Company Chat</h4>
 
       <% if @registration %>
         <% @registration.messages.each do |message| %>
