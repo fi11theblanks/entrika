@@ -9,7 +9,7 @@
   <div class="flex-grow-1">
     <h5 class="mb-1"><%= company.name %></h5>
     <p class="mb-1 text-muted small">🌐 <%= link_to company.url, company.url, class: "position-relative z-3", target: "_blank" %></p>
-    <p class="mb-2 text-muted small">Updated 2 days ago</p>
+    <p class="mb-2 text-muted small">Updated <%= time_ago_in_words(company.updated_at) %></p>
     <div class="d-flex gap-2">
       <button class="btn btn-outline-secondary btn-sm rounded-pill">💾 Save Analysis</button>
       <button class="btn btn-sm">⬇️ Download PDF Report</button>
