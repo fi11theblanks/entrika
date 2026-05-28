@@ -1,6 +1,4 @@
 class MessagesController < ApplicationController
-  before_action :authenticate_user!
-
   def create
     @company = Company.find(params[:company_id])
     @registration = Registration.find_or_create_by(user: current_user, company: @company)
