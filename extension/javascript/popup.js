@@ -46,8 +46,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         )
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
-            if(data.registered){
+            console.log(data.registered);
+            if(data){
             registrationLink.innerText = "Registered ✔";
             registrationLink.classList.add("disabled");
           }})

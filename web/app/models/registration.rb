@@ -6,5 +6,6 @@ class Registration < ApplicationRecord
   validates :status, presence: true
   validates :user_id, presence: true
   validates :company_id, presence: true
+  validates :user_id, uniqueness: { scope: :company_id }
   STATUSES = ["unregistered", "registered", "rejected", "canceled"]
 end
