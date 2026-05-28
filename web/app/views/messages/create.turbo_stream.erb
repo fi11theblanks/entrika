@@ -1,0 +1,8 @@
+<%= turbo_stream.append "messages" do %>
+  <%= render "messages/message", message: @message %>
+  <%= render "messages/message", message: @assistant_message %>
+<% end %>
+
+<%= turbo_stream.update "new-empty-form" do %>
+  <%= render "messages/form", registration: @registration, company: @company, message: Message.new %>
+<% end %>

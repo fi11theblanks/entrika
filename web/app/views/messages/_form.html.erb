@@ -1,0 +1,17 @@
+<% if user_signed_in? %>
+  <%= simple_form_for [registration.company, message], html: { class: "chat-form" } do |f| %>
+    <%= f.input :content,
+          label: false,
+          input_html: {
+            class: "chat-input",
+            placeholder: "Ask a question...",
+            rows: 1
+          } %>
+    <%= f.submit "Send", class: "chat-send-btn" %>
+  <% end %>
+<% else %>
+  <div class="chat-form chat-form--locked">
+    <span class="chat-input chat-input--placeholder">Sign in to ask questions</span>
+    <%= link_to "Sign in", new_user_session_path, class: "chat-send-btn" %>
+  </div>
+<% end %>

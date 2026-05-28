@@ -12,7 +12,11 @@ class MessagesController < ApplicationController
       response = @ruby_llm_chat.with_instructions("#{instructions}\n#{company_context}").ask(@message.content)
       @assistant_message = Message.create(role: "assistant", content: response.content, registration: @registration)
 
-      redirect_to company_path(@company)
+      respond_to do |format|
+        format.html { redirect_to company_path(@company) }
+        format.turbo_stream
+      end
+
     else
       render "companies/show", status: :unprocessable_entity
     end
@@ -65,7 +69,7 @@ class MessagesController < ApplicationController
       when asked questions pertaining to the company's Privacy Policy, reference #{@company.privacy_text}
       when asked questions regarding recent changes to the company's ToS or Privacy Policy, then reference #{@company.updated_at}
       Be consistent with the #{@company.tos_analysis} and #{@company.privacy_analysis} in your answers
-      be consistent with the #{@company.risk_score}, for example if asked about the risk_score for #{@company}, give the #{@company.risk_score}, only if asked specifically about #{@company}, not when asked about other companies
+      be consistent with the #{@company.risk_score}, for example if asked about the risk_score for #{@company}, give the risk_label associated with #{@company.risk_score}, only if asked specifically about #{@company}, not when asked about other companies. For example, if asked the risk score for Facebook, say it is Medium Risk
     COMPANY_CONTEXT
   end
 
