@@ -1,15 +1,8 @@
-<div class="company-header-card position-relative">
-  <div class="d-flex justify-content-end mb-1">
-    <% if company.risk_score %>
-      <%= render "companies/risk_badge", icon: "⚠", score: company.risk_label %>
-    <% else %>
-      <%= render "companies/risk_badge", icon: "❔", score: "No risk score" %>
-    <% end %>
   </div>
   <h2 class="company-header-card__name"><%= company.name %></h2>
   <div class="company-header-card__meta">
     <%= link_to company.url, company.url, target: "_blank", class: "position-relative z-3" %>
-    <span>Updated 2 days ago</span>
+    <p class="mb-2 text-muted small">Updated <%= time_ago_in_words(company.updated_at) %></p>
   </div>
   <div class="company-header-card__actions">
     <button class="btn btn-outline-secondary btn-sm">Save Analysis</button>
