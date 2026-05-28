@@ -26,7 +26,7 @@
                 data-bs-target="#dashboard-collapse"
                 aria-expanded="false"
                 data-label="Dashboard">
-          <i class="fa-solid fa-gauge nav-icon"></i>
+          <i class="fa-solid fa-book-open nav-icon"></i>
           <span class="sidebar-link__label">Dashboard</span>
           <i class="fa-solid fa-chevron-right chevron"></i>
         </button>
@@ -38,17 +38,7 @@
         </div>
       </li>
 
-      <%# ── My Sites ── %>
-      <li class="mb-1">
-        <%= link_to sitesanalyzed_path,
-              class: "sidebar-link #{request.path.start_with?('/registrations') ? 'is-active' : ''}",
-              data: { label: "My Sites" } do %>
-          <i class="fa-solid fa-book-open nav-icon"></i>
-          <span class="sidebar-link__label">My Sites</span>
-        <% end %>
-      </li>
-
-      <%# ── Directory ── %>
+<%# ── Directory ── %>
       <li class="mb-1">
         <%= link_to companies_path,
               class: "sidebar-link #{request.path.start_with?('/companies') ? 'is-active' : ''}",
