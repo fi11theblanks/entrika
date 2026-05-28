@@ -19,17 +19,26 @@
         <% end %>
       </li>
 
-      <%# ── My Sites ── %>
+      <%# ── Dashboard ── %>
       <li class="mb-1">
-        <%= link_to sitesanalyzed_path,
-              class: "sidebar-link #{request.path.start_with?('/registrations') ? 'is-active' : ''}",
-              data: { label: "My Sites" } do %>
+        <button class="sidebar-link"
+                data-bs-toggle="collapse"
+                data-bs-target="#dashboard-collapse"
+                aria-expanded="false"
+                data-label="Dashboard">
           <i class="fa-solid fa-book-open nav-icon"></i>
-          <span class="sidebar-link__label">My Sites</span>
-        <% end %>
+          <span class="sidebar-link__label">Dashboard</span>
+          <i class="fa-solid fa-chevron-right chevron"></i>
+        </button>
+        <div class="collapse" id="dashboard-collapse">
+          <ul class="btn-toggle-nav list-unstyled">
+            <li><a href="#">Overview</a></li>
+            <li><a href="#">Sites Analyzed</a></li>
+          </ul>
+        </div>
       </li>
 
-      <%# ── Directory ── %>
+<%# ── Directory ── %>
       <li class="mb-1">
         <%= link_to companies_path,
               class: "sidebar-link #{request.path.start_with?('/companies') ? 'is-active' : ''}",
