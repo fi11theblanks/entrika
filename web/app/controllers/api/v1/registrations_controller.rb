@@ -1,8 +1,8 @@
-class Api::V1::RegistrationsController < ApplicationController
+class Api::V1::RegistrationsController < Api::V1::BaseController
   skip_before_action :verify_authenticity_token
 
   def create
-    skip_authorization
+    # skip_authorization
     user = User.first
     @registration = Registration.new(
       company_id: params[:company_id],
