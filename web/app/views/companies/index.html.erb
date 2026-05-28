@@ -1,20 +1,39 @@
-<% if params[:query].present? %>
-  <h2>Results for "<%= params[:query] %>"</h2>
-<% else %>
-  <h2>Companies</h2>
-<% end %>
-<% if @companies.any? %>
-  <% @companies.each do |company| %>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
-          <%# <h1>Welcome!</h1>
-        <h5>Managed data and Terms of Service oversight</h5> %>
-          <%= render "company_card", company: company, registration: nil %>
-        </div>
-      </div>
+<div class="companies-index">
+  <header class="companies-header">
+    <div class="companies-header__top">
+      <% if params[:query].present? %>
+        <h1 class="companies-title">Results for "<%= params[:query] %>"</h1>
+      <% else %>
+        <h1 class="companies-title">Company Directory</h1>
+      <% end %>
+      <span class="companies-count"><%= @companies.count %> analysed</span>
     </div>
+  </header>
+
+  <% if @companies.any? %>
+    <div class="company-list">
+      <% @companies.each do |company| %>
+        <%= link_to company_path(company), class: "company-row" do %>
+          <div class="company-row__left">
+            <span class="company-row__name"><%= company.name %></span>
+            <span class="company-row__url"><%= company.url %></span>
+          </div>
+          <div class="company-row__right">
+            <% risk_level = company.risk_label&.split(' ')&.first&.downcase %>
+            <span class="company-row__risk company-row__risk--<%= risk_level %>">
+              <% if risk_level == 'low' %>
+                <i class="fa-solid fa-circle-check"></i>
+              <% else %>
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              <% end %>
+              <%= company.risk_label %>
+            </span>
+            <span class="company-row__arrow">↗</span>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="companies-empty">No companies found.</p>
   <% end %>
-<% else %>
-  <h3>No companies found</h3>
-<% end %>
+</div>

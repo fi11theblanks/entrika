@@ -1,81 +1,54 @@
-<nav class="sidebar ml-3" id="appSidebar">
-  <%# ── Hamburger toggle ── %>
-  <button class="sidebar-toggle" id="sidebarToggleBtn" aria-label="Toggle sidebar">
-    <span class="toggle-icon" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
-    </span>
-    <span class="toggle-label">Menu</span>
-  </button>
+<nav class="sidebar" id="appSidebar">
+  <%# ── Header / logo toggle ── %>
+  <div class="sidebar-header">
+    <button class="sidebar-toggle" id="sidebarToggleBtn" aria-label="Toggle sidebar">
+      <%= image_tag "logo.svg", class: "sidebar-logo", alt: "Entrika" %>
+    </button>
+    <span class="sidebar-wordmark">Entrika</span>
+  </div>
+
   <div class="sidebar-nav">
     <ul class="list-unstyled mb-0">
       <%# ── Home ── %>
       <li class="mb-1">
-        <button class="btn-toggle"
-                data-bs-toggle="collapse"
-                data-bs-target="#home-collapse"
-                aria-expanded="true"
-                data-label="Home">
-          <%= link_to root_path do %>
-            <i class="fa-solid fa-house nav-icon"></i>
-          <% end %>
-          <span class="nav-label">Home</span>
-          <i class="fa-solid fa-chevron-right chevron"></i>
-        </button>
-        <div class="collapse show" id="home-collapse">
-          <ul class="btn-toggle-nav list-unstyled">
-            <li><a href="#">Overview</a></li>
-            <li><a href="#">Updates</a></li>
-            <li><a href="#">Reports</a></li>
-          </ul>
-        </div>
+        <%= link_to root_path,
+              class: "sidebar-link #{current_page?(root_path) ? 'is-active' : ''}",
+              data: { label: "Home" } do %>
+          <i class="fa-solid fa-house nav-icon"></i>
+          <span class="sidebar-link__label">Home</span>
+        <% end %>
       </li>
-      <%# ── Dashboard ── %>
+
+      <%# ── My Sites ── %>
       <li class="mb-1">
-        <button class="btn-toggle"
-                data-bs-toggle="collapse"
-                data-bs-target="#dashboard-collapse"
-                aria-expanded="false"
-                data-label="Dashboard">
-          <%= link_to "dashboard" do %>
-            <i class="fa-solid fa-gauge nav-icon"></i>
-          <% end %>
-          <span class="nav-label">Dashboard</span>
-          <i class="fa-solid fa-chevron-right chevron"></i>
-        </button>
-        <div class="collapse" id="dashboard-collapse">
-          <ul class="btn-toggle-nav list-unstyled">
-            <li><a href="#">Risk Overview</a></li>
-            <li><a href="#">Sites Analyzed</a></li>
-            <li><a href="#">Recents</a></li>
-          </ul>
-        </div>
+        <%= link_to sitesanalyzed_path,
+              class: "sidebar-link #{request.path.start_with?('/registrations') ? 'is-active' : ''}",
+              data: { label: "My Sites" } do %>
+          <i class="fa-solid fa-book-open nav-icon"></i>
+          <span class="sidebar-link__label">My Sites</span>
+        <% end %>
       </li>
-      <%# ── Companies ── %>
+
+      <%# ── Directory ── %>
       <li class="mb-1">
-        <button class="btn-toggle"
-                aria-expanded="false"
-                data-label="Account">
-          <%= link_to companies_path do %>
-            <i class="fa-solid fa-city nav-icon"></i>
-          <% end %>
-          <span class="nav-label">Companies</span>
-          <i class="fa-solid hidden"></i>
-        </button>
+        <%= link_to companies_path,
+              class: "sidebar-link #{request.path.start_with?('/companies') ? 'is-active' : ''}",
+              data: { label: "Directory" } do %>
+          <i class="fa-solid fa-link nav-icon"></i>
+          <span class="sidebar-link__label">Directory</span>
+        <% end %>
       </li>
+
       <%# ── Search ── %>
-      <li class="mb-1 sidebar-search">
-        <div class="btn-toggle" data-label="Search">
+      <li class="mb-1">
+        <div class="sidebar-link" data-label="Search">
           <i class="fa-solid fa-magnifying-glass nav-icon search-icon-collapsed" id="searchIconCollapsed"></i>
           <%= form_with url: companies_path, method: :get, class: "search-form" do %>
             <div class="search-input-wrapper">
               <%= label_tag :query, "Search companies", class: "visually-hidden" %>
-              <%= text_field_tag :query,
-              params[:query],
-              class: "form-control",
-              placeholder: "Type here"
-            %>
+              <%= text_field_tag :query, params[:query],
+                    class: "search-input",
+                    placeholder: "Type here" %>
               <button type="submit" class="search-submit">
                 <i class="fa-solid fa-magnifying-glass"></i>
               </button>
@@ -83,35 +56,33 @@
           <% end %>
         </div>
       </li>
-      <%# ── NewsFeed── %>
+
+      <%# ── News Feed ── %>
       <li class="mb-1">
-        <button class="btn-toggle"
-                aria-expanded="false"
-                data-label="Account">
+        <button class="sidebar-link" data-label="News Feed">
           <i class="fa-solid fa-rss nav-icon"></i>
-          <span class="nav-label">News Feed</span>
-          <i class="fa-solid hidden"></i>
+          <span class="sidebar-link__label">News Feed</span>
         </button>
       </li>
+
       <li class="sidebar-divider"></li>
+
       <%# ── Settings ── %>
       <li class="mb-1">
-        <button class="btn-toggle"
+        <button class="sidebar-link"
                 data-bs-toggle="collapse"
-                data-bs-target="#account-collapse"
+                data-bs-target="#settings-collapse"
                 aria-expanded="false"
-                data-label="Account">
+                data-label="Settings">
           <i class="fa-solid fa-gear nav-icon"></i>
-          <span class="nav-label">Settings</span>
+          <span class="sidebar-link__label">Settings</span>
           <i class="fa-solid fa-chevron-right chevron"></i>
         </button>
-        <div class="collapse" id="account-collapse">
+        <div class="collapse" id="settings-collapse">
           <ul class="btn-toggle-nav list-unstyled">
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Settings</a></li>
             <li>
               <% if user_signed_in? %>
-                <%= link_to "Sign Out", destroy_user_session_path, data: {turbo_method: :delete} %>
+                <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete } %>
               <% else %>
                 <%= link_to "Sign In", new_user_session_path %>
               <% end %>
@@ -121,7 +92,9 @@
       </li>
     </ul>
   </div>
+
 </nav>
+
 <%# ── Toggle JS ── %>
 <script>
   var sidebar = document.getElementById('appSidebar');
@@ -141,5 +114,3 @@
     localStorage.setItem('sidebarCollapsed', 'false');
   });
 </script>
-<%=  %>
-<er></er>
