@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_27_024918) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_28_021508) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,9 +43,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_024918) do
   end
 
   create_table "companies", force: :cascade do |t|
-    t.text "analysis"
     t.datetime "created_at", null: false
-    t.text "flags"
     t.datetime "last_checked"
     t.string "name"
     t.text "privacy_analysis"
@@ -53,7 +51,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_024918) do
     t.text "privacy_text"
     t.string "privacy_url"
     t.float "risk_score"
-    t.text "summary"
     t.text "tos_analysis"
     t.text "tos_summary"
     t.text "tos_text"
@@ -74,7 +71,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_024918) do
   create_table "registrations", force: :cascade do |t|
     t.bigint "company_id", null: false
     t.datetime "created_at", null: false
-    t.string "status"
+    t.string "status", default: "unregistered"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["company_id"], name: "index_registrations_on_company_id"
