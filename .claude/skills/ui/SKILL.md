@@ -342,13 +342,34 @@ Never assume CSS changes are visible without recompiling.
 
 ---
 
+## Tools Available
+- **Playwright**: For screenshots — use SPARINGLY (see rules below)
+- **WebFetch**: For Bootstrap 5 documentation lookups when genuinely needed
+- **Read / Edit / Write**: For reading existing stylesheets and views before modifying
+
+## Tool Usage Rules
+
+**Playwright:**
+- Screenshot ONCE at the start (the target page only) for initial visual audit
+- Screenshot ONCE at the end to verify the final result
+- Do NOT screenshot after every change — it's slow and unnecessary
+
+**WebFetch:**
+- Only fetch Bootstrap docs if you genuinely cannot recall the syntax or variable name
+- Prefer your existing knowledge first
+
+**Filesystem:**
+- Read only the files you need to edit
+- Do NOT read the entire views directory or entire stylesheet tree
+- Always read before editing
+
 ## Workflow
-1. Confirm scope — ask which page/component and direction
-2. Read the target view + relevant SCSS files
-3. Screenshot current state
-4. Make changes
-5. Recompile + restart (see above)
-6. Screenshot final result
+1. Confirm scope with user — ask which page/component and any direction they have in mind
+2. Targeted audit — read config files + target view only, take one screenshot
+3. Foundation first — if Bootstrap config variables are missing or inconsistent, fix them before touching views
+4. High-impact transformations — work component by component within the target scope
+5. Polish — add micro-interactions, hover states, finishing touches
+6. Verify — take one final screenshot to confirm
 
 ## Scope Rule
 Work on ONE page or component per session. First action when invoked: ask "Which page or component? Any direction, or shall I suggest?"
