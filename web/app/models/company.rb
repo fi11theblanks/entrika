@@ -1,8 +1,9 @@
 class Company < ApplicationRecord
-  has_many :registrations
+  has_many :registrations, dependent: :destroy
   has_many :users, through: :registrations
   #validates :url, presence: true
   validates :name, presence: true
+
 
   def risk_label
     case risk_score

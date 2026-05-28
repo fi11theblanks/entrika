@@ -11,8 +11,11 @@ class CompaniesController < ApplicationController
   end
 
   def show
+    skip_authorization
     @company = Company.find(params[:id])
     authorize @company
+    @message = Message.new
+    @registration = current_user.registrations.find_by(company: @company)
   end
 
   def edit
