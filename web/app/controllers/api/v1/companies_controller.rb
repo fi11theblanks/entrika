@@ -1,4 +1,6 @@
 class Api::V1::CompaniesController < ApplicationController
+  skip_before_action :authenticate_user!, only: %i[show create search]
+
   def show
     @company = Company.find(params[:id])
     authorize @company
@@ -6,7 +8,7 @@ class Api::V1::CompaniesController < ApplicationController
   end
 
   def search
-    skip_authorization
+    # skip_authorization
     domain = params[:domain]
     @company = Company.where("url ILIKE ?", "%#{domain}%").first
 

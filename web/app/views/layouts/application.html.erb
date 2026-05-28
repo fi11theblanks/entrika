@@ -26,8 +26,8 @@
   <body>
     <div class="sidebar-layout">
       <%= render 'shared/sidebar' %>
-      <%= render "shared/flashes" %>
       <main class="sidebar-main">
+        <%= render "shared/flashes" %>
         <%= yield %>
       </main>
     </div>
