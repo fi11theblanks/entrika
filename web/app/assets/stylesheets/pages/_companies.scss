@@ -81,6 +81,9 @@
 }
 
 .company-row__risk {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;

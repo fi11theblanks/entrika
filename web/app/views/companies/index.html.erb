@@ -19,7 +19,13 @@
             <span class="company-row__url"><%= company.url %></span>
           </div>
           <div class="company-row__right">
-            <span class="company-row__risk company-row__risk--<%= company.risk_label&.split(' ')&.first&.downcase %>">
+            <% risk_level = company.risk_label&.split(' ')&.first&.downcase %>
+            <span class="company-row__risk company-row__risk--<%= risk_level %>">
+              <% if risk_level == 'low' %>
+                <i class="fa-solid fa-circle-check"></i>
+              <% else %>
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              <% end %>
               <%= company.risk_label %>
             </span>
             <span class="company-row__arrow">↗</span>
