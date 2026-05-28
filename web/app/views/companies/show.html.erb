@@ -36,14 +36,34 @@
   <div class="col-5 mb-5" style="height:90vh">
     <div class="card p-3 h-100 d-flex flex-column gap-3">
       <h4 class="fw-bold">Company Chat</h4>
+
+      <% if @registration %>
+        <% @registration.messages.each do |message| %>
+          <% if message.role == "user" %>
+            <div class="d-flex justify-content-end mb-2">
+              <div class="bg-white px-3 pb-0 pt-3 rounded-pill">
+              <%= message.content %>
+              </div>
+            </div>
+          <% elsif message.role == "assistant" %>
+            <div class="d-flex justify-content-start mb-5">
+              <div class="px-3 pb-0 pt-3">
+                <%= message.content %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+      <% else %>
       <p class="text-muted small">Start a conversation about this company.</p>
-      <%# <%= form_with url: company_chats_path(@company), method: :post, local: true do |form| %>
-        <%# <div class="mb-3"> %>
-          <%# <%= form.label :message, "Your Message", class: "form-label" %>
-          <%# <%= form.text_area :message, class: "form-control", rows: 4 %>
-        <%# </div> %>
-        <%# <%= form.submit "Start Chat", class: "btn btn-primary" %>
-      <%# <% end %>
-    </div>
+      <% end %>
+
+     <%= simple_form_for [@company, @message] do |f| %>
+        <%= f.input :content %>
+        <%= f.submit "Ask", class: "btn btn-primary" %>
+     <% end %>
+
   </div>
+
+
 </div>
