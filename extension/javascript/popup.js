@@ -20,14 +20,18 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       function displayCompanyInfo() {
         urlDisplay.innerText =
           `Now analyzing ${currentUrl}`;
-        document.getElementById("risk-analysis").innerText =
-          `Risk analysis for ${data.name}`;
-        document.getElementById("privacy-summary").innerText =
-          data.privacy_summary;
-        document.getElementById("privacy-analysis").innerText =
-          data.privacy_analysis;
-        document.getElementById("tos-summary").innerText = data.tos_summary;
+        document.getElementById("risk-analysis").innerText = data.name;
+        document.querySelector(".privacy-summary").innerText = data.privacy_summary;
+        document.querySelector(".privacy-analysis").innerText = data.privacy_analysis;
+        document.querySelector(".tos-summary").innerText = data.tos_summary;
         companyLink.href = `http://127.0.0.1:3000/companies/${data.id}`;
+        if (data.risk_label) {
+          const hero = document.getElementById("risk-badge");
+          const level = data.risk_label.split(" ")[0].toLowerCase();
+          const mod = level === "medium" ? "moderate" : level;
+          hero.textContent = data.risk_label;
+          hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
+        }
       }
 
       if (data.error) {
