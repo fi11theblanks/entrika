@@ -55,6 +55,7 @@ gem "sassc-rails"
 gem "cloudinary"
 gem "pundit"
 gem "kramdown"
+gem "kramdown-parser-gfm"
 
 group :development, :test do
   gem "dotenv-rails"
