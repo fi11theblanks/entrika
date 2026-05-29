@@ -1,4 +1,6 @@
 class Api::V1::CompaniesController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:search]
+
   def show
     @company = Company.find(params[:id])
     authorize @company
@@ -12,7 +14,7 @@ class Api::V1::CompaniesController < ApplicationController
 
     if @company
       registered = Registration.exists?(company_id: @company.id, user_id: 1)
-      render json: @company
+      render json: @company.as_json(methods: :risk_label)
     else
       render json: { error: "Company not found" }, status: :not_found
     end
