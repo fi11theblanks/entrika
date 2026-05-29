@@ -10,7 +10,8 @@ class Api::V1::CompaniesController < Api::V1::BaseController
 
   def search
     skip_authorization
-    domain = params[:domain]
+    domain = params[:domain].split(".").last(2).join(".")
+    # @company = Company.where("? ILIKE '%' || url || '%'", domain).first
     @company = Company.where("url ILIKE ?", "%#{domain}%").first
 
     if @company
