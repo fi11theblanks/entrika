@@ -1,11 +1,12 @@
 <% if user_signed_in? %>
-  <%= simple_form_for [registration.company, message], html: { class: "chat-form" } do |f| %>
+  <%= simple_form_for [company, message], html: { class: "chat-form", data: { controller: "submit-on-enter" } } do |f| %>
     <%= f.input :content,
           label: false,
           input_html: {
             class: "chat-input",
             placeholder: "Ask a question...",
-            rows: 1
+            rows: 1,
+            data: { action: "keydown->submit-on-enter#submit" }
           } %>
     <%= f.submit "Send", class: "chat-send-btn" %>
   <% end %>
