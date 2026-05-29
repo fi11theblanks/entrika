@@ -1,7 +1,7 @@
 // Popup script
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-  const baseUrl = "http://127.0.0.1:3000/"
-  const baseAPIUrl = "http://127.0.0.1:3000/api/v1/"
+  const baseUrl = "https://entrika-fd2dab6f0cd8.herokuapp.com/";
+  const baseAPIUrl = "https://entrika-fd2dab6f0cd8.herokuapp.com/api/v1/";
   const currentUrl = new URL(tabs[0].url).hostname;
   const domain = new URL(tabs[0].url).hostname.replace(/^www\./, "");
   const url = `${baseAPIUrl}companies/search?domain=${encodeURIComponent(domain)}`;
@@ -18,10 +18,9 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      const companyUrl = `${baseUrl}companies/${data.id}/registrations`;
+      const companyUrl = `${baseAPIUrl}companies/${data.id}/registrations`;
       function displayCompanyInfo() {
-        urlDisplay.innerText =
-          `Now analyzing ${currentUrl}`;
+        urlDisplay.innerText = `Now analyzing ${currentUrl}`;
         document.getElementById("risk-analysis").innerText =
           `Risk analysis for ${data.name}`;
         document.getElementById("privacy-summary").innerText =
@@ -46,16 +45,14 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         companyLink.classList.add("d-none");
         registrationLink.classList.add("d-none");
         runAnalysis.classList.remove("d-none");
-
-        } else if (data.registered) {
-          displayCompanyInfo()
-          registrationLink.innerText = "Registered ✔";
-          registrationLink.classList.add("disabled");
-          dashboardLink.classList.remove("d-none");
-          dashboardLink.href = `${baseUrl}dashboard`
-
+      } else if (data.registered) {
+        displayCompanyInfo();
+        registrationLink.innerText = "Registered ✔";
+        registrationLink.classList.add("disabled");
+        dashboardLink.classList.remove("d-none");
+        dashboardLink.href = `${baseUrl}dashboard`;
       } else {
-        displayCompanyInfo()
+        displayCompanyInfo();
         registrationLink.addEventListener("click", (event) => {
           event.preventDefault();
           fetch(companyUrl, {
@@ -70,7 +67,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
               if (data) {
                 registrationLink.innerText = "Registered ✔";
                 registrationLink.classList.add("disabled");
-                dashboardLink.classList.remove("d-none")
+                dashboardLink.classList.remove("d-none");
               }
             })
             .catch((error) => console.error(error));
