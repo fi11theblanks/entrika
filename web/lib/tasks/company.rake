@@ -7,7 +7,7 @@ namespace :company do
     Message.delete_all
     Registration.delete_all
     Company.delete_all
-    COMPANY_ANALYSIS_DATA.each do |name, data|
+    CompanyAnalysisData.each do |name, data|
       Company.create!(data.merge(name: name))
       puts "Created: #{name}"
     end
