@@ -322,15 +322,22 @@
   gap: 0.5rem;
   padding: 0.875rem 1rem;
   border-top: 1px solid $gray-100;
-  flex-shrink: 0;
+  width: 100%;
   background: $white;
 
-  .form-group { flex: 1; margin: 0; }
+  .message_content {
+    flex: 1;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+  }
+  .input { margin: 0; }
 
   &--locked { opacity: 0.7; }
 }
 
 .chat-input {
+  margin: 0;
   flex: 1;
   border: 1px solid $gray-100;
   border-radius: 1.5rem;
@@ -343,10 +350,14 @@
   outline: none;
   width: 100%;
 
+
   &:focus { border-color: $gray-300; background: $white; }
   &--placeholder { color: $gray-500; font-style: italic; }
 }
-
+textarea.chat-input {
+  min-height: unset !important;
+  align-self: center;
+}
 .chat-send-btn {
   flex-shrink: 0;
   background: $near-black;
