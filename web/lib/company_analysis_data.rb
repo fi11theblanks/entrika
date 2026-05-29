@@ -1,4 +1,4 @@
-COMPANY_ANALYSIS_DATA = {
+CompanyAnalysisData = {
   "TikTok" => {
     risk_score: 3.0,
     url: "https://www.tiktok.com",
