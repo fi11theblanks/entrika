@@ -13,7 +13,7 @@ Rails.application.routes.draw do
         collection do
           get :search
         end
-        resources :registrations, only: [:create]
+        resources :registrations, only: %i[create destroy]
       end
       devise_scope :user do
         post "login", to: "users/sessions#create"

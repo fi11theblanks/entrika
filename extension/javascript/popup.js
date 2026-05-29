@@ -14,14 +14,9 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      if (data.error) {
-        document.querySelector(".website-url").innerText = "Company not found";
-        analysisCard.classList.add("d-none");
-        tosCard.classList.add("d-none");
-        companyLink.classList.add("d-none");
-        registrationLink.classList.add("d-none");
-        runAnalysis.classList.remove("d-none");
-      } else {
+      console.log(data);
+      const companyUrl = `http://127.0.0.1:3000/api/v1/companies/${data.id}/registrations`;
+      function displayCompanyInfo() {
         document.querySelector(".website-url").innerText =
           `Now analyzing ${currentUrl}`;
         document.querySelector("#risk-analysis").innerText =
@@ -33,26 +28,45 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         document.querySelector(".tos-summary").innerText = data.tos_summary;
         companyLink.href = `http://127.0.0.1:3000/companies/${data.id}`;
       }
-      registrationLink.addEventListener("click", (event) => {
-        event.preventDefault();
-        fetch(
-          `http://127.0.0.1:3000/api/v1/companies/${data.id}/registrations`,
-          {
+
+      if (data.error) {
+        document.querySelector(".website-url").innerText = "Company not found";
+        analysisCard.classList.add("d-none");
+        tosCard.classList.add("d-none");
+        companyLink.classList.add("d-none");
+        registrationLink.classList.add("d-none");
+        runAnalysis.classList.remove("d-none");
+
+        } else if (data.registered) {
+          displayCompanyInfo()
+          registrationLink.innerText = "❌ Unregister";
+          // registrationLink.addEventListener("click", (event) => {
+          //   event.preventDefault();
+          //   fetch(companyUrl), {
+
+          //   }
+          // })
+      } else {
+        displayCompanyInfo()
+        registrationLink.addEventListener("click", (event) => {
+          event.preventDefault();
+          fetch(companyUrl, {
             method: "POST",
             // credentials: "include",
             headers: { "Content-Type": "aplication/json" },
             body: JSON.stringify({ company_id: data.id }),
-          },
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data.registered);
-            if(data){
-            registrationLink.innerText = "Registered ✔";
-            registrationLink.classList.add("disabled");
-          }})
-          .catch((error) => console.error(error));
-      });
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              if (data) {
+                registrationLink.innerText = "Registered ✔";
+                registrationLink.classList.add("disabled");
+              }
+            })
+            .catch((error) => console.error(error));
+        });
+      }
     })
     .catch((error) => console.error("Error:", error));
 });
