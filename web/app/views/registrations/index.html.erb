@@ -1,12 +1,16 @@
-<div class="container">
-  <h2>Sites Analyzed</h2>
+<div class="dashboard-index">
+  <header class="dashboard-header">
+    <div class="dashboard-header__top">
+      <h1 class="dashboard-title">Sites Analyzed</h1>
+    </div>
+  </header>
   <ul class="nav tabs-underlined" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined active" id="sites-tab" data-bs-toggle="tab" data-bs-target="#sites-tab-pane" role="tab" aria-controls="sites-tab-pane" aria-selected="true">All Sites</span>
+      <span class="nav-link tab-underlined active dashboard-link" id="sites-tab" data-bs-toggle="tab" data-bs-target="#sites-tab-pane" role="tab" aria-controls="sites-tab-pane" aria-selected="true">All Sites</span>
     </li>
     <% @statuses.each do |status| %>
       <li class="nav-item" role="presentation">
-        <span class="nav-link tab-underlined" id="<%= status %>-tab" data-bs-toggle="tab" data-bs-target="#<%= status %>-tab-pane" role="tab" aria-controls="<%= status %>-tab-pane" aria-selected="false"><%= status.capitalize %> Sites</span>
+        <span class="nav-link tab-underlined dashboard-link" id="<%= status %>-tab" data-bs-toggle="tab" data-bs-target="#<%= status %>-tab-pane" role="tab" aria-controls="<%= status %>-tab-pane" aria-selected="false"><%= status.capitalize %> Sites</span>
       </li>
     <% end %>
   </ul>
