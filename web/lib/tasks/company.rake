@@ -4,12 +4,12 @@ namespace :company do
   desc "Apply pre-generated AI analysis to all companies (no LLM calls)"
   task create: :environment do
       puts "Applying AI analysis to companies..."
-    Company.destroy_all
+    Message.delete_all
+    Registration.delete_all
+    Company.delete_all
     COMPANY_ANALYSIS_DATA.each do |name, data|
-      company = Company.new(name: name)
-      company.update!(data)
-        #  "Terms of Service Summary:\n#{data[:tos_summary]}\n\nPrivacy Policy Summary:\n#{data[:privacy_summary]}",
-        # "Terms of Service Analysis:\n#{data[:tos_analysis]}\n\nPrivacy Policy Analysis:\n#{data[:privacy_analysis]}"
+      Company.create!(data.merge(name: name))
+      puts "Created: #{name}"
     end
   end
 end

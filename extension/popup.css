@@ -178,3 +178,7 @@ a { color: inherit; text-decoration: none; }
   padding: 0 5px;
   margin: 0 auto;
 }
+
+.risk-label--high     { color: #C42B2B; }
+.risk-label--moderate { color: #B45309; }
+.risk-label--low      { color: #1A7A42; }

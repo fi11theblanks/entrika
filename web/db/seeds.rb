@@ -6,4 +6,3 @@ User.find_or_create_by!(email: "test@example.com") do |user|
   user.username = "testuser"
 end
 
-#TosScraper.scrape_all
