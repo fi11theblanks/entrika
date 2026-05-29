@@ -1,8 +1,10 @@
 // Popup script
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  const baseUrl = "http://127.0.0.1:3000/"
+  const baseAPIUrl = "http://127.0.0.1:3000/api/v1/"
   const currentUrl = new URL(tabs[0].url).hostname;
   const domain = new URL(tabs[0].url).hostname.replace(/^www\./, "");
-  const url = `http://127.0.0.1:3000/api/v1/companies/search?domain=${encodeURIComponent(domain)}`;
+  const url = `${baseAPIUrl}companies/search?domain=${encodeURIComponent(domain)}`;
 
   const urlDisplay = document.getElementById("website-url");
   const analysisCard = document.getElementById("analysis-card");
@@ -16,7 +18,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      const companyUrl = `http://127.0.0.1:3000/api/v1/companies/${data.id}/registrations`;
+      const companyUrl = `${baseUrl}companies/${data.id}/registrations`;
       function displayCompanyInfo() {
         urlDisplay.innerText =
           `Now analyzing ${currentUrl}`;
@@ -27,7 +29,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         document.getElementById("privacy-analysis").innerText =
           data.privacy_analysis;
         document.getElementById("tos-summary").innerText = data.tos_summary;
-        companyLink.href = `http://127.0.0.1:3000/companies/${data.id}`;
+        companyLink.href = `${baseUrl}companies/${data.id}`;
         if (data.risk_label) {
           const hero = document.getElementById("risk-badge");
           const level = data.risk_label.split(" ")[0].toLowerCase();
@@ -50,7 +52,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           registrationLink.innerText = "Registered ✔";
           registrationLink.classList.add("disabled");
           dashboardLink.classList.remove("d-none");
-          dashboardLink.href = `http://127.0.0.1:3000/dashboard`
+          dashboardLink.href = `${baseUrl}dashboard`
 
       } else {
         displayCompanyInfo()
