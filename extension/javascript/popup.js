@@ -28,6 +28,13 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           data.privacy_analysis;
         document.getElementById("tos-summary").innerText = data.tos_summary;
         companyLink.href = `http://127.0.0.1:3000/companies/${data.id}`;
+        if (data.risk_label) {
+          const riskLabel = document.getElementById("risk-label");
+          const level = data.risk_label.split(" ")[0].toLowerCase();
+          const mod = level === "medium" ? "moderate" : level;
+          riskLabel.textContent = data.risk_label;
+          riskLabel.className = `risk-label--${mod}`;
+        }
       }
 
       if (data.error) {

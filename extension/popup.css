@@ -15,3 +15,7 @@ body {
   font-size: small !important;
   margin: 10px;
 }
+
+.risk-label--high     { color: #C42B2B; }
+.risk-label--moderate { color: #B45309; }
+.risk-label--low      { color: #1A7A42; }
