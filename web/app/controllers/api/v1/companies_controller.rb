@@ -1,5 +1,5 @@
 class Api::V1::CompaniesController < Api::V1::BaseController
-  # skip_before_action :authenticate_user!, only: [:search], raise: false
+  skip_before_action :authenticate_user!, only: [:search], raise: false
 
   def show
     @company = Company.find(params[:id])
