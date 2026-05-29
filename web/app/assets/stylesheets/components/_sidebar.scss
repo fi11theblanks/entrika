@@ -228,3 +228,29 @@
 
   &:hover { color: $near-black; }
 }
+
+//Icons
+
+.sidebar.collapsed .fa-house {
+  padding-left: 5px;
+}
+
+.sidebar.collapsed .fa-book-open {
+  padding-left: 10px;
+}
+
+.sidebar.collapsed .fa-link {
+  padding-left: 5px;
+}
+
+.sidebar.collapsed .fa-rss {
+  padding-left: 6px;
+}
+
+.sidebar.collapsed .avatar-sidebar {
+  margin-left: 16px;
+}
+
+.sidebar.collpased .fa-gear {
+  margin-left: 4px;
+}
