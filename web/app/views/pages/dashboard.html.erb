@@ -1,6 +1,11 @@
-<div class="container">
-  <h1>Welcome!</h1>
-  <div class="card">
+<div class="dashboard-index">
+  <header class="dashboard-header">
+    <div class="dashboard-header__top">
+      <h1 class="dashboard-title">Welcome!</h1>
+    </div>
+  </header>
+  <p class="dashboard-text">Your portal to online protection</p>
+  <%# <div class="card">
     <p>Overall Risk Profile</p>
     <p>insert rating here</p>
     <p>insert explanation here</p>
@@ -10,10 +15,14 @@
     <p>AI Compliance Agent</p>
     <p>Customize how Entrika analyzes your documents. Set specific keywords
       or clause you care about most.</p>
-  </div>
-  <h2>Recent Analyses</h2>
+  </div> %>
+  <header class="dashboard-header">
+    <div class="dashboard-header__top">
+      <h2 class="dashboard-title">Recent Analyses</h2>
+    </div>
+  </header>
   <% @sorted_registrations.each do |registration| %>
     <%= render "companies/company_card", company: registration.company, registration: registration %>
   <% end %>
-  <%= link_to "View More Analyses", sitesanalyzed_path %>
+  <%= link_to "View More Analyses", sitesanalyzed_path, class: "dashboard-link" %>
 </div>

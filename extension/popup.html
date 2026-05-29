@@ -5,41 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Entrika</title>
     <link rel="stylesheet" href="popup.css" />
+    <link rel="icon" type="image/svg+xml" href="entrika-icon.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   </head>
   <body>
-    <div class="card text-bg-primary mb-3" id="title-card">
-      <div class="card-body">
-        <h3 class="card-title">Entrika</h3>
-        <p class="card-text" id="website-url" style="font-size: small;">Loading...</p>
+    <div class="popup-container">
+    <header class="popup-header" id="title-card">
+      <img src="entrika-logo.svg" height="30" alt="Entrika" class="popup-logo">
+    </header>
+
+    <div id="analysis-card">
+      <div class="popup-hero">
+        <p class="popup-company-label" id="risk-analysis">—</p>
+        <span class="website-url popup-url" id="website-url">Loading...</span>
+        <p class="popup-risk-hero" id="risk-badge">—</p>
       </div>
+
+      <section class="popup-section">
+        <h6 class="popup-section-label">Privacy Analysis</h6>
+        <p class="popup-section-body" id="privacy-analysis">—</p>
+      </section>
+
+      <section class="popup-section">
+        <h6 class="popup-section-label">Privacy Summary</h6>
+        <p class="popup-section-body" id="privacy-summary">—</p>
+      </section>
     </div>
 
-    <div class="card text-bg-primary mb-3" id="analysis-card">
-      <div class="card-header">
-        <h1 id="risk-label">Medium Risk</h1>
-        <p id="risk-analysis">Risk analysis for...</p>
-      </div>
-      <div class="card-body">
-        <h6>Privacy Analysis</h6>
-        <p class="card-text" id="privacy-analysis"">This site may share your data</p>
-        <h6>Privacy Summary</h6>
-        <p class="card-text" id="privacy-summary">This may affect your privacy</p>
-      </div>
+    <div id="tos-card">
+      <section class="popup-section">
+        <h6 class="popup-section-label">Terms of Service</h6>
+        <p class="popup-section-body" id="tos-summary">—</p>
+      </section>
     </div>
 
-    <div class="card text-bg-primary mb-3" id="tos-card">
-      <div class="card-header"><h2>Terms of Service</h2></div>
-      <div class="card-body">
-        <h6 class="card-title">Privacy Issues</h6>
-        <p class="card-text" id="tos-summary">Terms of service summary</p>
-      </div>
+    <div class="popup-actions buttons-container">
+      <a href="#" id="company-link" target="_blank" class="popup-link">View company</a>
+      <a href="#" id="registration-link" target="_blank" class="popup-link">Register</a>
     </div>
-    <div class="buttons-container d-flex justify-content-between">
-      <a href="#" id="company-link" target="_blank" class="btn btn-secondary mr-2">View Company Page</a>
-      <a href="#" id="registration-link" target="_blank" class="btn btn-secondary ml-2">Register this Company</a>
+    <div class="text-center">
+      <a href="#" id="dashboard-link" target="_blank" class="d-none popup-link" style="margin: 0 12px 16px;">View dashboard</a>
     </div>
-    <button class="d-none" id="get-analysis">Run analysis for this company</button>
-    <a href="#" id="dashboard-link" target="_blank" class="d-none">View your dashboard</a>
+
+      <!-- <a href="#", target="_blank" class="d-none justify-content-center mb-3" id="dashboard-link">Go to dashboard</a> -->
+    <button class="d-none popup-link" id="get-analysis">Run analysis for this company</button>
+  </div>
     <script type="text/javascript" src="javascript/popup.js"></script>
+  </body>
 </html>
