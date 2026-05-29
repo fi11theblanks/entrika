@@ -2,31 +2,70 @@
   <div class="col-7">
     <%= render "company_card", company: @company %>
 
-    <h4 class="section-heading">Terms of Service Summary</h4>
-    <p><%= @company.tos_summary %></p>
+    <h4 class="section-heading">What you're agreeing to</h4>
+    <p class="section-intro"><%= @company.tos_summary %></p>
 
-    <h4 class="section-heading">Privacy Policy Summary</h4>
-    <p><%= @company.privacy_summary %></p>
+    <h4 class="section-heading">Privacy in plain English</h4>
+    <p class="section-intro"><%= @company.privacy_summary %></p>
 
-    <h4 class="section-heading">Analysis</h4>
-    <p><%= @company.tos_analysis %></p>
-    <p><%= @company.privacy_analysis %></p>
-    <ul class="company-meta-list">
-      <li><strong>Risk Score:</strong> <%= @company.risk_label %></li>
-      <li>
-        <strong>Privacy Policy:</strong>
-        <%= @company.privacy_url.present? ? link_to(@company.privacy_url, @company.privacy_url, target: "_blank") : "Not available" %>
-      </li>
-      <li>
-        <strong>Terms of Service:</strong>
-        <%= @company.tos_url.present? ? link_to(@company.tos_url, @company.tos_url, target: "_blank") : "Not available" %>
-      </li>
-    </ul>
+    <h4 class="section-heading">Terms of Service: Breakdown</h4>
+    <% tos_parts = @company.tos_analysis.to_s.split(/(?=(?:Clause \d|Red flag \d|Third-party sharing:|A real-world scenario:|Privacy advocate verdict:))/).map(&:strip).reject(&:blank?) %>
+    <p class="analysis-opening"><%= tos_parts.reject { |p| p.match?(/\A(?:Clause \d|Red flag \d|Third-party|A real-world|Privacy advocate)/) }.first %></p>
+    <% tos_bullets = tos_parts.select { |p| p.match?(/\A(?:Clause \d|Red flag \d)/) } %>
+    <% if tos_bullets.any? %>
+      <ul class="analysis-bullets">
+        <% tos_bullets.each do |b| %>
+          <li><span class="analysis-eye"></span><span><%= b.sub(/\A(?:Clause|Red flag) \d+\s*\(([^)]+)\):\s*/i, '\1: ') %></span></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <% tos_parts.select { |p| p.start_with?("Third-party sharing:") }.each do |m| %><p class="analysis-meta"><%= m %></p><% end %>
+    <% if (tos_scenario = tos_parts.find { |p| p.start_with?("A real-world scenario:") }) %>
+      <div class="analysis-scenario">
+        <span class="analysis-scenario__label">Real-world scenario:</span>
+        <span><%= tos_scenario.sub(/\AA real-world scenario:\s*/i, "") %></span>
+      </div>
+    <% end %>
+    <% if (tos_verdict = tos_parts.find { |p| p.start_with?("Privacy advocate verdict:") }) %>
+      <div class="analysis-verdict">
+        <span class="analysis-verdict__label">Verdict:</span>
+        <span><%= tos_verdict.sub(/\APrivacy advocate verdict:\s*/i, "") %></span>
+      </div>
+    <% end %>
 
-    <h4 class="section-heading">Flagged Clauses</h4>
-    <div class="flagged-clause">They do something with your data</div>
-    <div class="flagged-clause">They do something with your data</div>
-    <div class="flagged-clause">They do something with your data</div>
+    <h4 class="section-heading">Privacy Policy: Breakdown</h4>
+    <% priv_parts = @company.privacy_analysis.to_s.split(/(?=(?:Clause \d|Red flag \d|Third-party sharing:|A real-world scenario:|Privacy advocate verdict:))/).map(&:strip).reject(&:blank?) %>
+    <p class="analysis-opening"><%= priv_parts.reject { |p| p.match?(/\A(?:Clause \d|Red flag \d|Third-party|A real-world|Privacy advocate)/) }.first %></p>
+    <% priv_bullets = priv_parts.select { |p| p.match?(/\A(?:Clause \d|Red flag \d)/) } %>
+    <% if priv_bullets.any? %>
+      <ul class="analysis-bullets">
+        <% priv_bullets.each do |b| %>
+          <li><span class="analysis-eye"></span><span><%= b.sub(/\A(?:Clause|Red flag) \d+\s*\(([^)]+)\):\s*/i, '\1: ') %></span></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <% priv_parts.select { |p| p.start_with?("Third-party sharing:") }.each do |m| %><p class="analysis-meta"><%= m %></p><% end %>
+    <% if (priv_scenario = priv_parts.find { |p| p.start_with?("A real-world scenario:") }) %>
+      <div class="analysis-scenario">
+        <span class="analysis-scenario__label">Real-world scenario:</span>
+        <span><%= priv_scenario.sub(/\AA real-world scenario:\s*/i, "") %></span>
+      </div>
+    <% end %>
+    <% if (priv_verdict = priv_parts.find { |p| p.start_with?("Privacy advocate verdict:") }) %>
+      <div class="analysis-verdict">
+        <span class="analysis-verdict__label">Verdict:</span>
+        <span><%= priv_verdict.sub(/\APrivacy advocate verdict:\s*/i, "") %></span>
+      </div>
+    <% end %>
+
+    <div class="company-links">
+      <% if @company.tos_url.present? %>
+        <%= link_to "Read the full Terms of Service →", @company.tos_url, target: "_blank", class: "company-link" %>
+      <% end %>
+      <% if @company.privacy_url.present? %>
+        <%= link_to "Read the full Privacy Policy →", @company.privacy_url, target: "_blank", class: "company-link" %>
+      <% end %>
+    </div>
   </div>
 
   <div class="col-5">
