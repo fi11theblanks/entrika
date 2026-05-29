@@ -1,17 +1,168 @@
+/* ── Reset ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
-  width: 350px;
-  padding: 16px;
-  font-family: sans-serif;
+  width: 320px;
+  background: #ffffff;
+  color: #111111;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.popup-container {
+  background: #ffffff;
+  border: 6px solid #e0e0e0;
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 6px;
+}
+
+a { color: inherit; text-decoration: none; }
+.d-none { display: none !important; }
+
+/* ── Header ────────────────────────────────────── */
+.popup-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-.card {
-  width: 100%;
+.popup-logo {
+  display: block;
+  height: 30px;
+  width: auto;
 }
 
-.btn {
-  font-size: small !important;
-  margin: 10px;
+.popup-url {
+  display: block;
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Hero ───────────────────────────────────────── */
+.popup-hero {
+  background: #111;
+  border-radius: 10px;
+  margin: 14px 12px;
+  padding: 20px 18px 24px;
+}
+
+.popup-company-label {
+  font-size: 22px;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.08em;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+.popup-risk-hero {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-size: 72px;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  color: #111;
+}
+
+.popup-risk-hero--high     { color: #C42B2B; }
+.popup-risk-hero--moderate { color: #B45309; }
+.popup-risk-hero--low      { color: #1A7A42; }
+
+/* ── Sections ──────────────────────────────────── */
+.popup-section {
+  background: #9a9898;
+  border-radius: 10px;
+  margin: 0 12px 10px;
+  padding: 14px 16px;
+}
+
+
+
+.popup-section-label {
+  font-size: 19px;
+  font-weight: 700;
+  text-transform: capitalize;
+  letter-spacing: 0.06em;
+  color: #111;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.popup-section-body {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ── ToS divider ────────────────────────────────── */
+#tos-card {
+  border-top: 1px solid #ebebeb;
+}
+
+/* ── Actions ─────────────────────────────────────── */
+.popup-actions {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px 16px;
+  border-top: none;
+  margin-top: 0;
+}
+
+.popup-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+#company-link {
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+}
+
+#company-link:hover { background: #333; border-color: #333; }
+
+#registration-link {
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+}
+
+#registration-link:hover { background: #333; border-color: #333; }
+
+/* ── Get analysis (company not found state) ──────── */
+#get-analysis {
+  display: block;
+  width: calc(100% - 24px);
+  margin: 10px 12px 16px;
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+#get-analysis:hover { background: #333; border-color: #333; }
+
+.popup-link.disabled {
+  opacity: 0.4;
+  pointer-events: none;
 }
