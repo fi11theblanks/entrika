@@ -42,23 +42,10 @@
       </div>
 
       <%# Messages %>
-      <div class="chat-messages">
+      <div class="chat-messages" id="messages">
         <% if @registration&.messages&.any? %>
           <% @registration.messages.each do |message| %>
-            <% if message.role == "user" %>
-              <div class="chat-bubble chat-bubble--user">
-                <%= message.content %>
-              </div>
-            <% elsif message.role == "assistant" %>
-              <div class="chat-bubble-row chat-bubble-row--assistant">
-                <div class="chat-avatar">
-                  <%= image_tag "logo.svg", alt: "e", class: "chat-avatar__logo" %>
-                </div>
-                <div class="chat-bubble chat-bubble--assistant">
-                  <%= message.content %>
-                </div>
-              </div>
-            <% end %>
+            <%= render "messages/message", message: message %>
           <% end %>
         <% else %>
           <div class="chat-bubble-row chat-bubble-row--assistant">
@@ -71,23 +58,9 @@
       </div>
 
       <%# Input %>
-      <% if user_signed_in? %>
-        <%= simple_form_for [@company, @message], html: { class: "chat-form" } do |f| %>
-          <%= f.input :content,
-                label: false,
-                input_html: {
-                  class: "chat-input",
-                  placeholder: "Ask a question...",
-                  rows: 1
-                } %>
-          <%= f.submit "Send", class: "chat-send-btn" %>
-        <% end %>
-      <% else %>
-        <div class="chat-form chat-form--locked">
-          <span class="chat-input chat-input--placeholder">Sign in to ask questions</span>
-          <%= link_to "Sign in", new_user_session_path, class: "chat-send-btn" %>
-        </div>
-      <% end %>
+      <div id="new-empty-form">
+        <%= render "messages/form", company: @company, message: @message %>
+      </div>
 
     </div>
   </div>

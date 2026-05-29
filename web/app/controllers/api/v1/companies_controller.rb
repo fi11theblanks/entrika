@@ -9,12 +9,14 @@ class Api::V1::CompaniesController < ApplicationController
 
   def search
     skip_authorization
-    domain = params[:domain]
+    domain = params[:domain].split(".").last(2).join(".")
+    # @company = Company.where("? ILIKE '%' || url || '%'", domain).first
     @company = Company.where("url ILIKE ?", "%#{domain}%").first
 
     if @company
       registered = Registration.exists?(company_id: @company.id, user_id: 1)
       render json: @company.as_json(methods: :risk_label)
+      render json: @company.as_json.merge(registered: registered)
     else
       render json: { error: "Company not found" }, status: :not_found
     end

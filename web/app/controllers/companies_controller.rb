@@ -11,7 +11,6 @@ class CompaniesController < ApplicationController
   end
 
   def show
-    skip_authorization
     @company = Company.find(params[:id])
     authorize @company
     @message = Message.new

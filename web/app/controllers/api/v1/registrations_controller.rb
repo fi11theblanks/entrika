@@ -1,5 +1,5 @@
-class Api::V1::RegistrationsController < ApplicationController
-  skip_before_action :verify_authenticity_token
+class Api::V1::RegistrationsController < Api::V1::BaseController
+  # skip_before_action :verify_authenticity_token
 
   def create
     skip_authorization
