@@ -1,5 +1,6 @@
-class Api::V1::CompaniesController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[show create search]
+class Api::V1::CompaniesController < Api::V1::BaseController
+  # skip_before_action :verify_authenticity_token
+  # skip_before_action :authenticate_user!, only: %i[show create search]
 
   def show
     @company = Company.find(params[:id])
@@ -8,13 +9,13 @@ class Api::V1::CompaniesController < ApplicationController
   end
 
   def search
-    # skip_authorization
+    skip_authorization
     domain = params[:domain]
     @company = Company.where("url ILIKE ?", "%#{domain}%").first
 
     if @company
       registered = Registration.exists?(company_id: @company.id, user_id: 1)
-      render json: @company
+      render json: @company.as_json.merge(registered: registered)
     else
       render json: { error: "Company not found" }, status: :not_found
     end
