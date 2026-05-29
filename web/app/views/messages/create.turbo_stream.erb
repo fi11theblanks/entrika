@@ -4,5 +4,5 @@
 <% end %>
 
 <%= turbo_stream.update "new-empty-form" do %>
-  <%= render "messages/form", registration: @registration, company: @company, message: Message.new %>
+  <%= render "messages/form", company: @company, message: Message.new %>
 <% end %>

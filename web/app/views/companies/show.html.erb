@@ -42,11 +42,11 @@
       </div>
 
       <%# Messages %>
-      <div class="chat-messages">
+      <div class="chat-messages" id="messages">
         <% if @registration&.messages&.any? %>
-        <div id="messages">
-          <%= render "messages/message", registration: @registration, message: @message %>
-        </div>
+          <% @registration.messages.each do |message| %>
+            <%= render "messages/message", message: message %>
+          <% end %>
         <% else %>
           <div class="chat-bubble-row chat-bubble-row--assistant">
             <div class="chat-avatar logo-sprite--sm"></div>
@@ -59,7 +59,7 @@
 
       <%# Input %>
       <div id="new-empty-form">
-        <%= render "messages/form", registration: @registration, message: @message %>
+        <%= render "messages/form", company: @company, message: @message %>
       </div>
 
     </div>
