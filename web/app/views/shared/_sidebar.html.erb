@@ -1,5 +1,4 @@
 <nav class="sidebar" id="appSidebar">
-  <%# <div id="sidebarStatic" data-turbo-permanent> %>
   <%# ── Header / logo toggle ── %>
   <div class="sidebar-header">
     <button class="sidebar-toggle" id="sidebarToggleBtn" aria-label="Toggle sidebar">
@@ -48,7 +47,7 @@
         <% end %>
       </li>
       <%# ── Search ── %>
-      <li class="mb-1">
+      <li class="mb-1" data-turbo-permanent>
         <div class="sidebar-link" data-label="Search">
           <i class="fa-solid fa-magnifying-glass nav-icon search-icon-collapsed" id="searchIconCollapsed"></i>
           <%= form_with url: companies_path, method: :get, class: "search-form" do %>
