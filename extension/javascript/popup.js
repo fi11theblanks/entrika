@@ -1,7 +1,7 @@
 // Popup script
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-  const baseUrl = "http://127.0.0.1:3000/"
-  const baseAPIUrl = "http://127.0.0.1:3000/api/v1/"
+  const baseUrl = "http://127.0.0.1:3000/";
+  const baseAPIUrl = "http://127.0.0.1:3000/api/v1/";
   const currentUrl = new URL(tabs[0].url).hostname;
   const domain = new URL(tabs[0].url).hostname.replace(/^www\./, "");
   const url = `${baseAPIUrl}companies/search?domain=${encodeURIComponent(domain)}`;
@@ -19,9 +19,9 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     .then((data) => {
       console.log(data);
       const companyUrl = `${baseUrl}companies/${data.id}/registrations`;
+
       function displayCompanyInfo() {
-        urlDisplay.innerText =
-          `Now analyzing ${currentUrl}`;
+        urlDisplay.innerText = `Now analyzing ${currentUrl}`;
         document.getElementById("risk-analysis").innerText =
           `Risk analysis for ${data.name}`;
         document.getElementById("privacy-summary").innerText =
@@ -47,15 +47,35 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         registrationLink.classList.add("d-none");
         runAnalysis.classList.remove("d-none");
 
-        } else if (data.registered) {
-          displayCompanyInfo()
-          registrationLink.innerText = "Registered ✔";
-          registrationLink.classList.add("disabled");
-          dashboardLink.classList.remove("d-none");
-          dashboardLink.href = `${baseUrl}dashboard`
-
+        runAnalysis.addEventListener("click", (event) => {
+          const analyzeURL = `${baseAPIUrl}companies/analyze`;
+          console.log("Fetching:", analyzeURL);
+          analysisCard.classList.remove("d-none");
+          analysisCard.innerText = `Now analyzing ${currentUrl}`;
+          event.preventDefault();
+          fetch(analyzeURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url: tabs[0].url }),
+          })
+            .then((response) => {
+              response.json();
+            })
+            .then((data) => {
+              console.log(data);
+              window.location.reload()
+            })
+            .catch((error) => console.error(error));
+        });
+        displayCompanyInfo();
+      } else if (data.registered) {
+        displayCompanyInfo();
+        registrationLink.innerText = "Registered ✔";
+        registrationLink.classList.add("disabled");
+        dashboardLink.classList.remove("d-none");
+        dashboardLink.href = `${baseUrl}dashboard`;
       } else {
-        displayCompanyInfo()
+        displayCompanyInfo();
         registrationLink.addEventListener("click", (event) => {
           event.preventDefault();
           fetch(companyUrl, {
@@ -70,7 +90,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
               if (data) {
                 registrationLink.innerText = "Registered ✔";
                 registrationLink.classList.add("disabled");
-                dashboardLink.classList.remove("d-none")
+                dashboardLink.classList.remove("d-none");
               }
             })
             .catch((error) => console.error(error));

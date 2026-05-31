@@ -1,5 +1,5 @@
 class Api::V1::CompaniesController < Api::V1::BaseController
-  skip_before_action :authenticate_user!, only: [:search], raise: false
+  skip_before_action :authenticate_user!, only: %w[search analyze], raise: false
 
   def show
     @company = Company.find(params[:id])
@@ -18,6 +18,22 @@ class Api::V1::CompaniesController < Api::V1::BaseController
     else
       render json: { error: "Company not found" }, status: :not_found
     end
+  end
+
+  def analyze
+    skip_authorization
+    page_url = params[:url]
+
+    return render json: { error: "NO URL provided" }, status: :bad_request unless page_url
+
+    domain = URI.parse(page_url).hostname.gsub(/^www\./, "").split(".").last(2).first.capitalize
+
+    company = TosScraper.scrape_one(page_url, domain)
+    TosAnalyzer.analyze_company(company)
+
+    render json: company.as_json(methos: :risk_label)
+  rescue => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   def create

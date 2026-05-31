@@ -16,13 +16,44 @@ class TosScraper
     "Mozilla" => { url: "https://www.mozilla.org", tos_url: "https://www.mozilla.org/en-US/about/legal/terms/firefox/", privacy_url: "https://www.mozilla.org/en-US/privacy/firefox/" }
   }
 
-  def self.scrape_all
-    TOS_URLS.each do |name, data|
-      puts "Scraping #{name}..."
-      tos_response = HTTParty.get(data[:tos_url], headers: {
-        "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)"
+  def self.find_tos_url(page_url)
+    response = HTTParty.get(page_url, headers: {
+      "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)"
+    }, timeout: 10)
+
+    return nil unless response.success?
+
+    doc = Nokogiri::HTML(response.body)
+
+   result = { tos_url: nil, privacy_url: nil }
+
+    doc.css("a").each do |link|
+      href = link["href"]
+      text = link.text.strip.downcase
+
+      next unless href
+
+      if result[:tos_url].nil? && (href.match?(/terms|conditions/i) || text.match?(/terms|conditions/i))
+        result[:tos_url] = href
+      end
+
+      if result[:privacy_url].nil? && (href.match?(/privacy/i) || text.match?(/privacy/i))
+        result[:privacy_url] = href
+      end
+
+      break if result[:tos_url] && result[:privacy_url]
+    end
+
+    result
+  end
+
+  def self.scrape_one(page_url, name)
+    puts "Scraping #{name}..."
+    data = find_tos_url(page_url)
+    tos_response = HTTParty.get(data[:tos_url], headers: {
+      "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)"
       }, timeout: 10, open_timeout: 5)
-      next unless tos_response.success?
+    return unless tos_response.success?
 
       tos_doc = Nokogiri::HTML(tos_response.body)
       tos_doc.css("script, style, nav, header, footer").remove
@@ -41,7 +72,8 @@ class TosScraper
       end
 
       company = Company.find_or_create_by(name: name) do |c|
-        c.url = data[:url]
+        uri = URI.parse(page_url)
+        c.url = "#{uri.scheme}://#{uri.hostname}"
       end
 
       company.update(
@@ -52,9 +84,18 @@ class TosScraper
         last_checked: Time.current
       )
 
-      puts "✓ #{name} done"
-    rescue => e
-      puts "✗ #{name} failed: #{e.message}"
+    puts "✓ #{name} done"
+    company
+  rescue => e
+    puts "✗ #{name} failed: #{e.message}"
+  end
+
+  def self.scrape_all
+    TOS_URLS.each do |name, data|
+      company = Company.find_by(name: name)
+      next if company&.tos_url.present?
+
+      scrape_one(data[:url], name)
     end
   end
 end
