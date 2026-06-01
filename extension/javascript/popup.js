@@ -18,7 +18,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      const companyUrl = `${baseUrl}companies/${data.id}/registrations`;
+      const companyUrl = `${baseAPIUrl}companies/${data.id}/registrations`;
       function displayCompanyInfo() {
         urlDisplay.innerText =
           `Now analyzing ${currentUrl}`;
@@ -70,7 +70,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
               if (data) {
                 registrationLink.innerText = "Registered ✔";
                 registrationLink.classList.add("disabled");
-                dashboardLink.classList.remove("d-none")
+                dashboardLink.classList.remove("d-none");
+                dashboardLink.href = `${baseUrl}dashboard`
               }
             })
             .catch((error) => console.error(error));
