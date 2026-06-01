@@ -19,7 +19,6 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     .then((data) => {
       console.log(data);
       const companyUrl = `${baseAPIUrl}companies/${data.id}/registrations`;
-
       function displayCompanyInfo() {
         console.log(data)
         document.getElementById("risk-analysis").innerText =
@@ -117,6 +116,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
                 registrationLink.innerText = "Registered ✔";
                 registrationLink.classList.add("disabled");
                 dashboardLink.classList.remove("d-none");
+                dashboardLink.href = `${baseUrl}dashboard`
               }
             })
             .catch((error) => console.error(error));
