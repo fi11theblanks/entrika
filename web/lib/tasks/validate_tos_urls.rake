@@ -2,8 +2,9 @@
 namespace :tos do
   task validate: :environment do
     require 'net/http'
+    require_relative "../company_analysis_data"
 
-    TOS_URLS.each do |company, data|
+    CompanyAnalysisData.each do |company, data|
       [:tos_url, :privacy_url].each do |key|
         url = data[key]
         begin
