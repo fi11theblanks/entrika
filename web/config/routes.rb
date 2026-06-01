@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
-  resources :companies, only: [:index, :show] do
+  resources :companies, only: %w[index show create] do
     resources :messages, only: [:create]
     resources :registrations, only: [:create]
   end
@@ -9,9 +9,10 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :companies, only: [:show, :create] do
+      resources :companies, only: %w[show create] do
         collection do
           get :search
+          post :analyze
         end
         resources :registrations, only: [:create]
       end

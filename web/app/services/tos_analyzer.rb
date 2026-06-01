@@ -1,13 +1,20 @@
 module TosAnalyzer
   SCORES = { "low" => 1.0, "moderate" => 2.0, "high" => 3.0 }.freeze
 
+  def self.analyze_company(company)
+    puts "Analyzing #{company.name}..."
+    Summary.new(company).analyze
+    Analysis.new(company).analyze
+    RiskScore.new(company).analyze
+    puts "✓ #{company.name} done"
+  rescue => e
+    puts "✗ #{company.name} failed: #{e.message}"
+    puts e.backtrace.first(3).join("\n")
+  end
+
   def self.analyze_all
-    Company.where.not(tos_url: nil).find_each do |company|
-      puts "Analyzing #{company.name}..."
-      Summary.new(company).analyze
-      Analysis.new(company).analyze
-      RiskScore.new(company).analyze
-      puts "✓ #{company.name} done"
+    Company.where.not(tos_url: nil).where(tos_summary: nil).find_each do |company|
+      analyze_company(company)
     rescue => e
       puts "✗ #{company.name} failed: #{e.message}"
     end
@@ -101,7 +108,7 @@ module TosAnalyzer
 
     def analyze
       result = ask(SCHEMA, "Rate the overall privacy risk as Low, Moderate, or High.\n\nTerms of Service: #{@company.tos_url}\nPrivacy Policy: #{@company.privacy_url}")
-      @company.update!(risk_score: SCORES[result["risk_score"]&.downcase])
+      @company.update!(risk_score: TosAnalyzer::SCORES[result["risk_score"]&.downcase])
     end
   end
 end
