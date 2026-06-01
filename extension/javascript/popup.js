@@ -1,7 +1,7 @@
 // Popup script
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-  const baseUrl = "http://127.0.0.1:3000/"
-  const baseAPIUrl = "http://127.0.0.1:3000/api/v1/"
+  const baseUrl = "http://127.0.0.1:3000/";
+  const baseAPIUrl = "http://127.0.0.1:3000/api/v1/";
   const currentUrl = new URL(tabs[0].url).hostname;
   const domain = new URL(tabs[0].url).hostname.replace(/^www\./, "");
   const url = `${baseAPIUrl}companies/search?domain=${encodeURIComponent(domain)}`;
@@ -20,22 +20,47 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       console.log(data);
       const companyUrl = `${baseAPIUrl}companies/${data.id}/registrations`;
       function displayCompanyInfo() {
-        urlDisplay.innerText =
-          `Now analyzing ${currentUrl}`;
+        console.log(data)
         document.getElementById("risk-analysis").innerText =
-          `Risk analysis for ${data.name}`;
-        document.getElementById("privacy-summary").innerText =
-          data.privacy_summary;
-        document.getElementById("privacy-analysis").innerText =
-          data.privacy_analysis;
-        document.getElementById("tos-summary").innerText = data.tos_summary;
-        companyLink.href = `${baseUrl}companies/${data.id}`;
+          data.name;
+
+        makeTruncable(
+          document.getElementById("privacy-summary"),
+          data.privacy_summary,
+        );
+        makeTruncable(
+          document.getElementById("privacy-analysis"),
+          data.privacy_analysis,
+        );
+        makeTruncable(
+          document.getElementById("tos-summary"),
+          data.tos_summary,
+        );
         if (data.risk_label) {
           const hero = document.getElementById("risk-badge");
           const level = data.risk_label.split(" ")[0].toLowerCase();
           const mod = level === "medium" ? "moderate" : level;
           hero.textContent = data.risk_label;
           hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
+        }
+      }
+
+      function makeTruncable(el, text, limit = 65) {
+        const isTruncated = text.length > limit;
+        el.innerText = isTruncated ? text.slice(0, limit) + "..." : text;
+
+        if (isTruncated) {
+          const toggle = document.createElement("span");
+          toggle.innerText = "Show more >>"
+          toggle.style.cssText = "display:block; text-align:right; cursor:pointer; color:#e0e0e0; font-size:0.8em; margin-top:4px;"
+          el.parentElement.appendChild(toggle);
+
+          toggle.addEventListener("click", (event) => {
+            const expanded = el.dataset.expanded === "true";
+            el.innerText = expanded ? text.slice(0, limit) + "..." : text;
+            el.dataset.expanded = expanded? "false" : "true";
+            toggle.innerText = expanded ? "Show more >>" : "<< Show less"
+          });
         }
       }
 
@@ -47,15 +72,35 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         registrationLink.classList.add("d-none");
         runAnalysis.classList.remove("d-none");
 
-        } else if (data.registered) {
-          displayCompanyInfo()
-          registrationLink.innerText = "Registered ✔";
-          registrationLink.classList.add("disabled");
-          dashboardLink.classList.remove("d-none");
-          dashboardLink.href = `${baseUrl}dashboard`
-
+        runAnalysis.addEventListener("click", (event) => {
+          const analyzeURL = `${baseAPIUrl}companies/analyze`;
+          console.log("Fetching:", analyzeURL);
+          analysisCard.classList.remove("d-none");
+          analysisCard.innerText = `Now analyzing ${currentUrl}`;
+          event.preventDefault();
+          fetch(analyzeURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url: tabs[0].url }),
+          })
+            .then((response) => {
+              response.json();
+            })
+            .then((data) => {
+              console.log(data);
+              window.location.reload();
+            })
+            .catch((error) => console.error(error));
+        });
+        displayCompanyInfo();
+      } else if (data.registered) {
+        displayCompanyInfo();
+        registrationLink.innerText = "Registered ✔";
+        registrationLink.classList.add("disabled");
+        dashboardLink.classList.remove("d-none");
+        dashboardLink.href = `${baseUrl}dashboard`;
       } else {
-        displayCompanyInfo()
+        displayCompanyInfo();
         registrationLink.addEventListener("click", (event) => {
           event.preventDefault();
           fetch(companyUrl, {
