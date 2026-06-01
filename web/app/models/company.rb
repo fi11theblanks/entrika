@@ -5,6 +5,14 @@ class Company < ApplicationRecord
   validates :name, presence: true
 
 
+  def summary
+    "#{tos_summary}\n\n#{privacy_summary}"
+  end
+
+  def analysis
+    "#{tos_analysis}\n\n#{privacy_analysis}"
+  end
+
   def risk_label
     case risk_score
     when 1.0 then "Low Risk"
