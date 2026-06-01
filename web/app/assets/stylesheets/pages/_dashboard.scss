@@ -13,7 +13,6 @@
 .dashboard-header__top {
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
   gap: 1rem;
   margin-top: 16px;
 }
@@ -35,15 +34,13 @@
 }
 
 .dashboard-link {
-  text-decoration: none;
+  font-size: .9rem;
   color: $gray-500;
-  font-size: 1.05rem;
-  max-width: 480px;
-  line-height: 1.6;
-  &:hover {
-    color: $near-black;
-    text-decoration: none;
-  }
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover { color: $near-black; }
 }
 
 .dashboard-tabs {
@@ -51,4 +48,97 @@
   color: $gray-500;
   max-width: 480px;
   line-height: 1.6;
+}
+
+.dashboard-registrations-header {
+  margin-bottom: 16px;
+}
+
+.dashboard-registrations-text {
+  font-size: .9rem;
+  color: $gray-500;
+  max-width: 480px;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+.dashboard-card {
+  background: $white;
+  color: $near-black;
+  border-radius: 0.875rem;
+  border: 1px solid $near-black;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+
+  &__name {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: $near-black;
+    margin: 0.5rem 0 1rem;
+    font-family: $display-font;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  &__low {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: $risk-low;
+    margin: 0.5rem 0 1rem;
+    font-family: $display-font;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  &__medium {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: $risk-moderate;
+    margin: 0.5rem 0 1rem;
+    font-family: $display-font;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  &__high {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    color: $risk-high;
+    margin: 0.5rem 0 1rem;
+    font-family: $display-font;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    color: $gray-500;
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  &__meta {
+    font-size: 1rem;
+    color: $gray-500;
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+
+    a { color: $gray-300; text-decoration: none; &:hover { color: $white; } }
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+.nav-link[aria-selected="true"] {
+  pointer-events: none;
+  cursor: default;
 }

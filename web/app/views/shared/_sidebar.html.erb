@@ -20,21 +20,24 @@
       <%# ── Dashboard ── %>
       <% if user_signed_in? %>
         <li class="mb-1">
-          <button class="sidebar-link"
+          <%= link_to dashboard_path,
+              class: "sidebar-link #{request.path.start_with?('/dashboard') ? 'is-active' : ''}",
+              data: { label: "Dashboard" } do %>
+            <i class="fa-solid fa-book-open nav-icon"></i>
+            <span class="sidebar-link__label">Dashboard</span>
+          <% end %>
+          <%# <button class="sidebar-link"
                 data-bs-toggle="collapse"
                 data-bs-target="#dashboard-collapse"
                 aria-expanded="false"
-                data-label="Dashboard">
-            <i class="fa-solid fa-book-open nav-icon"></i>
-            <span class="sidebar-link__label">Dashboard</span>
-            <i class="fa-solid fa-chevron-right chevron"></i>
-          </button>
-          <div class="collapse" id="dashboard-collapse" data-turbo-permanent>
-            <ul class="btn-toggle-nav list-unstyled">
-              <li><%= link_to "Overview", dashboard_path %></li>
-              <li><%= link_to "Sites Analyzed", sitesanalyzed_path %></li>
-            </ul>
-          </div>
+                data-label="Dashboard"> %>
+          <%# <i class="fa-solid fa-chevron-right chevron"></i>
+        </button>
+        <div class="collapse" id="dashboard-collapse" data-turbo-permanent>
+          <ul class="btn-toggle-nav list-unstyled">
+            <li><%= link_to "Sites Analyzed", sitesanalyzed_path %>
+          <%# </ul>
+        </div> %>
         </li>
       <% end %>
       <%# ── Directory ── %>
@@ -53,7 +56,7 @@
           <%= form_with url: companies_path, method: :get, class: "search-form" do %>
             <div class="search-input-wrapper">
               <%= label_tag :query, "Search companies", class: "visually-hidden" %>
-              <%= text_field_tag :query, params[:query],
+              <%= text_field_tag :query, nil,
                     class: "search-input",
                     placeholder: "Search companies" %>
               <%# <button type="submit" class="search-submit">
