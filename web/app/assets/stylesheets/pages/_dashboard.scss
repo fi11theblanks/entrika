@@ -38,6 +38,7 @@
   color: $gray-500;
   text-decoration: none;
   font-weight: 500;
+  cursor: pointer;
 
   &:hover { color: $near-black; }
 }
@@ -47,4 +48,16 @@
   color: $gray-500;
   max-width: 480px;
   line-height: 1.6;
+}
+
+.dashboard-registrations-header {
+  margin-bottom: 16px;
+}
+
+.dashboard-registrations-text {
+  font-size: .9rem;
+  color: $gray-500;
+  max-width: 480px;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
 }
