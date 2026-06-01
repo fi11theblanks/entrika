@@ -4,7 +4,7 @@
       <%= raw(render_markdown(message.content)) %>
     </div>
   <% elsif message.role == "assistant" %>
-    <div class="chat-bubble-row chat-bubble-row--assistant">
+    <div class="chat-bubble-row chat-bubble-row--assistant" id="<%= dom_id(message) %>">
       <div class="chat-avatar">
         <%= image_tag "logo.svg", alt: "e", class: "chat-avatar__logo" %>
       </div>
