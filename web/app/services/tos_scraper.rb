@@ -1,3 +1,5 @@
+require 'uri'
+
 class TosScraper
 
   TOS_URLS = {
@@ -23,7 +25,10 @@ class TosScraper
 
     return nil unless response.success?
 
-    doc = Nokogiri::HTML(response.body)
+    browser = Ferrum::Browser.new(browser_path: "/usr/bin/brave-browser")
+    browser.go_to(page_url)
+    doc = Nokogiri::HTML(browser.body)
+    browser.quit
 
    result = { tos_url: nil, privacy_url: nil }
 
@@ -33,12 +38,12 @@ class TosScraper
 
       next unless href
 
-      if result[:tos_url].nil? && (href.match?(/terms|conditions/i) || text.match?(/terms|conditions/i))
-        result[:tos_url] = href
+      if result[:tos_url].nil? && (href.match?(/terms|conditions|policy/i) || text.match?(/terms|conditions|policy/i))
+        result[:tos_url] = URI.join(page_url, href).to_s
       end
 
-      if result[:privacy_url].nil? && (href.match?(/privacy/i) || text.match?(/privacy/i))
-        result[:privacy_url] = href
+      if result[:privacy_url].nil? && (href.match?(/privacy|policy/i) || text.match?(/privacy|policy/i))
+        result[:privacy_url] = URI.join(page_url, href).to_s
       end
 
       break if result[:tos_url] && result[:privacy_url]
@@ -49,7 +54,8 @@ class TosScraper
 
   def self.scrape_one(page_url, name)
     puts "Scraping #{name}..."
-    data = find_tos_url(page_url)
+
+    data = TOS_URLS[name] || find_tos_url(page_url)
     tos_response = HTTParty.get(data[:tos_url], headers: {
       "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)"
       }, timeout: 10, open_timeout: 5)

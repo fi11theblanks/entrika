@@ -18,24 +18,50 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      const companyUrl = `${baseUrl}companies/${data.id}/registrations`;
+      const companyUrl = `${baseAPIUrl}companies/${data.id}/registrations`;
 
       function displayCompanyInfo() {
-        urlDisplay.innerText = `Now analyzing ${currentUrl}`;
+        console.log(data)
         document.getElementById("risk-analysis").innerText =
-          `Risk analysis for ${data.name}`;
-        document.getElementById("privacy-summary").innerText =
-          data.privacy_summary;
-        document.getElementById("privacy-analysis").innerText =
-          data.privacy_analysis;
-        document.getElementById("tos-summary").innerText = data.tos_summary;
-        companyLink.href = `${baseUrl}companies/${data.id}`;
+          data.name;
+
+        makeTruncable(
+          document.getElementById("privacy-summary"),
+          data.privacy_summary,
+        );
+        makeTruncable(
+          document.getElementById("privacy-analysis"),
+          data.privacy_analysis,
+        );
+        makeTruncable(
+          document.getElementById("tos-summary"),
+          data.tos_summary,
+        );
         if (data.risk_label) {
           const hero = document.getElementById("risk-badge");
           const level = data.risk_label.split(" ")[0].toLowerCase();
           const mod = level === "medium" ? "moderate" : level;
           hero.textContent = data.risk_label;
           hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
+        }
+      }
+
+      function makeTruncable(el, text, limit = 65) {
+        const isTruncated = text.length > limit;
+        el.innerText = isTruncated ? text.slice(0, limit) + "..." : text;
+
+        if (isTruncated) {
+          const toggle = document.createElement("span");
+          toggle.innerText = "Show more >>"
+          toggle.style.cssText = "display:block; text-align:right; cursor:pointer; color:#e0e0e0; font-size:0.8em; margin-top:4px;"
+          el.parentElement.appendChild(toggle);
+
+          toggle.addEventListener("click", (event) => {
+            const expanded = el.dataset.expanded === "true";
+            el.innerText = expanded ? text.slice(0, limit) + "..." : text;
+            el.dataset.expanded = expanded? "false" : "true";
+            toggle.innerText = expanded ? "Show more >>" : "<< Show less"
+          });
         }
       }
 
@@ -63,7 +89,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             })
             .then((data) => {
               console.log(data);
-              window.location.reload()
+              window.location.reload();
             })
             .catch((error) => console.error(error));
         });
