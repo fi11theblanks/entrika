@@ -137,3 +137,8 @@
     gap: 0.5rem;
   }
 }
+
+.nav-link[aria-selected="true"] {
+  pointer-events: none;
+  cursor: default;
+}

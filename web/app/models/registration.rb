@@ -8,4 +8,14 @@ class Registration < ApplicationRecord
   validates :company_id, presence: true
   validates :user_id, uniqueness: { scope: :company_id }
   STATUSES = ["unregistered", "registered", "rejected", "canceled"]
+
+  include PgSearch::Model
+
+  pg_search_scope :search,
+                  associated_against: {
+                    company: [:name]
+                  },
+                  using: {
+                    tsearch: { prefix: true }
+                  }
 end

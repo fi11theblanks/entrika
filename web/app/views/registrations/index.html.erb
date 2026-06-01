@@ -3,48 +3,56 @@
     <div class="dashboard-header__top">
       <h1 class="dashboard-title">Sites Analyzed</h1>
       <%= link_to "Return to Dashboard", dashboard_path, class: "dashboard-link" %>
-    </div>
-  </header>
-  <ul class="nav tabs-underlined" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined active dashboard-link" id="sites-tab" data-bs-toggle="tab" data-bs-target="#sites-tab-pane" role="tab" aria-controls="sites-tab-pane" aria-selected="true">All Sites</span>
-    </li>
-    <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined dashboard-link" id="registered-tab" data-bs-toggle="tab" data-bs-target="#registered-tab-pane" role="tab" aria-controls="registered-tab-pane" aria-selected="true">Signed-Up</span>
-    </li>
-    <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined dashboard-link" id="unregistered-tab" data-bs-toggle="tab" data-bs-target="#unregistered-tab-pane" role="tab" aria-controls="unregistered-tab-pane" aria-selected="true">Undecided</span>
-    </li>
-    <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined dashboard-link" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected-tab-pane" role="tab" aria-controls="rejected-tab-pane" aria-selected="true">Rejected</span>
-    </li>
-    <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined dashboard-link" id="canceled-tab" data-bs-toggle="tab" data-bs-target="#canceled-tab-pane" role="tab" aria-controls="canceled-tab-pane" aria-selected="true">Canceled</span>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade py-3 show active" id="sites-tab-pane" role="tabpanel" aria-labelledby="sites-tab" tabindex="0">
-      <% @registrations.each do |registration| %>
-        <%= render "companies/company_card", company: registration.company, registration: registration %>
-      <% end %>
-    </div>
-    <% @statuses.each do |status| %>
-      <div class="tab-pane fade py-3" id="<%= status %>-tab-pane" role="tabpanel" aria-labelledby="<%= status %>-tab" tabindex="0">
-        <header class="dashboard-registrations-header">
-          <% if status == "registered" %>
-            <span class="dashboard-registrations-text">Sites you have created an account for</span>
-          <% elsif status == "unregistered" %>
-            <span class="dashboard-registrations-text">Sites you are considering to make an account for</span>
-          <% elsif status == "rejected" %>
-            <span class="dashboard-registrations-text">Sites you won't be making an account for</span>
-          <% elsif status == "canceled" %>
-            <span class="dashboard-registrations-text">Sites you had previously signed up for but then deleted your account</span>
-          <% end %>
-        </header>
-        <% @registrations.where(status: status).each do |registration| %>
+      <%# <%= form_with url: sitesanalyzed_path, method: :get, class: "search-form" do %>
+        <%# <div class="search-input-wrapper"> %>
+        <%# <%= label_tag :site, "Search sites", class: "visually-hidden" %>
+        <%# <%= text_field_tag :site, params[:query], %>
+        <%# class: "search-input", %>
+        <%# placeholder: "Search sites" %>
+        <%# </div> %>
+        <%# <% end %>
+      </div>
+    </header>
+    <ul class="nav tabs-underlined" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <span class="nav-link tab-underlined active dashboard-link" id="sites-tab" data-bs-toggle="tab" data-bs-target="#sites-tab-pane" role="tab" aria-controls="sites-tab-pane" aria-selected="true" aria-disabled="true">All Sites (<%= @registrations.count %>)</span>
+      </li>
+      <li class="nav-item" role="presentation">
+        <span class="nav-link tab-underlined dashboard-link" id="registered-tab" data-bs-toggle="tab" data-bs-target="#registered-tab-pane" role="tab" aria-controls="registered-tab-pane" aria-selected="true" aria-disabled="true">Signed-Up (<%= @registrations.where(status: "registered").count %>)</span>
+      </li>
+      <li class="nav-item" role="presentation">
+        <span class="nav-link tab-underlined dashboard-link" id="unregistered-tab" data-bs-toggle="tab" data-bs-target="#unregistered-tab-pane" role="tab" aria-controls="unregistered-tab-pane" aria-selected="true" aria-disabled="true">Undecided (<%= @registrations.where(status: "unregistered").count %>)</span>
+      </li>
+      <li class="nav-item" role="presentation">
+        <span class="nav-link tab-underlined dashboard-link" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected-tab-pane" role="tab" aria-controls="rejected-tab-pane" aria-selected="true" aria-disabled="true">Rejected (<%= @registrations.where(status: "rejected").count %>)</span>
+      </li>
+      <li class="nav-item" role="presentation">
+        <span class="nav-link tab-underlined dashboard-link" id="canceled-tab" data-bs-toggle="tab" data-bs-target="#canceled-tab-pane" role="tab" aria-controls="canceled-tab-pane" aria-selected="true" aria-disabled="true">Canceled (<%= @registrations.where(status: "canceled").count %>)</span>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade py-3 show active" id="sites-tab-pane" role="tabpanel" aria-labelledby="sites-tab" tabindex="0">
+        <% @registrations.each do |registration| %>
           <%= render "companies/company_card", company: registration.company, registration: registration %>
         <% end %>
       </div>
-    <% end %>
+      <% @statuses.each do |status| %>
+        <div class="tab-pane fade py-3" id="<%= status %>-tab-pane" role="tabpanel" aria-labelledby="<%= status %>-tab" tabindex="0">
+          <header class="dashboard-registrations-header">
+            <% if status == "registered" %>
+              <span class="dashboard-registrations-text">Sites you have created an account for</span>
+            <% elsif status == "unregistered" %>
+              <span class="dashboard-registrations-text">Sites you are considering to make an account for</span>
+            <% elsif status == "rejected" %>
+              <span class="dashboard-registrations-text">Sites you won't be making an account for</span>
+            <% elsif status == "canceled" %>
+              <span class="dashboard-registrations-text">Sites you had previously signed up for but then deleted your account</span>
+            <% end %>
+          </header>
+          <% @registrations.where(status: status).each do |registration| %>
+            <%= render "companies/company_card", company: registration.company, registration: registration %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
-</div>

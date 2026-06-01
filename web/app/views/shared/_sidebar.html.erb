@@ -56,7 +56,7 @@
           <%= form_with url: companies_path, method: :get, class: "search-form" do %>
             <div class="search-input-wrapper">
               <%= label_tag :query, "Search companies", class: "visually-hidden" %>
-              <%= text_field_tag :query, params[:query],
+              <%= text_field_tag :query, nil,
                     class: "search-input",
                     placeholder: "Search companies" %>
               <%# <button type="submit" class="search-submit">
