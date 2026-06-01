@@ -19,10 +19,11 @@
   <header class="dashboard-header">
     <div class="dashboard-header__top">
       <h2 class="dashboard-title">Recent Analyses</h2>
+      <%= link_to "View All Analyses", sitesanalyzed_path, class: "dashboard-link" %>
     </div>
   </header>
   <% @sorted_registrations.each do |registration| %>
     <%= render "companies/company_card", company: registration.company, registration: registration %>
   <% end %>
-  <%= link_to "View More Analyses", sitesanalyzed_path, class: "dashboard-link" %>
+  <%= link_to "View More", sitesanalyzed_path, class: "dashboard-link" %>
 </div>
