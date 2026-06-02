@@ -27,8 +27,9 @@ class Api::V1::CompaniesController < Api::V1::BaseController
     return render json: { error: "NO URL provided" }, status: :bad_request unless page_url
 
     domain = URI.parse(page_url).hostname.gsub(/^www\./, "").split(".").last(2).first.capitalize
+    matched_name = CompanyAnalysisData.keys.find { |k| k.downcase == domain.downcase}
 
-    company = TosScraper.scrape_one(page_url, domain)
+    company = TosScraper.scrape_one(page_url, matched_name || domain)
     TosAnalyzer.analyze_company(company)
 
     render json: company.as_json(method: :risk_label)
