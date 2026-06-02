@@ -9,6 +9,16 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
 
+  RISK_LABELS = { 1 => "Low", 2 => "Medium", 3 => "High" }
+  RISK_COLORS = { "Low" => "#2ecc71", "Medium" => "#f39c12", "High" => "#e74c3c" }
+
+  def risk_score_chart_data
+    RISK_LABELS.sort_by { |k, _| k }.filter_map do |k, label|
+      count = registered_sites.where(risk_score: k).count
+      [label, count]
+    end.to_h
+  end
+
   def registered_risk_score
     return 0 unless registered_companies.any?
 
@@ -24,5 +34,9 @@ class User < ApplicationRecord
 
   def registered_companies
     registrations.where(status: 'registered').pluck(:company_id)
+  end
+
+  def registered_sites
+    Company.where(id: registered_companies)
   end
 end
