@@ -53,9 +53,36 @@ class TosScraper
   end
 
   def self.scrape_one(page_url, name)
-    puts "Scraping #{name}..."
 
-    data = TOS_URLS[name] || find_tos_url(page_url)
+    analysis = CompanyAnalysisData[name]
+    data = analysis || TOS_URLS[name] || find_tos_url(page_url)
+
+    # Use pre-written analysis data if available, skip scraping entirely
+    if (analysis = CompanyAnalysisData[name])
+      puts "Finding #{name} in database..."
+      company = Company.find_or_create_by(name: name) do |c|
+        uri = URI.parse(page_url)
+        c.url = "#{uri.scheme}://#{uri.hostname}"
+      end
+
+      company.update(
+        tos_url: analysis[:tos_url],
+        privacy_url: analysis[:privacy_url],
+        tos_summary: analysis[:tos_summary],
+        privacy_summary: analysis[:privacy_summary],
+        tos_analysis: analysis[:tos_analysis],
+        privacy_analysis: analysis[:privacy_analysis],
+        risk_score: analysis[:risk_score],
+        last_checked: Time.current
+      )
+
+      puts "✔ @#{name} done (from analysis data)"
+      return company
+
+    end
+    
+    #Fall back to TOS_URLS or live scraping
+    puts "Scraping #{name}..."
     tos_response = HTTParty.get(data[:tos_url], headers: {
       "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)"
       }, timeout: 10, open_timeout: 5)
@@ -96,12 +123,12 @@ class TosScraper
     puts "✗ #{name} failed: #{e.message}"
   end
 
-  def self.scrape_all
-    TOS_URLS.each do |name, data|
-      company = Company.find_by(name: name)
-      next if company&.tos_url.present?
+  # def self.scrape_all
+  #   TOS_URLS.each do |name, data|
+  #     company = Company.find_by(name: name)
+  #     next if company&.tos_url.present?
 
-      scrape_one(data[:url], name)
-    end
-  end
+  #     scrape_one(data[:url], name)
+  #   end
+  # end
 end
