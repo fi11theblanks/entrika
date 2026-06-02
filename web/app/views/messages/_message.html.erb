@@ -1,14 +1,14 @@
 
   <% if message.role == "user" %>
-    <div class="chat-bubble chat-bubble--user" data-controller="scroll">
+    <div class="chat-bubble chat-bubble--user">
       <%= raw(render_markdown(message.content)) %>
     </div>
   <% elsif message.role == "assistant" %>
-    <div class="chat-bubble-row chat-bubble-row--assistant">
+    <div class="chat-bubble-row chat-bubble-row--assistant" id="<%= dom_id(message) %>">
       <div class="chat-avatar">
         <%= image_tag "logo.svg", alt: "e", class: "chat-avatar__logo" %>
       </div>
-      <div class="chat-bubble chat-bubble--assistant">
+      <div class="chat-bubble chat-bubble--assistant" data-controller="scroll">
         <%= raw(render_markdown(message.content)) %>
       </div>
     </div>
