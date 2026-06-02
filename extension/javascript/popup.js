@@ -46,6 +46,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           hero.textContent = data.risk_label;
           hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
         }
+        companyLink.href = `${baseUrl}companies/${data.id}`
       }
 
       function makeTruncable(el, text, limit = 65) {
