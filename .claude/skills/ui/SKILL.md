@@ -259,17 +259,6 @@ animation: logo-eye 1.8s steps(11) infinite;
 
 ---
 
-## CRITICAL: After Any SCSS Change
-
-```sh
-cd web
-rm -rf public/assets tmp/cache
-bundle exec rails assets:precompile
-# restart server — new asset fingerprint won't load until restart
-```
-
----
-
 ## Workflow
 1. Ask which page/component and any direction
 2. Read config + target files, take one screenshot
