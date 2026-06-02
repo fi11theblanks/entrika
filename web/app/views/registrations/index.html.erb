@@ -1,8 +1,8 @@
 <div class="dashboard-index">
   <header class="dashboard-header">
     <div class="dashboard-header__top">
-      <h1 class="dashboard-title">Sites Analyzed</h1>
-      <%= link_to "Return to Dashboard", dashboard_path, class: "dashboard-link" %>
+      <h1 class="dashboard-title">Dashboard - Sites Analyzed</h1>
+      <%= link_to "Return to Overall Risk Assessment", dashboard_path, class: "dashboard-link" %>
       <%= form_with url: sitesanalyzed_path, method: :get, class: "search-form" do %>
         <div class="search-input-wrapper">
           <%= label_tag :site, "Search sites", class: "visually-hidden" %>
