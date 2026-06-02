@@ -43,7 +43,10 @@
     </div>
   </header>
   <% @sorted_registrations.each do |registration| %>
-    <%= render "companies/company_card", company: registration.company, registration: registration %>
+    <div class="dashboard-registrations-container">
+      <%= render "companies/company_card", company: registration.company, registration: registration %>
+      <p>Remove</p>
+    </div>
   <% end %>
   <%= link_to "View More", sitesanalyzed_path, class: "dashboard-link" %>
 </div>
