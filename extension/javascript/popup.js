@@ -14,10 +14,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   const registrationLink = document.getElementById("registration-link");
   const dashboardLink = document.getElementById("dashboard-link");
   const riskAnalysis = document.getElementById("risk-analysis");
-  const analizing = document.getElementById("analizing");
+  const homepageLink = document.getElementById("homepage-link");
   const manualForm = document.getElementById("manual-form");
 
-  console.log(manualForm)
+  console.log(manualForm);
 
   fetch(url)
     .then((response) => response.json())
@@ -46,7 +46,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           hero.textContent = data.risk_label;
           hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
         }
-        companyLink.href = `${baseUrl}companies/${data.id}`
+        companyLink.href = `${baseUrl}companies/${data.id}`;
       }
 
       function makeTruncable(el, text, limit = 65) {
@@ -93,10 +93,12 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             .then((dataOther) => {
               console.log(dataOther);
               if (dataOther.error) {
-                console.log(dataOther)
-                analysisCard.innerText =
-                  "Analysis failed. Enter the URLs manually:";
-                manualForm.classList.remove("d-none");
+                console.log(dataOther);
+                analysisCard.innerText = "Could not perform analysys";
+                analysisCard.style.paddingTop = "20px";
+                runAnalysis.classList.add("disabled")
+                homepageLink.classList.remove("d-none");
+                homepageLink.href = baseUrl;
               } else {
                 window.location.reload();
               }
