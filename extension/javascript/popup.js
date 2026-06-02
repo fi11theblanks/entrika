@@ -13,6 +13,11 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   const companyLink = document.getElementById("company-link");
   const registrationLink = document.getElementById("registration-link");
   const dashboardLink = document.getElementById("dashboard-link");
+  const riskAnalysis = document.getElementById("risk-analysis");
+  const analizing = document.getElementById("analizing");
+  const manualForm = document.getElementById("manual-form");
+
+  console.log(manualForm)
 
   fetch(url)
     .then((response) => response.json())
@@ -20,9 +25,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       console.log(data);
       const companyUrl = `${baseAPIUrl}companies/${data.id}/registrations`;
       function displayCompanyInfo() {
-        console.log(data)
-        document.getElementById("risk-analysis").innerText =
-          data.name;
+        console.log(data);
+        riskAnalysis.innerText = data.name;
+
+        analysisCard.classList.remove("text-center");
 
         makeTruncable(
           document.getElementById("privacy-summary"),
@@ -32,10 +38,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           document.getElementById("privacy-analysis"),
           data.privacy_analysis,
         );
-        makeTruncable(
-          document.getElementById("tos-summary"),
-          data.tos_summary,
-        );
+        makeTruncable(document.getElementById("tos-summary"), data.tos_summary);
         if (data.risk_label) {
           const hero = document.getElementById("risk-badge");
           const level = data.risk_label.split(" ")[0].toLowerCase();
@@ -43,6 +46,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           hero.textContent = data.risk_label;
           hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
         }
+        companyLink.href = `${baseUrl}companies/${data.id}`
       }
 
       function makeTruncable(el, text, limit = 65) {
@@ -51,15 +55,16 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 
         if (isTruncated) {
           const toggle = document.createElement("span");
-          toggle.innerText = "Show more >>"
-          toggle.style.cssText = "display:block; text-align:right; cursor:pointer; color:#e0e0e0; font-size:0.8em; margin-top:4px;"
+          toggle.innerText = "Show more >>";
+          toggle.style.cssText =
+            "display:block; text-align:right; cursor:pointer; color:#e0e0e0; font-size:0.8em; margin-top:4px;";
           el.parentElement.appendChild(toggle);
 
           toggle.addEventListener("click", (event) => {
             const expanded = el.dataset.expanded === "true";
             el.innerText = expanded ? text.slice(0, limit) + "..." : text;
-            el.dataset.expanded = expanded? "false" : "true";
-            toggle.innerText = expanded ? "Show more >>" : "<< Show less"
+            el.dataset.expanded = expanded ? "false" : "true";
+            toggle.innerText = expanded ? "Show more >>" : "<< Show less";
           });
         }
       }
@@ -76,23 +81,29 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           const analyzeURL = `${baseAPIUrl}companies/analyze`;
           console.log("Fetching:", analyzeURL);
           analysisCard.classList.remove("d-none");
-          analysisCard.innerText = `Now analyzing ${currentUrl}`;
+          analysisCard.innerHTML = `Now analyzing ${currentUrl}<br>
+          <i class="fa-solid fa-spinner fa-spin-pulse"></i>`;
           event.preventDefault();
           fetch(analyzeURL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ url: tabs[0].url }),
           })
-            .then((response) => {
-              response.json();
-            })
-            .then((data) => {
-              console.log(data);
-              window.location.reload();
-            })
-            .catch((error) => console.error(error));
+            .then((response) => response.json())
+            .then((dataOther) => {
+              console.log(dataOther);
+              if (dataOther.error) {
+                console.log(dataOther)
+                analysisCard.innerText =
+                  "Analysis failed. Enter the URLs manually:";
+                manualForm.classList.remove("d-none");
+              } else {
+                window.location.reload();
+              }
+            });
+          // .catch((error) => console.error(error));
         });
-        displayCompanyInfo();
+        // displayCompanyInfo();
       } else if (data.registered) {
         displayCompanyInfo();
         registrationLink.innerText = "Registered ✔";
@@ -116,7 +127,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
                 registrationLink.innerText = "Registered ✔";
                 registrationLink.classList.add("disabled");
                 dashboardLink.classList.remove("d-none");
-                dashboardLink.href = `${baseUrl}dashboard`
+                dashboardLink.href = `${baseUrl}dashboard`;
               }
             })
             .catch((error) => console.error(error));

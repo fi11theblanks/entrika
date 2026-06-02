@@ -31,7 +31,7 @@ class Api::V1::CompaniesController < Api::V1::BaseController
     company = TosScraper.scrape_one(page_url, domain)
     TosAnalyzer.analyze_company(company)
 
-    render json: company.as_json(methos: :risk_label)
+    render json: company.as_json(method: :risk_label)
   rescue => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
