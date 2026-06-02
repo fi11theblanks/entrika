@@ -2,6 +2,11 @@ class RegistrationsController < ApplicationController
   def index
     @registrations = policy_scope(Registration)
     @statuses = @registrations.pluck(:status).uniq
+    if params[:site].present?
+      @registrations = Registration.search(params[:site])
+    else
+      @registrations = Registration.all
+    end
     # query function might be needed at some point
   end
 

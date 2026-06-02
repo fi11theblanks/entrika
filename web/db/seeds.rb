@@ -5,4 +5,3 @@ User.find_or_create_by!(email: "test@example.com") do |user|
   user.password_confirmation = "password"
   user.username = "testuser"
 end
-
