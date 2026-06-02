@@ -162,3 +162,7 @@
       text-underline-offset: 4px;
     }
 }
+
+.fa-arrow-rotate-right {
+  &:hover { background-color: $gray-300; }
+}
