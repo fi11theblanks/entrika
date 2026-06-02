@@ -85,3 +85,5 @@ end
 
 gem "pg_search"
 gem "ferrum"
+
+gem "chartkick"
