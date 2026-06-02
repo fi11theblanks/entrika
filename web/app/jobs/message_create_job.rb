@@ -29,7 +29,7 @@ class MessageCreateJob < ApplicationJob
   private
 
   def ask_llm
-    @ruby_llm_chat = RubyLLM.chat(model: "gpt-4o").with_temperature(0.3)
+    @ruby_llm_chat = RubyLLM.chat(model: "gpt-4o").with_temperature(0.2)
     build_conversation_history
     response = @ruby_llm_chat.with_instructions("#{instructions}\n#{company_context(@company)}").ask(@message.content)
     raise "Empty response" if response&.content.blank?
@@ -51,11 +51,10 @@ class MessageCreateJob < ApplicationJob
       Task: Answer the user's questions, with plain language appropriate for the user's technical capability.
       Default to 2-3 sentences. For complex questions, use bullet points with a maximum of 5 bullets, one sentence each. Never write a closing summary or restate your answer.
 
-      Give advice on ways the user can reduce their data exposure/risks and be safer online only when specifically asked.
+      Only give advice on reducing data exposure or privacy risks when the user explicitly asks how to protect themselves or reduce their risk. Questions about whether something is safe or risky are not requests for advice.
       Be candid when risks are serious, but avoid alarmist or fear-mongering language. Present risks factually so the user can make an informed decision.
 
-      Format: Provide answers in a professional tone with complete sentences using proper grammar.
-      Format your response using markdown. Use **bold** for emphasis, and bullet points or numbered lists where appropriate.
+      Format: Respond in plain, professional prose with proper grammar. Never use headers or numbered section titles, even when asked multi-part questions. Bold key terms sparingly. Bullet points are only allowed when listing 3 or more distinct items, and never more than 5 bullets total. Never write a closing sentence that summarizes or restates the answer. Stop immediately when the answer is complete.
       Never use em dashes or emoticons
 
       DO NOT end your messages with follow up questions
@@ -86,6 +85,9 @@ class MessageCreateJob < ApplicationJob
   def build_conversation_history
     # Implementation for building conversation history
     @registration.messages.each do |message|
+      next if message.content.blank?
+      next if message.content.include?("fa-ellipsis")
+
       @ruby_llm_chat.add_message(role: message.role, content: message.content)
     end
   end
