@@ -84,6 +84,10 @@ module TosAnalyzer
 
       Verdict: [1 sentence]
 
+      Clauses snapshot: [1 sentence on the most important thing the user agrees to]
+      Sharing snapshot: [1 sentence on who data is shared with and why]
+      Privacy snapshot: [1 sentence on the most notable surveillance or tracking behavior, or "No significant privacy issues found" if none]
+
       Rules:
       - Known incidents must be real, confirmed public facts only — no speculation.
       - Be specific: name years, fine amounts, number of affected users.

@@ -1,4 +1,12 @@
 // Popup script
+function extractSnapshots(analysisText) {
+  const clauses = analysisText.match(/Clauses snapshot:\s*(.+)/)?.[1]?.trim();
+  const sharing = analysisText.match(/Sharing snapshot:\s*(.+)/)?.[1]?.trim();
+  const privacy = analysisText.match(/Privacy snapshot:\s*(.+)/)?.[1]?.trim();
+  const verdict = analysisText?.match(/Verdict:\s*(.+?)(\r?\n|$)/)?.[1]?.trim();
+  return { clauses, sharing, privacy, verdict };
+}
+
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   const baseUrl = "http://127.0.0.1:3000/";
   const baseAPIUrl = "http://127.0.0.1:3000/api/v1/";
@@ -16,8 +24,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   const riskAnalysis = document.getElementById("risk-analysis");
   const homepageLink = document.getElementById("homepage-link");
   const manualForm = document.getElementById("manual-form");
-
-  console.log(manualForm);
+  const EXCLUDED_SECTIONS = [""];
 
   fetch(url)
     .then((response) => response.json())
@@ -27,18 +34,18 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       function displayCompanyInfo() {
         console.log(data);
         riskAnalysis.innerText = data.name;
-
+        console.log(data.privacy_analysis)
         analysisCard.classList.remove("text-center");
 
-        makeTruncable(
-          document.getElementById("privacy-summary"),
-          data.privacy_summary,
-        );
-        makeTruncable(
-          document.getElementById("privacy-analysis"),
-          data.privacy_analysis,
-        );
-        makeTruncable(document.getElementById("tos-summary"), data.tos_summary);
+        // makeTruncable(
+        //   document.getElementById("privacy-analysis"),
+        //   data.privacy_analysis,
+        // );
+        // makeTruncable(
+        //   document.getElementById("privacy-summary"),
+        //   data.privacy_summary,
+        // );
+        // makeTruncable(document.getElementById("tos-summary"), data.tos_summary);
         if (data.risk_label) {
           const hero = document.getElementById("risk-badge");
           const level = data.risk_label.split(" ")[0].toLowerCase();
@@ -46,6 +53,17 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           hero.textContent = data.risk_label;
           hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
         }
+
+        //Snapshots
+        const { clauses, sharing, privacy, verdict } = extractSnapshots(
+          data.privacy_analysis,
+        );
+        document.getElementById("snapshot-clauses").innerText = clauses ?? "";
+        document.getElementById("snapshot-sharing").innerText = sharing ?? "";
+        document.getElementById("snapshot-privacy").innerText = privacy ?? "";
+        document.getElementById("snapshot-verdict").innerText = verdict ?? "";
+        console.log("verdict:", verdict);
+
         companyLink.href = `${baseUrl}companies/${data.id}`;
       }
 
@@ -70,7 +88,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       }
 
       if (data.error) {
-        analysisCard.innerText = "Nothing Here Yet"
+        analysisCard.innerText = "Nothing Here Yet";
         analysisCard.style.paddingTop = "20px";
         tosCard.classList.add("d-none");
         companyLink.classList.add("d-none");
@@ -96,7 +114,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
                 console.log(dataOther);
                 analysisCard.innerText = "Could not perform analysys";
                 analysisCard.style.paddingTop = "20px";
-                runAnalysis.classList.add("disabled")
+                runAnalysis.classList.add("disabled");
                 homepageLink.classList.remove("d-none");
                 homepageLink.href = baseUrl;
               } else {
