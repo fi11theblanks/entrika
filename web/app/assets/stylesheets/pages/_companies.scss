@@ -112,8 +112,9 @@
 // ── Company show ──
 
 .company-header-card {
-  background: $purple-deep;
+  background: $gray-300;
   color: $near-black;
+  border: 1px solid #FFD1DC;
   border-radius: 0.875rem;
   padding: 1rem 1.25rem;
   margin-bottom: 2rem;
@@ -166,8 +167,8 @@
   padding-left: 0.875rem;
   border-left: 4px solid $gray-300;
 
-  &--tos     { border-left-color: $risk-high; }
-  &--privacy { border-left-color: $accent-blue; }
+  &--tos     { border-left-color: darken($pink-accent, 20%); }
+  &--privacy { border-left-color: darken($pink-accent, 20%); }
 }
 
 .flagged-clause {
@@ -192,20 +193,20 @@
 .section-intro {
   font-size: 1rem;
   line-height: 1.7;
-  color: $gray-700;
+  color: $white;
   margin-bottom: 0.5rem;
   padding: 1rem 1.125rem;
   border-radius: 0 0.5rem 0.5rem 0;
   border-left: 4px solid $gray-300;
 
   &--tos {
-    background: $gray-50;
-    border-left-color: $risk-high;
+    background: $gray-900;
+    border-left-color: darken($pink-accent, 20%);
   }
 
   &--privacy {
-    background: $gray-50;
-    border-left-color: $accent-blue;
+    background: $gray-900;
+    border-left-color: darken($pink-accent, 20%);
   }
 }
 
@@ -221,25 +222,25 @@
   border-radius: 0.25rem;
   display: inline-block;
 
-  &--clauses   { color: $risk-high;     background: #2d1515; }
-  &--sharing   { color: $accent-blue;   background: #151d2d; }
-  &--incidents { color: $risk-moderate; background: #2d2210; }
+  &--clauses   { color: darken($pink-accent, 20%);   background: $gray-300; }
+  &--sharing   { color: darken($pink-accent, 20%);   background: $gray-300; }
+  &--incidents { color: darken($pink-accent, 20%);   background: $gray-300; }
 }
 
 .analysis-bullets--clauses li {
-  border-left-color: $risk-high;
+  border-left-color: darken($pink-accent, 20%);
   background: #2d1515;
   color: #ffb8a0;
 }
 
 .analysis-bullets--sharing li {
-  border-left-color: $accent-blue;
+  border-left-color: darken($pink-accent, 20%);
   background: #151d2d;
   color: #a0c4ff;
 }
 
 .analysis-bullets--incidents li {
-  border-left-color: $risk-moderate;
+  border-left-color: darken($pink-accent, 20%);
   background: #2d2210;
   color: #ffd878;
 }
@@ -266,9 +267,9 @@
     gap: 0.625rem;
     font-size: 0.9rem;
     line-height: 1.6;
-    color: $gray-700;
-    background: $gray-50;
-    border-left: 3px solid $gray-300;
+    color: $white;
+    background: $gray-900;
+    border-left: 3px solid darken($pink-accent, 20%);
     padding: 0.625rem 0.875rem;
     border-radius: 0 0.375rem 0.375rem 0;
   }
@@ -301,13 +302,13 @@
 }
 
 .analysis-scenario {
-  background: #151d2d;
-  border-left: 3px solid $accent-blue;
+  background: $gray-100;
+  border-left: 3px solid darken($pink-accent, 20%);
   padding: 0.75rem 1rem;
   border-radius: 0 0.375rem 0.375rem 0;
   font-size: 0.875rem;
   line-height: 1.6;
-  color: #a0c4ff;
+  color: darken($pink-accent, 20%);
   margin-bottom: 0.875rem;
 
   &__label {
@@ -318,8 +319,8 @@
 }
 
 .analysis-verdict {
-  background: $purple-deep;
-  color: $near-black;
+  background: $gray-300;
+  color: $pink-accent;
   padding: 0.75rem 1rem;
   border-radius: 0.375rem;
   font-size: 0.875rem;
@@ -349,8 +350,8 @@
 }
 
 .chat-card {
-  background: #2e1040;
-  border: 1px solid #4a1a5a;
+  background: $gray-500;
+  border: 1px solid $pink-accent;
   border-radius: 0.875rem;
   display: flex;
   flex-direction: column;
@@ -389,14 +390,14 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
-  background: #1a0630;
-  border-bottom: 1px solid #3a1050;
+  background: $gray-100;
+  border-bottom: 1px solid $pink-accent;
   flex-shrink: 0;
 
   &__avatar {
     width: 36px;
     height: 36px;
-    background-color: $white;
+    background-color: $gray-300;
     border: 1px solid $gray-100;
     border-radius: 50%;
     display: flex;
@@ -441,8 +442,9 @@
 .chat-avatar {
   width: 28px;
   height: 28px;
-  background-color: $white;
-  border: 1px solid $gray-100;
+  background-color: $gray-300;
+  border: 1px solid $pink-accent;
+;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -462,16 +464,18 @@
   border-radius: 1rem;
 
   &--user {
-    background: $purple-deep;
-    color: $near-black;
+    background: $gray-900;
+    color: $gray-100;
     border-bottom-right-radius: 0.25rem;
     margin-left: auto;
+    border: 1px solid $gray-100;
   }
 
   &--assistant {
-    background: $gray-50;
+    background: $gray-300;
     color: $near-black;
-    border: 1px solid $gray-100;
+    border: 1px solid $pink-accent;
+;
     border-bottom-left-radius: 0.25rem;
   }
 }
@@ -482,9 +486,9 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.875rem 1rem;
-  border-top: 1px solid #3a1050;
+  border-top: 1px solid $pink-accent;
   width: 100%;
-  background: #1a0630;
+  background: $gray-100;
 
   .message_content {
     flex: 1;
@@ -507,13 +511,13 @@
   font-size: 0.875rem;
   font-family: $body-font;
   color: $near-black;
-  background: #2e1040;
+  background: $gray-500;
   resize: none;
   outline: none;
   width: 100%;
 
 
-  &:focus { border-color: #5a2070; background: #381250; }
+  &:focus { border-color: $gray-700; background: $gray-500; }
   &--placeholder { color: $gray-500; font-style: italic; }
 }
 textarea.chat-input {
@@ -522,8 +526,8 @@ textarea.chat-input {
 }
 .chat-send-btn {
   flex-shrink: 0;
-  background: $orange-accent;
-  color: $near-black;
+  background: $pink-accent;
+  color: $white;
   border: none;
   border-radius: 1.5rem;
   padding: 0.5rem 1rem;
@@ -534,7 +538,7 @@ textarea.chat-input {
   text-decoration: none;
   white-space: nowrap;
 
-  &:hover { background: darken(#e63d00, 8%); color: $near-black; }
+  &:hover { background: darken($pink-accent, 8%); color: $gray-50; }
 }
 
 .analysis-raw {
