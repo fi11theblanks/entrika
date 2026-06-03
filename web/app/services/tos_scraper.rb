@@ -21,7 +21,7 @@ class TosScraper
   def self.find_tos_url(page_url)
     response = HTTParty.get(page_url, headers: {
       "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)"
-    }, timeout: 10)
+    }, timeout: 15)
 
     return nil unless response.success?
 
@@ -80,7 +80,7 @@ class TosScraper
       return company
 
     end
-    
+
     #Fall back to TOS_URLS or live scraping
     puts "Scraping #{name}..."
     tos_response = HTTParty.get(data[:tos_url], headers: {

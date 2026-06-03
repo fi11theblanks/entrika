@@ -70,8 +70,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       }
 
       if (data.error) {
-        urlDisplay.innerText = "Company not found";
-        analysisCard.classList.add("d-none");
+        analysisCard.innerText = "Nothing Here Yet"
+        analysisCard.style.paddingTop = "20px";
         tosCard.classList.add("d-none");
         companyLink.classList.add("d-none");
         registrationLink.classList.add("d-none");
