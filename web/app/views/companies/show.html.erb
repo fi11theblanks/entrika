@@ -1,7 +1,7 @@
 <%= turbo_stream_from @company %>
 <div class="row g-4">
   <div class="col-7">
-    <%= render "company_card", company: @company %>
+    <%= render "company_card", company: @company, registration: @registration %>
 
     <h4 class="section-heading">What you're agreeing to</h4>
     <p class="section-intro"><%= @company.tos_summary %></p>

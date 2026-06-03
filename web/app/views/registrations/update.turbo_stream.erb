@@ -1,0 +1,4 @@
+<%# Update the status badge %>
+<%= turbo_stream.replace dom_id(@registration, :status) do %>
+  <%= render "registrations/status_badge", registration: @registration %>
+<% end %>
