@@ -5,6 +5,7 @@ module TosAnalyzer
     puts "Analyzing #{company.name}..."
     Summary.new(company).analyze
     Analysis.new(company).analyze
+    ExtensionSummary.new(company).analyze
     RiskScore.new(company).analyze
     puts "✓ #{company.name} done"
   rescue => e
@@ -47,7 +48,10 @@ module TosAnalyzer
 
     def analyze
       result = ask(SCHEMA, "Summarize each document in 2 sentences for a non-technical user. Be direct and specific — name what the company actually does with your data.\n\nTerms of Service: #{@company.tos_url}\nPrivacy Policy: #{@company.privacy_url}")
-      @company.update!(tos_summary: result["tos_summary"], privacy_summary: result["privacy_summary"])
+      @company.update!(
+        tos_summary: result["tos_summary"],
+        privacy_summary: result["privacy_summary"]
+      )
     end
   end
 
@@ -58,7 +62,10 @@ module TosAnalyzer
         tos_analysis: { type: "string" },
         privacy_analysis: { type: "string" }
       },
-      required: ["tos_analysis", "privacy_analysis"],
+      required: [
+        "tos_analysis",
+        "privacy_analysis",
+      ],
       additionalProperties: false
     }.freeze
 
@@ -84,12 +91,6 @@ module TosAnalyzer
 
       Verdict: [1 sentence]
 
-      MUST INCLUDE:
-      
-      Clauses snapshot: [1 sentence on the most important thing the user agrees to]
-      Sharing snapshot: [1 sentence on who data is shared with and why]
-      Privacy snapshot: [1 sentence on the most notable surveillance or tracking behavior, or "No significant privacy issues found" if none]
-
       Rules:
       - Known incidents must be real, confirmed public facts only — no speculation.
       - Be specific: name years, fine amounts, number of affected users.
@@ -101,6 +102,68 @@ module TosAnalyzer
       @company.update!(tos_analysis: result["tos_analysis"], privacy_analysis: result["privacy_analysis"])
     end
   end
+
+  class ExtensionSummary < Base
+  SCHEMA = {
+    type: "object",
+    properties: {
+      general_warning: { type: "string" },
+      data_warning: { type: "string" },
+      tracking_warning: { type: "string" }
+    },
+    required: [
+      "general_warning",
+      "data_warning",
+      "tracking_warning"
+    ],
+    additionalProperties: false
+  }.freeze
+
+  PROMPT = <<~TEXT
+    Generate exactly three short user-facing warnings.
+
+    General warning:
+    - Biggest non-privacy concern from the Terms of Service.
+    - Examples: account termination, arbitration clauses, content licensing.
+    - If nothing notable exists, say the company appears relatively transparent.
+
+    Data warning:
+    - Biggest concern about data collection, retention, or sharing.
+    - If nothing notable exists, say data practices appear relatively limited.
+
+    Tracking warning:
+    - Biggest concern about advertising, profiling, behavioral tracking, cross-site tracking, or third-party analytics.
+    - If none exists, say tracking appears relatively limited.
+
+    Rules:
+    - One sentence each.
+    - Maximum 20 words.
+    - No legal jargon.
+    - Write directly to the user.
+    - Do not repeat the same concern in multiple fields.
+  TEXT
+
+  def analyze
+    result = ask(
+      SCHEMA,
+      <<~PROMPT
+        #{PROMPT}
+
+        Terms of Service:
+        #{@company.tos_url}
+
+        Privacy Policy:
+        #{@company.privacy_url}
+      PROMPT
+    )
+
+    @company.update!(
+      general_warning: result["general_warning"],
+      data_warning: result["data_warning"],
+      tracking_warning: result["tracking_warning"]
+    )
+  end
+end
 
   class RiskScore < Base
     SCHEMA = {

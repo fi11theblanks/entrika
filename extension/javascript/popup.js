@@ -37,15 +37,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         console.log(data.privacy_analysis)
         analysisCard.classList.remove("text-center");
 
-        // makeTruncable(
-        //   document.getElementById("privacy-analysis"),
-        //   data.privacy_analysis,
-        // );
-        // makeTruncable(
-        //   document.getElementById("privacy-summary"),
-        //   data.privacy_summary,
-        // );
-        // makeTruncable(document.getElementById("tos-summary"), data.tos_summary);
+        makeTruncable(
+          document.getElementById("privacy-analysis"),
+          data.privacy_analysis,
+        );
+        makeTruncable(
+          document.getElementById("privacy-summary"),
+          data.privacy_summary,
+        );
+        makeTruncable(document.getElementById("tos-summary"), data.tos_summary);
         if (data.risk_label) {
           const hero = document.getElementById("risk-badge");
           const level = data.risk_label.split(" ")[0].toLowerCase();
@@ -54,7 +54,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
         }
 
-        //Snapshots
+        // Snapshots
         const { clauses, sharing, privacy, verdict } = extractSnapshots(
           data.privacy_analysis,
         );
