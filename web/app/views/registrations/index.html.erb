@@ -2,15 +2,19 @@
   <header class="dashboard-header">
     <div class="dashboard-header__top">
       <h1 class="dashboard-title">Dashboard - Sites Analyzed</h1>
-      <%= link_to "Return to Overall Risk Assessment", dashboard_path, class: "dashboard-link" %>
-      <%= form_with url: sitesanalyzed_path, method: :get, class: "search-form" do %>
-        <div class="search-input-wrapper">
+      <div class="search-input-wrapper">
+        <%= link_to sitesanalyzed_path do %>
+          <i class="fa-solid fa-arrow-rotate-right"></i>
+        <% end %>
+        <%= form_with url: sitesanalyzed_path, method: :get, class: "search-form" do %>
           <%= label_tag :site, "Search sites", class: "visually-hidden" %>
-          <%= text_field_tag :site, params[:query],
+          <%= text_field_tag :site, params[:site],
          class: "search-input",
          placeholder: "Search sites" %>
+          <%= submit_tag "Search", class: "dashboard-link btn btn-light" %>
         </div>
       <% end %>
+      <%= link_to "Return to Overall Risk Assessment", dashboard_path, class: "dashboard-link" %>
     </div>
   </header>
   <ul class="nav tabs-underlined" id="myTab" role="tablist">

@@ -13,6 +13,7 @@
 .dashboard-header__top {
   display: flex;
   align-items: baseline;
+  justify-content: space-between;
   gap: 1rem;
   margin-top: 16px;
 }
@@ -160,4 +161,8 @@
       text-decoration: underline;
       text-underline-offset: 4px;
     }
+}
+
+.fa-arrow-rotate-right {
+  &:hover { background-color: $gray-300; }
 }
