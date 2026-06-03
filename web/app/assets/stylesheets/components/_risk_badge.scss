@@ -12,8 +12,8 @@
   &__icon { font-size: 1.5rem; }
   &__label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
 
-  &--high     { background: #FEF2F2; border: 1px solid #FECACA; color: $risk-high; }
-  &--moderate { background: #FFFBEB; border: 1px solid #FDE68A; color: $risk-moderate; }
-  &--medium   { background: #FFFBEB; border: 1px solid #FDE68A; color: $risk-moderate; }
-  &--low      { background: #F0FDF4; border: 1px solid #BBF7D0; color: $risk-low; }
+  &--high     { background: #2d1515; border: 1px solid #5d2020; color: $risk-high; }
+  &--moderate { background: #2d2210; border: 1px solid #5d4820; color: $risk-moderate; }
+  &--medium   { background: #2d2210; border: 1px solid #5d4820; color: $risk-moderate; }
+  &--low      { background: #132010; border: 1px solid #1d4020; color: $risk-low; }
 }
