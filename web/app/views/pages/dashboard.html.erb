@@ -4,33 +4,11 @@
       <h1 class="dashboard-title">Dashboard - Overall Risk Assessment</h1>
     </div>
   </header>
-  <div class="dashboard-card-container">
-    <div class="dashboard-card">
-      <% if current_user.registered_risk_score == "Low Risk" %>
-        <h2 class="dashboard-card__low"><%= current_user.registered_risk_score %></h2>
-        <span class="dashboard-card__meta">You're engaging in very safe practices online.
-          Well done!
-        </span>
-      <% elsif current_user.registered_risk_score == "Medium Risk" %>
-        <h2 class="dashboard-card__medium"><%= current_user.registered_risk_score %></h2>
-        <span class="dashboard-card__meta">There's a good balance between safe behavior and risky behavior.
-          Review your registered sites to see if there's any high risk
-          sites you would like to cancel to improve your score.</span>
-      <% elsif current_user.registered_risk_score == "High Risk" %>
-        <h2 class="dashboard-card__high"><%= current_user.registered_risk_score %></h2>
-        <span class="dashboard-card__meta">There are high risks regarding your data
-          and privacy, but your score can be improved. Review your sites and see what
-          changes can be made for better safety.</span>
-      <% end %>
-    </div>
-    <div class="dashboard-card">
-      <h2 class="dashboard-card__name">Signed-Up Sites Risk Scores</h2>
-      <%= pie_chart @risk_data,
-  donut: true,
-  colors: User::RISK_COLORS.values_at(*@risk_data.keys) %>
-      <%# <p>insert status bar here</p> %>
-    </div>
+
+  <div id="dashboard-risk-summary">
+    <%= render "pages/risk_summary" %>
   </div>
+
   <%# <div class="card">
     <p>AI Compliance Agent</p>
     <p>Customize how Entrika analyzes your documents. Set specific keywords
