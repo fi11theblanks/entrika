@@ -1,19 +1,24 @@
-// Core palette
+// Core palette — dark warm theme
 $black:      #000000;
-$near-black: #0D0D0D;
-$gray-900:   #1C1C1C;
-$gray-700:   #404040;
-$gray-500:   #6B6B6B;
-$gray-300:   #B0B0B0;
-$gray-100:   #E8E8E8;
-$gray-50:    #F5F5F5;
-$white:      #FFFFFF;
+$near-black: #f2f2f2;   // primary text (light on dark)
+$gray-900:   #e8d8d8;
+$gray-700:   #c8b0b0;   // secondary text
+$gray-500:   #a08888;   // muted text
+$gray-300:   #6d5050;   // subtle borders
+$gray-100:   #3a2828;   // dividers / card borders
+$gray-50:    #2c2020;   // elevated surfaces / cards
+$white:      #211a1a;   // main background
 
-// Semantic
-$risk-high:     #C42B2B;
-$risk-moderate: #B45309;
-$risk-low:      #1A7A42;
-$accent-blue:   #0066CC;
+// Brand accents
+$purple-deep:    #4d004d;
+$orange-accent:  #e63d00;
+$yellow-accent:  #ffcc00;
+
+// Semantic — tuned for dark background
+$risk-high:     #e63d00;
+$risk-moderate: #ffcc00;
+$risk-low:      #4ade80;
+$accent-blue:   #60a5fa;
 
 // Aliases
 $dark-navy:       $near-black;
