@@ -112,18 +112,27 @@
 // ── Company show ──
 
 .company-header-card {
-  background: $near-black;
-  color: $white;
+  background: $gray-300;
+  color: $near-black;
+  border: 1px solid #FFD1DC;
   border-radius: 0.875rem;
-  padding: 1.5rem;
+  padding: 1rem 1.25rem;
   margin-bottom: 2rem;
 
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
   &__name {
-    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
     font-weight: 900;
     text-transform: uppercase;
-    color: $white;
-    margin: 0.5rem 0 1rem;
+    color: $near-black;
+    margin: 0;
     font-family: $display-font;
     letter-spacing: -0.02em;
     line-height: 1;
@@ -131,17 +140,11 @@
 
   &__meta {
     font-size: 0.775rem;
-    color: $gray-500;
+    color: rgba(242, 242, 242, 0.5);
     display: flex;
     gap: 1.5rem;
-    margin-bottom: 1.25rem;
 
-    a { color: $gray-300; text-decoration: none; &:hover { color: $white; } }
-  }
-
-  &__actions {
-    display: flex;
-    gap: 0.5rem;
+    a { color: rgba(242, 242, 242, 0.7); text-decoration: none; &:hover { color: $near-black; } }
   }
 }
 
@@ -161,6 +164,11 @@
   color: $near-black;
   margin-top: 2.5rem;
   margin-bottom: 0.875rem;
+  padding-left: 0.875rem;
+  border-left: 4px solid $gray-300;
+
+  &--tos     { border-left-color: darken($pink-accent, 20%); }
+  &--privacy { border-left-color: darken($pink-accent, 20%); }
 }
 
 .flagged-clause {
@@ -185,8 +193,56 @@
 .section-intro {
   font-size: 1rem;
   line-height: 1.7;
-  color: $gray-700;
+  color: $white;
   margin-bottom: 0.5rem;
+  padding: 1rem 1.125rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  border-left: 4px solid $gray-300;
+
+  &--tos {
+    background: $gray-900;
+    border-left-color: darken($pink-accent, 20%);
+  }
+
+  &--privacy {
+    background: $gray-900;
+    border-left-color: darken($pink-accent, 20%);
+  }
+}
+
+.analysis-section-label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $gray-500;
+  margin-bottom: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  display: inline-block;
+
+  &--clauses   { color: darken($pink-accent, 20%);   background: $gray-300; }
+  &--sharing   { color: darken($pink-accent, 20%);   background: $gray-300; }
+  &--incidents { color: darken($pink-accent, 20%);   background: $gray-300; }
+}
+
+.analysis-bullets--clauses li {
+  border-left-color: darken($pink-accent, 20%);
+  background: #2d1515;
+  color: #ffb8a0;
+}
+
+.analysis-bullets--sharing li {
+  border-left-color: darken($pink-accent, 20%);
+  background: #151d2d;
+  color: #a0c4ff;
+}
+
+.analysis-bullets--incidents li {
+  border-left-color: darken($pink-accent, 20%);
+  background: #2d2210;
+  color: #ffd878;
 }
 
 .analysis-opening {
@@ -211,11 +267,18 @@
     gap: 0.625rem;
     font-size: 0.9rem;
     line-height: 1.6;
-    color: $gray-700;
-    background: $gray-50;
-    border-left: 3px solid $gray-300;
+    color: $white;
+    background: $gray-900;
+    border-left: 3px solid darken($pink-accent, 20%);
     padding: 0.625rem 0.875rem;
     border-radius: 0 0.375rem 0.375rem 0;
+  }
+
+  .fa-solid {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 0.15rem;
   }
 }
 
@@ -226,8 +289,8 @@
   margin-top: 0.15rem;
   background-image: image-url('logo-sprite.svg');
   background-repeat: no-repeat;
-  background-size: 1100% auto;
-  background-position: 0 50%;
+  background-size: 1253% auto;
+  background-position: 6.65% 50%;
   animation: logo-eye 1.8s steps(11) infinite;
   display: inline-block;
 }
@@ -239,13 +302,13 @@
 }
 
 .analysis-scenario {
-  background: #EFF6FF;
-  border-left: 3px solid $accent-blue;
+  background: $gray-100;
+  border-left: 3px solid darken($pink-accent, 20%);
   padding: 0.75rem 1rem;
   border-radius: 0 0.375rem 0.375rem 0;
   font-size: 0.875rem;
   line-height: 1.6;
-  color: #1E3A5F;
+  color: darken($pink-accent, 20%);
   margin-bottom: 0.875rem;
 
   &__label {
@@ -256,8 +319,8 @@
 }
 
 .analysis-verdict {
-  background: $near-black;
-  color: $white;
+  background: $gray-300;
+  color: $pink-accent;
   padding: 0.75rem 1rem;
   border-radius: 0.375rem;
   font-size: 0.875rem;
@@ -287,8 +350,8 @@
 }
 
 .chat-card {
-  background: $gray-50;
-  border: 1px solid $gray-100;
+  background: $gray-500;
+  border: 1px solid $pink-accent;
   border-radius: 0.875rem;
   display: flex;
   flex-direction: column;
@@ -296,35 +359,29 @@
 }
 
 // ── Logo sprite animation ──
-// 11 frames, viewBox 10963x1015, each frame ~996.6px wide
-// At 28px height: total width = 28 * (10963/1015) = 302.4px, each frame = 27.5px
+// 11 frames, viewBox 12674x2288, eyes at x=1282..11399, avg spacing=1011.7px
+// background-size 1253% → one frame = one container width at avg eye spacing
+// Start offset 6.65% → centers eye 1 in frame 1; step size 8.67% per frame
 
 @keyframes logo-eye {
-  from { background-position: 0% 50%; }
-  to   { background-position: 110% 50%; }
+  from { background-position: 6.65% 50%; }
+  to   { background-position: 102.1% 50%; }
 }
-
-// 1100% = 11 frames × 100% container width → each frame fills the avatar exactly
 
 .logo-sprite {
   background-image: image-url('logo-sprite.svg');
   background-repeat: no-repeat;
-  background-size: 1100% auto;
-  background-position: 0 50%;
+  background-size: 1253% auto;
+  background-position: 6.65% 50%;
   animation: logo-eye 1.8s steps(11) infinite;
 }
 
 .logo-sprite--sm {
   background-image: image-url('logo-sprite.svg');
   background-repeat: no-repeat;
-  background-size: 1100% auto;
-  background-position: 0 50%;
-  animation: logo-eye-sm 1.8s steps(11) infinite;
-}
-
-@keyframes logo-eye-sm {
-  from { background-position: 0% 50%; }
-  to   { background-position: 110% 50%; }
+  background-size: 1253% auto;
+  background-position: 6.65% 50%;
+  animation: logo-eye 1.8s steps(11) infinite;
 }
 
 // ── Chat header ──
@@ -333,13 +390,14 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
-  border-bottom: 1px solid $gray-100;
+  background: $gray-100;
+  border-bottom: 1px solid $pink-accent;
   flex-shrink: 0;
 
   &__avatar {
     width: 36px;
     height: 36px;
-    background-color: $white;
+    background-color: $gray-300;
     border: 1px solid $gray-100;
     border-radius: 50%;
     display: flex;
@@ -384,8 +442,9 @@
 .chat-avatar {
   width: 28px;
   height: 28px;
-  background-color: $white;
-  border: 1px solid $gray-100;
+  background-color: $gray-300;
+  border: 1px solid $pink-accent;
+;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -405,16 +464,18 @@
   border-radius: 1rem;
 
   &--user {
-    background: $near-black;
-    color: $white;
+    background: $gray-900;
+    color: $gray-100;
     border-bottom-right-radius: 0.25rem;
     margin-left: auto;
+    border: 1px solid $gray-100;
   }
 
   &--assistant {
-    background: $white;
+    background: $gray-300;
     color: $near-black;
-    border: 1px solid $gray-100;
+    border: 1px solid $pink-accent;
+;
     border-bottom-left-radius: 0.25rem;
   }
 }
@@ -425,9 +486,9 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.875rem 1rem;
-  border-top: 1px solid $gray-100;
+  border-top: 1px solid $pink-accent;
   width: 100%;
-  background: $white;
+  background: $gray-100;
 
   .message_content {
     flex: 1;
@@ -450,13 +511,13 @@
   font-size: 0.875rem;
   font-family: $body-font;
   color: $near-black;
-  background: $gray-50;
+  background: $gray-500;
   resize: none;
   outline: none;
   width: 100%;
 
 
-  &:focus { border-color: $gray-300; background: $white; }
+  &:focus { border-color: $gray-700; background: $gray-500; }
   &--placeholder { color: $gray-500; font-style: italic; }
 }
 textarea.chat-input {
@@ -465,7 +526,7 @@ textarea.chat-input {
 }
 .chat-send-btn {
   flex-shrink: 0;
-  background: $near-black;
+  background: $pink-accent;
   color: $white;
   border: none;
   border-radius: 1.5rem;
@@ -477,5 +538,16 @@ textarea.chat-input {
   text-decoration: none;
   white-space: nowrap;
 
-  &:hover { background: $gray-900; color: $white; }
+  &:hover { background: darken($pink-accent, 8%); color: $gray-50; }
+}
+
+.analysis-raw {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: $near-black;
+  background: $gray-50;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  white-space: pre-wrap;
 }

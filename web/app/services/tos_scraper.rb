@@ -80,7 +80,7 @@ class TosScraper
       return company
 
     end
-    
+
     #Fall back to TOS_URLS or live scraping
     puts "Scraping #{name}..."
     tos_response = HTTParty.get(data[:tos_url], headers: {
