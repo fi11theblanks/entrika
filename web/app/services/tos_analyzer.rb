@@ -5,6 +5,7 @@ module TosAnalyzer
     puts "Analyzing #{company.name}..."
     Summary.new(company).analyze
     Analysis.new(company).analyze
+    Extension.new(company).analyze
     RiskScore.new(company).analyze
     puts "✓ #{company.name} done"
   rescue => e
@@ -93,6 +94,34 @@ module TosAnalyzer
     def analyze
       result = ask(SCHEMA, "#{INSTRUCTIONS}\n\nTerms of Service: #{@company.tos_url}\nPrivacy Policy: #{@company.privacy_url}")
       @company.update!(tos_analysis: result["tos_analysis"], privacy_analysis: result["privacy_analysis"])
+    end
+  end
+
+  class Extension < Base
+    SCHEMA = {
+      type: "object",
+      properties: {
+        ext_tos_analysis: { type: "string" },
+        ext_privacy_analysis: { type: "string" }
+      },
+      required: ["ext_tos_analysis", "ext_privacy_analysis"],
+      additionalProperties: false
+    }.freeze
+    INSTRUCTIONS = <<~TEXT
+      Analyze the Terms of Service and Privacy Policy. Write in plain English for a non-technical user.
+
+      For ext_tos_analysis (Terms of Service only):
+      Verdict: [1 sentence]
+      Clauses snapshot: [1 sentence on the most important thing the user agrees to]
+
+      For ext_privacy_analysis (Privacy Policy only):
+      Sharing snapshot: [1 sentence on who data is shared with and why]
+      Privacy snapshot: [1 sentence on the most notable surveillance or tracking behavior, or "No significant privacy issues found" if none]
+    TEXT
+
+    def analyze
+      result = ask(SCHEMA, "#{INSTRUCTIONS}\n\nTerms of Service: #{@company.tos_url}\nPrivacy Policy: #{@company.privacy_url}")
+      @company.update!(ext_tos_analysis: result["ext_tos_analysis"], ext_privacy_analysis: result["ext_privacy_analysis"])
     end
   end
 
