@@ -15,6 +15,11 @@ class CompaniesController < ApplicationController
     authorize @company
     @message = Message.new
     @registration = current_user&.registrations&.find_by(company: @company)
+    if @company.risk_score.present?
+      @alternatives = AlternativeCompaniesService.new(@company).call
+    else
+      @alternatives = []
+    end
   end
 
   def edit
