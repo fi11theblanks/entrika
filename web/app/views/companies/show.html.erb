@@ -134,8 +134,9 @@
       <% else %>
         <p class="analysis-opening"><%= section %></p>
       <% end %>
-    </div>
-    
+    <% end %>
+  <% end %>
+
     <div class="company-links">
       <% if @company.tos_url.present? %>
         <%= link_to "Read the full Terms of Service →", @company.tos_url, target: "_blank", class: "company-link" %>
@@ -160,36 +161,36 @@
       <% else %>
       <p class="section-intro">We don't yet have alternative sites that are lower risk than <%= @company.name %>. Analyze another to compare.</p>
     <% end %>
-</div>
-<div class="col-5">
-  <div class="chat-card" style="height: 90vh; position: sticky; top: 2rem;">
-    <%# Header %>
-    <div class="chat-header">
-      <div class="chat-header__avatar logo-sprite"></div>
-      <div>
-        <div class="chat-header__name">Entrika</div>
-        <div class="chat-header__sub">Ask about this company's policies</div>
+  </div>
+  <div class="col-5">
+    <div class="chat-card" style="height: 90vh; position: sticky; top: 2rem;">
+      <%# Header %>
+      <div class="chat-header">
+        <div class="chat-header__avatar logo-sprite"></div>
+        <div>
+          <div class="chat-header__name">Entrika</div>
+          <div class="chat-header__sub">Ask about this company's policies</div>
+        </div>
+      </div>
+      <%# Messages %>
+      <div class="chat-messages" id="messages">
+        <% if @registration&.messages&.any? %>
+          <% @registration.messages.each do |message| %>
+            <%= render "messages/message", message: message %>
+          <% end %>
+        <% else %>
+          <div class="chat-bubble-row chat-bubble-row--assistant">
+            <div class="chat-avatar logo-sprite--sm"></div>
+            <div class="chat-bubble chat-bubble--assistant">
+              Ask me anything about <%= @company.name %>'s terms or privacy policy.
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <%# Input %>
+      <div id="new-empty-form">
+        <%= render "messages/form", company: @company, message: @message %>
       </div>
     </div>
-    <%# Messages %>
-    <div class="chat-messages" id="messages">
-      <% if @registration&.messages&.any? %>
-        <% @registration.messages.each do |message| %>
-          <%= render "messages/message", message: message %>
-        <% end %>
-      <% else %>
-        <div class="chat-bubble-row chat-bubble-row--assistant">
-          <div class="chat-avatar logo-sprite--sm"></div>
-          <div class="chat-bubble chat-bubble--assistant">
-            Ask me anything about <%= @company.name %>'s terms or privacy policy.
-          </div>
-        </div>
-      <% end %>
-    </div>
-    <%# Input %>
-    <div id="new-empty-form">
-      <%= render "messages/form", company: @company, message: @message %>
-    </div>
   </div>
-</div>
 </div>
