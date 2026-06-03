@@ -24,8 +24,6 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   const dashboardLink = document.getElementById("dashboard-link");
   const riskAnalysis = document.getElementById("risk-analysis");
   const homepageLink = document.getElementById("homepage-link");
-  const manualForm = document.getElementById("manual-form");
-  const EXCLUDED_SECTIONS = [""];
 
   // First popup intiation
   fetch(url)
