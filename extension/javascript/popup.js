@@ -1,4 +1,4 @@
-// Popup script
+// Snapshot Extraction
 function extractSnapshots(analysisText) {
   const clauses = analysisText.match(/Clauses snapshot:\s*(.+)/)?.[1]?.trim();
   const sharing = analysisText.match(/Sharing snapshot:\s*(.+)/)?.[1]?.trim();
@@ -7,6 +7,7 @@ function extractSnapshots(analysisText) {
   return { clauses, sharing, privacy, verdict };
 }
 
+//Beginning of popup
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   const baseUrl = "http://127.0.0.1:3000/";
   const baseAPIUrl = "http://127.0.0.1:3000/api/v1/";
@@ -26,6 +27,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   const manualForm = document.getElementById("manual-form");
   const EXCLUDED_SECTIONS = [""];
 
+  // First popup intiation
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -95,6 +97,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         registrationLink.classList.add("d-none");
         runAnalysis.classList.remove("d-none");
 
+        // Analysis button action
         runAnalysis.addEventListener("click", (event) => {
           const analyzeURL = `${baseAPIUrl}companies/analyze`;
           console.log("Fetching:", analyzeURL);
