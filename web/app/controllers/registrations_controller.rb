@@ -37,6 +37,10 @@ class RegistrationsController < ApplicationController
 
     # Determine if we should redirect or respond with turbo_stream
     is_from_index = request.referrer&.include?("sitesanalyzed")
+    @from_dashboard = request.referrer&.include?("dashboard")
+
+    # Set risk data so the partial has what it needs
+    @risk_data = current_user.risk_score_chart_data if @from_dashboard
 
     respond_to do |format|
       if is_from_index && @old_status != @new_status

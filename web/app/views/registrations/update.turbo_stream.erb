@@ -2,3 +2,9 @@
 <%= turbo_stream.replace dom_id(@registration, :status) do %>
   <%= render "registrations/status_badge", registration: @registration %>
 <% end %>
+
+<% if @from_dashboard %>
+  <%= turbo_stream.replace "dashboard-risk-summary" do %>
+    <%= render "pages/risk_summary" %>
+  <% end %>
+<% end %>
