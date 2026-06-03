@@ -551,3 +551,37 @@ textarea.chat-input {
   margin-bottom: 1.25rem;
   white-space: pre-wrap;
 }
+
+
+.alternatives-grid {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.alternative-card {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #333;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s;
+}
+
+.alternative-card:hover {
+  border-color: #fff;
+  color: inherit;
+}
+
+.alternative-card__name {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.alternative-card__url {
+  font-size: 0.75rem;
+  opacity: 0.5;
+  margin-top: 0.4rem;
+}
