@@ -151,7 +151,7 @@
       <p class="section-intro">Similar services with a lower risk score.</p>
       <div class="alternatives-grid">
         <% @alternatives.each do |alt| %>
-          <%= link_to company_path(alt), class: "alternative-card" do %>
+          <%= link_to company_path(alt), class: "alternative-card", data: { turbo_prefetch: false } do %>
             <div class="alternative-card__name"><%= alt.name %></div>
             <%= render "companies/risk_badge", icon: "⚠", score: alt.risk_label %>
             <div class="alternative-card__url"><%= alt.url %></div>

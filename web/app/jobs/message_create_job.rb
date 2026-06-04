@@ -29,7 +29,7 @@ class MessageCreateJob < ApplicationJob
   private
 
   def ask_llm
-    @ruby_llm_chat = RubyLLM.chat(model: "gpt-4o").with_temperature(0.2)
+    @ruby_llm_chat = RubyLLM.chat(model: "gpt-4o-mini").with_temperature(0.2)
     build_conversation_history
     response = @ruby_llm_chat.with_instructions("#{instructions}\n#{company_context(@company)}").ask(@message.content)
     raise "Empty response" if response&.content.blank?
