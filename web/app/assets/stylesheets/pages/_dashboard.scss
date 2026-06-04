@@ -166,3 +166,15 @@
 .fa-arrow-rotate-right {
   &:hover { background-color: $gray-300; }
 }
+
+.high-risk-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.registrations-container {
+  display: grid;
+  justify-content: space-evenly;
+  grid-template-columns: auto auto;
+}
