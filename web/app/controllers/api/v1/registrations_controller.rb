@@ -8,7 +8,7 @@ class Api::V1::RegistrationsController < Api::V1::BaseController
     @registration = Registration.new(
       company_id: params[:company_id],
       user: user,
-      status: "active"
+      status: "unregistered"
     )
     if @registration.save
       render json: @registration, status: :created
