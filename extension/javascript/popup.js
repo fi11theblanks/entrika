@@ -46,12 +46,24 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         //   data.data_warning,
         // );
         // makeTruncable(document.getElementById("snapshot-privacy"), data.tracking_warning);
-        if (data.risk_label) {
+        if (data.risk_score) {
           const hero = document.getElementById("risk-badge");
-          const level = data.risk_label.split(" ")[0].toLowerCase();
-          const mod = level === "medium" ? "moderate" : level;
-          hero.textContent = data.risk_label;
-          hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
+          // const level = data.risk_label.split(" ")[0].toLowerCase();
+
+          let level
+          if (data.risk_score == 1.0){
+            level = "low risk";
+          } else if (data.risk_score == 2.0){
+            level = "medium risk";
+          } else if (data.risk_score == 3.0) {
+            level = "high risk";
+          }
+
+          // const mod = level === "medium" ? "moderate" : level;
+          // hero.textContent = data.risk_label;
+          hero.innerText = level;
+          // hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
+          hero.className = `popup-risk-hero popup-risk-hero--moderate risk`;
         }
 
         // Snapshots
