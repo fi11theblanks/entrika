@@ -86,3 +86,4 @@ end
 gem "pg_search"
 gem "ferrum"
 gem "chartkick"
+# gem "google-genai"

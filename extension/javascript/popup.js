@@ -1,4 +1,13 @@
-// Popup script
+// Snapshot Extraction
+function extractSnapshots(analysisText) {
+  const clauses = analysisText.match(/Clauses snapshot:\s*(.+)/)?.[1]?.trim();
+  const sharing = analysisText.match(/Sharing snapshot:\s*(.+)/)?.[1]?.trim();
+  const privacy = analysisText.match(/Privacy snapshot:\s*(.+)/)?.[1]?.trim();
+  const verdict = analysisText?.match(/Verdict:\s*(.+?)(\r?\n|$)/)?.[1]?.trim();
+  return { clauses, sharing, privacy, verdict };
+}
+
+//Beginning of popup
 chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   const baseUrl = "http://127.0.0.1:3000/";
   const baseAPIUrl = "http://127.0.0.1:3000/api/v1/";
@@ -15,10 +24,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   const dashboardLink = document.getElementById("dashboard-link");
   const riskAnalysis = document.getElementById("risk-analysis");
   const homepageLink = document.getElementById("homepage-link");
-  const manualForm = document.getElementById("manual-form");
 
-  console.log(manualForm);
-
+  // First popup intiation
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -27,18 +34,18 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       function displayCompanyInfo() {
         console.log(data);
         riskAnalysis.innerText = data.name;
-
+        console.log(data.privacy_analysis)
         analysisCard.classList.remove("text-center");
 
-        makeTruncable(
-          document.getElementById("privacy-summary"),
-          data.privacy_summary,
-        );
-        makeTruncable(
-          document.getElementById("privacy-analysis"),
-          data.privacy_analysis,
-        );
-        makeTruncable(document.getElementById("tos-summary"), data.tos_summary);
+        document.getElementById("snapshot-clauses").innerText = data.general_warning;
+        document.getElementById("snapshot-sharing").innerText = data.data_warning;
+        document.getElementById("snapshot-privacy").innerText = data.tracking_warning;
+
+        // makeTruncable(
+        //   document.getElementById("snapshot-sharing"),
+        //   data.data_warning,
+        // );
+        // makeTruncable(document.getElementById("snapshot-privacy"), data.tracking_warning);
         if (data.risk_label) {
           const hero = document.getElementById("risk-badge");
           const level = data.risk_label.split(" ")[0].toLowerCase();
@@ -46,6 +53,16 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           hero.textContent = data.risk_label;
           hero.className = `popup-risk-hero popup-risk-hero--${mod}`;
         }
+
+        // Snapshots
+        const { clauses, sharing, privacy, verdict } = extractSnapshots(
+          data.privacy_analysis,
+        );
+        // document.getElementById("snapshot-clauses").innerText = clauses ?? "";
+        // document.getElementById("snapshot-sharing").innerText = sharing ?? "";
+        // document.getElementById("snapshot-privacy").innerText = privacy ?? "";
+        document.getElementById("snapshot-verdict").innerText = verdict ?? "Entrika currently doen't publish a clear verdict for this company.";
+
         companyLink.href = `${baseUrl}companies/${data.id}`;
       }
 
@@ -70,13 +87,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       }
 
       if (data.error) {
-        analysisCard.innerText = "Nothing Here Yet"
+        console.log(data.error)
+        analysisCard.innerText = "Nothing Here Yet";
         analysisCard.style.paddingTop = "20px";
         tosCard.classList.add("d-none");
         companyLink.classList.add("d-none");
         registrationLink.classList.add("d-none");
         runAnalysis.classList.remove("d-none");
 
+        // Analysis button action
         runAnalysis.addEventListener("click", (event) => {
           const analyzeURL = `${baseAPIUrl}companies/analyze`;
           console.log("Fetching:", analyzeURL);
@@ -102,9 +121,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
               } else {
                 window.location.reload();
               }
-            });
-          // .catch((error) => console.error(error));
+            })
+            .catch((error) => console.error(error));
         });
+
         // displayCompanyInfo();
       } else if (data.registered) {
         displayCompanyInfo();
