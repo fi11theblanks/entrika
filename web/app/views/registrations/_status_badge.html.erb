@@ -1,0 +1,29 @@
+<div id="<%= dom_id(registration, :status) %>" class="position-relative z-3">
+  <%= simple_form_for registration, local: false, url: registration_path(registration), method: :patch, data: { controller: 'registration-status' } do |f| %>
+    <% status_options = Registration::STATUSES.map do |s|
+      label = case s
+              when 'unregistered'
+                '? Undecided'
+              when 'registered'
+                '✓ Signed-up'
+              when 'rejected'
+                '✕ Rejected'
+              when 'canceled'
+                '⊘ Canceled'
+              else
+                s.humanize
+              end
+      [label, s]
+    end %>
+    <%= f.input :status,
+                collection: status_options,
+                selected: registration.status,
+                include_blank: false,
+                label: false,
+                input_html: {
+                  data: {action: 'change->registration-status#submit' },
+                  class: 'reg-status-select',
+                  style: 'max-width: 150px; padding: 4px 8px; background-image: none !important;'
+                }%>
+  <% end %>
+</div>

@@ -1,35 +1,11 @@
 <div class="dashboard-index">
   <header class="dashboard-header">
     <div class="dashboard-header__top">
-      <h1 class="dashboard-title">Dashboard - Overall Risk Assessment</h1>
+      <h1 class="dashboard-title">Dashboard - Overview</h1>
     </div>
   </header>
-  <div class="dashboard-card-container">
-    <div class="dashboard-card">
-      <% if current_user.registered_risk_score == "Low Risk" %>
-        <h2 class="dashboard-card__low"><%= current_user.registered_risk_score %></h2>
-        <span class="dashboard-card__meta">You're engaging in very safe practices online.
-          Well done!
-        </span>
-      <% elsif current_user.registered_risk_score == "Medium Risk" %>
-        <h2 class="dashboard-card__medium"><%= current_user.registered_risk_score %></h2>
-        <span class="dashboard-card__meta">There's a good balance between safe behavior and risky behavior.
-          Review your registered sites to see if there's any high risk
-          sites you would like to cancel to improve your score.</span>
-      <% elsif current_user.registered_risk_score == "High Risk" %>
-        <h2 class="dashboard-card__high"><%= current_user.registered_risk_score %></h2>
-        <span class="dashboard-card__meta">There are high risks regarding your data
-          and privacy, but your score can be improved. Review your sites and see what
-          changes can be made for better safety.</span>
-      <% end %>
-    </div>
-    <div class="dashboard-card">
-      <h2 class="dashboard-card__name">Signed-Up Sites Risk Scores</h2>
-      <%= pie_chart @risk_data,
-  donut: true,
-  colors: User::RISK_COLORS.values_at(*@risk_data.keys) %>
-      <%# <p>insert status bar here</p> %>
-    </div>
+  <div id="dashboard-risk-summary">
+    <%= render "pages/risk_summary" %>
   </div>
   <%# <div class="card">
     <p>AI Compliance Agent</p>
@@ -38,14 +14,33 @@
   </div> %>
   <header class="dashboard-header">
     <div class="dashboard-header__top">
-      <h2 class="dashboard-title">Recent Analyses</h2>
-      <%= link_to "View All Analyses", sitesanalyzed_path, class: "dashboard-link" %>
+      <h2 class="dashboard-title">High Risk Signed Up Sites</h2>
     </div>
   </header>
+  <div class="high-risk-container">
+    <% if @high_risk_registrations.any? %>
+      <% @high_risk_registrations.each do |registration| %>
+        <div class="dashboard-registrations-container p-2">
+          <%= render "companies/company_card", company: registration.company, registration: registration %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No high risk signed-up sites. Great!</p>
+    <% end %>
+  </div>
+</header>
+<header class="dashboard-header">
+  <div class="dashboard-header__top">
+    <h2 class="dashboard-title">Recent Analyses</h2>
+    <%= link_to "View All Analyses", sitesanalyzed_path, class: "dashboard-link" %>
+  </div>
+</header>
+<div class="registrations-container">
   <% @sorted_registrations.each do |registration| %>
     <div class="dashboard-registrations-container">
       <%= render "companies/company_card", company: registration.company, registration: registration %>
     </div>
   <% end %>
-  <%= link_to "View More", sitesanalyzed_path, class: "dashboard-link" %>
+</div>
+<%# <%= link_to "View More", sitesanalyzed_path, class: "dashboard-link" %>
 </div>

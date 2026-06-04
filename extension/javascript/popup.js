@@ -110,12 +110,12 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           })
             .then((response) => response.json())
             .then((dataOther) => {
-              // console.log(dataOther);
-              if (!dataOther || dataOther.error) {
-                // console.log(dataOther);
+              console.log(dataOther);
+              if (dataOther.error) {
+                console.log(dataOther);
                 analysisCard.innerText = "Could not perform analysys";
                 analysisCard.style.paddingTop = "20px";
-                runAnalysis.classList.add("disabled");
+                runAnalysis.classList.add("disabled")
                 homepageLink.classList.remove("d-none");
                 homepageLink.href = baseUrl;
               } else {

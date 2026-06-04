@@ -12,36 +12,38 @@
          class: "search-input",
          placeholder: "Search sites" %>
           <%= submit_tag "Search", class: "dashboard-link btn btn-light" %>
-        </div>
-      <% end %>
-      <%= link_to "Return to Overall Risk Assessment", dashboard_path, class: "dashboard-link" %>
+        <% end %>
+      </div>
+      <%= link_to "Return to Overview", dashboard_path, class: "dashboard-link" %>
     </div>
   </header>
   <ul class="nav tabs-underlined" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined active dashboard-link" id="sites-tab" data-bs-toggle="tab" data-bs-target="#sites-tab-pane" role="tab" aria-controls="sites-tab-pane" aria-selected="true">All Sites (<%= @registrations.count %>)</span>
+      <span class="nav-link tab-underlined <%= params[:tab].blank? ? 'active' : '' %> dashboard-link" id="sites-tab" data-bs-toggle="tab" data-bs-target="#sites-tab-pane" role="tab" aria-controls="sites-tab-pane" aria-selected="<%= params[:tab].blank? ? 'true' : 'false' %>">All Sites (<span id="sites-tab-count"><%= @registrations.count %></span>)</span>
     </li>
     <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined dashboard-link" id="registered-tab" data-bs-toggle="tab" data-bs-target="#registered-tab-pane" role="tab" aria-controls="registered-tab-pane" aria-selected="false">Signed-Up (<%= @registrations.where(status: "registered").count %>)</span>
+      <span class="nav-link tab-underlined <%= params[:tab] == 'registered' ? 'active' : '' %> dashboard-link" id="registered-tab" data-bs-toggle="tab" data-bs-target="#registered-tab-pane" role="tab" aria-controls="registered-tab-pane" aria-selected="<%= params[:tab] == 'registered' ? 'true' : 'false' %>">Signed-Up (<span id="registered-tab-count"><%= @registrations.where(status: "registered").count %></span>)</span>
     </li>
     <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined dashboard-link" id="unregistered-tab" data-bs-toggle="tab" data-bs-target="#unregistered-tab-pane" role="tab" aria-controls="unregistered-tab-pane" aria-selected="false">Undecided (<%= @registrations.where(status: "unregistered").count %>)</span>
+      <span class="nav-link tab-underlined <%= params[:tab] == 'unregistered' ? 'active' : '' %> dashboard-link" id="unregistered-tab" data-bs-toggle="tab" data-bs-target="#unregistered-tab-pane" role="tab" aria-controls="unregistered-tab-pane" aria-selected="<%= params[:tab] == 'unregistered' ? 'true' : 'false' %>">Undecided (<span id="unregistered-tab-count"><%= @registrations.where(status: "unregistered").count %></span>)</span>
     </li>
     <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined dashboard-link" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected-tab-pane" role="tab" aria-controls="rejected-tab-pane" aria-selected="false">Rejected (<%= @registrations.where(status: "rejected").count %>)</span>
+      <span class="nav-link tab-underlined <%= params[:tab] == 'rejected' ? 'active' : '' %> dashboard-link" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected-tab-pane" role="tab" aria-controls="rejected-tab-pane" aria-selected="<%= params[:tab] == 'rejected' ? 'true' : 'false' %>">Rejected (<span id="rejected-tab-count"><%= @registrations.where(status: "rejected").count %></span>)</span>
     </li>
     <li class="nav-item" role="presentation">
-      <span class="nav-link tab-underlined dashboard-link" id="canceled-tab" data-bs-toggle="tab" data-bs-target="#canceled-tab-pane" role="tab" aria-controls="canceled-tab-pane" aria-selected="false">Canceled (<%= @registrations.where(status: "canceled").count %>)</span>
+      <span class="nav-link tab-underlined <%= params[:tab] == 'canceled' ? 'active' : '' %> dashboard-link" id="canceled-tab" data-bs-toggle="tab" data-bs-target="#canceled-tab-pane" role="tab" aria-controls="canceled-tab-pane" aria-selected="<%= params[:tab] == 'canceled' ? 'true' : 'false' %>">Canceled (<span id="canceled-tab-count"><%= @registrations.where(status: "canceled").count %></span>)</span>
     </li>
   </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade py-3 show active" id="sites-tab-pane" role="tabpanel" aria-labelledby="sites-tab" tabindex="0">
-      <% @registrations.each do |registration| %>
-        <%= render "companies/company_card", company: registration.company, registration: registration %>
-      <% end %>
+  <div class="tab-content" id="myTabContent" data-controller="tab-scroll">
+    <div class="tab-pane fade py-3 <%= params[:tab].blank? ? 'show active' : '' %>" id="sites-tab-pane" role="tabpanel" aria-labelledby="sites-tab" tabindex="0">
+      <div class="registrations-container" id="sites-cards-container">
+        <% @registrations.each do |registration| %>
+          <%= render "companies/company_card", company: registration.company, registration: registration, context: "sites" %>
+        <% end %>
+      </div>
     </div>
     <% @statuses.each do |status| %>
-      <div class="tab-pane fade py-3" id="<%= status %>-tab-pane" role="tabpanel" aria-labelledby="<%= status %>-tab" tabindex="0">
+      <div class="tab-pane fade py-3 <%= params[:tab] == status ? 'show active' : '' %>" id="<%= status %>-tab-pane" role="tabpanel" aria-labelledby="<%= status %>-tab" tabindex="0">
         <header class="dashboard-registrations-header">
           <% if status == "registered" %>
             <span class="dashboard-registrations-text">Sites you have created an account for</span>
@@ -53,9 +55,17 @@
             <span class="dashboard-registrations-text">Sites you had previously signed up for but then deleted your account</span>
           <% end %>
         </header>
-        <% @registrations.where(status: status).each do |registration| %>
-          <%= render "companies/company_card", company: registration.company, registration: registration %>
-        <% end %>
+        <div class="registrations-container" id="<%= status %>-cards-container">
+          <% target_registration = @registrations.find_by(id: params[:registration_id]) if params[:registration_id].present? && params[:tab] == status %>
+          <%# Render the target registration first if it's in this tab %>
+          <% if target_registration %>
+            <%= render "companies/company_card", company: target_registration.company, registration: target_registration %>
+          <% end %>
+          <%# Render all other registrations in this status %>
+          <% @registrations.where(status: status).where.not(id: params[:registration_id]).each do |registration| %>
+            <%= render "companies/company_card", company: registration.company, registration: registration %>
+          <% end %>
+        </div>
       </div>
     <% end %>
   </div>

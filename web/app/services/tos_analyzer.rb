@@ -29,7 +29,7 @@ module TosAnalyzer
     private
 
     def ask(schema, prompt, system: "You are a privacy analyst. Be plain-spoken and useful to a non-technical user. Never use em dashes.")
-      chat = RubyLLM.chat(model: "claude-sonnet-4-6")
+      chat = RubyLLM.chat(model: "gpt-4o")
       chat.with_instructions(system).with_schema(schema)
       chat.ask(prompt).content
     rescue RubyLLM::Error => e
