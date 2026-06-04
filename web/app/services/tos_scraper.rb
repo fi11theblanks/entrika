@@ -21,11 +21,11 @@ class TosScraper
   def self.find_tos_url(page_url)
     response = HTTParty.get(page_url, headers: {
       "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)"
-    }, timeout: 10)
+    }, timeout: 15)
 
     return nil unless response.success?
 
-    browser = Ferrum::Browser.new(browser_path: "/usr/bin/brave-browser")
+    browser = Ferrum::Browser.new(browser_path: "/usr/bin/brave-browser", timeout: 15, pending_connection_errors: false)
     browser.go_to(page_url)
     doc = Nokogiri::HTML(browser.body)
     browser.quit
@@ -82,6 +82,13 @@ class TosScraper
     end
 
     #Fall back to TOS_URLS or live scraping
+    data = find_tos_url(page_url)
+
+    unless data&.dig(:tos_url).present?
+      puts"✖ #{name} failed: could not find url"
+      return
+    end
+
     puts "Scraping #{name}..."
     tos_response = HTTParty.get(data[:tos_url], headers: {
       "User-Agent" => "Mozilla/5.0 (compatible; Entrika/1.0)"

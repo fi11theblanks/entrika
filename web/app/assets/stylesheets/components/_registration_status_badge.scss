@@ -1,10 +1,16 @@
 .reg-status-select {
   appearance: none;
-  border: none;
-  background: transparent;
-  font-size: 0.75rem;
+  border: 1px solid #FFD1DC !important;
+  background: $gray-100;
+  font-size: .85rem;
   font-weight: 600;
   cursor: pointer;
   padding: 2px 10px;
   border-radius: 999px;
+  text-align: center;
+}
+
+.reg-status-select:focus {
+  box-shadow: none !important;
+  border-color: #FFD1DC !important;
 }

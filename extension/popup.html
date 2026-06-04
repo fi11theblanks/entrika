@@ -33,7 +33,7 @@
 
       <div class="text-center mt-2" id="analysis-card">
 
-        <!-- <p class="text-center d-none" id="analyzing"></p> -->
+        <p class="text-center d-none" id="analyzing"></p>
         <div class="popup-hero">
           <p class="popup-company-label" id="risk-analysis">—</p>
           <span class="website-url popup-url" id="website-url"></span>
@@ -42,45 +42,24 @@
 
         <section class="popup-section">
           <!-- <div>⛔</div> -->
-          <h6 class="popup-section-label">⛔ Privacy Analysis</h6>
-          <p class="popup-section-body" id="privacy-analysis">—</p>
+          <h6 class="popup-section-label mb-3">⛔ Points of Concern</h6>
+          <!-- <p class="popup-section-body" id="privacy-analysis">—</p> -->
+          <p class="popup-section-body">⚠️ <span class="popup-section-body" id="snapshot-clauses"></span></p>
+          <p class="popup-section-body"><i class="fa-solid fa-database"></i> <span class="popup-section-body" id="snapshot-sharing"></span></p>
+          <p>👁️ <span class="popup-section-body" id="snapshot-privacy"></span></p>
         </section>
 
-        <section class="popup-section">
-          <!-- <div>🔏</div> -->
+        <!-- <section class="popup-section">
           <h6 class="popup-section-label">🔏 Privacy Summary</h6>
           <p class="popup-section-body" id="privacy-summary">—</p>
-        </section>
+        </section> -->
       </div>
-
-      <form class = "d-none" id="manual-form">
-          <div class="form-group">
-            <label for="terms-url">Terms URL</label>
-            <input
-              type="url"
-              class="form-control"
-              id="terms-url"
-              aria-describedby="emailHelp"
-              placeholder="Enter Terms URL"
-            />
-          </div>
-          <div class="form-group">
-            <label for="privacy-url">Privacy URL</label>
-            <input
-              type="password"
-              class="form-control"
-              id="privacy-url"
-              placeholder="Privacy URL"
-            />
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
 
       <div id="tos-card">
         <section class="popup-section">
           <!-- <div>📃</div> -->
-          <h6 class="popup-section-label">📃 Terms of Service</h6>
-          <p class="popup-section-body" id="tos-summary">—</p>
+          <h6 class="popup-section-label"><i class="fa-solid fa-gavel"></i> verdict</h6>
+          <p class="popup-section-body" id="snapshot-verdict">—</p>
         </section>
       </div>
 
@@ -103,11 +82,15 @@
         >
       </div>
 
+
       <!-- <a href="#", target="_blank" class="d-none justify-content-center mb-3" id="dashboard-link">Go to dashboard</a> -->
       <button class="d-none popup-link" id="get-analysis">
-        Run analysis for this company
+        Get risk score
       </button>
+      <a href="#" id="homepage-link" target="_blank" class="d-none popup-link"
+          >View more options</a>
+
     </div>
     <script type="text/javascript" src="javascript/popup.js"></script>
-  </body>
+</body>
 </html>

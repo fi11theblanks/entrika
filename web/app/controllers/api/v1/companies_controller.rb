@@ -23,8 +23,12 @@ class Api::V1::CompaniesController < Api::V1::BaseController
   def analyze
     skip_authorization
     page_url = params[:url]
+    page_url = "https://#{page_url}" unless page_url.start_with?("http://", "https://")
 
     return render json: { error: "NO URL provided" }, status: :bad_request unless page_url
+
+    hostname = URI.parse(page_url).hostname
+    return render json: { error: "Invalid URL" }, status: :bad_request unless hostname
 
     domain = URI.parse(page_url).hostname.gsub(/^www\./, "").split(".").last(2).first.capitalize
     matched_name = CompanyAnalysisData.keys.find { |k| k.downcase == domain.downcase}
@@ -32,7 +36,7 @@ class Api::V1::CompaniesController < Api::V1::BaseController
     company = TosScraper.scrape_one(page_url, matched_name || domain)
     TosAnalyzer.analyze_company(company)
 
-    render json: company.as_json(method: :risk_label)
+    render json: company.as_json(methods: :risk_label)
   rescue => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
