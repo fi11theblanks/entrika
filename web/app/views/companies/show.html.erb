@@ -134,10 +134,10 @@
           <span class="analysis-section-label analysis-section-label--sharing">Who Gets Your Data</span>
           <ul class="analysis-bullets analysis-bullets--sharing">
             <% items = section
-       .sub(/\AData sharing:\s*/i, "")
-       .split(/\n-\s*|(?<!\A)\s+-\s+/)
-       .map { |item| item.strip.sub(/\A-\s*/, "") }
-       .reject(&:blank?) %>
+              .sub(/\AData sharing:\s*/i, "")
+              .split(/\n-\s*|(?<!\A)\s+-\s+/)
+              .map { |item| item.strip.sub(/\A-\s*/, "") }
+              .reject(&:blank?) %>
             <% items.each do |item| %>
               <%# <% section.sub(/\AData sharing:\s*/i, "").split(/ - /).map(&:strip).reject(&:blank?).each do |item| %>
                 <li><i class="fa-solid fa-hand"></i><span><%= item %></span></li>
@@ -147,10 +147,10 @@
             <span class="analysis-section-label analysis-section-label--clauses">Privacy Issues</span>
             <ul class="analysis-bullets analysis-bullets--clauses">
               <% items = section
-       .sub(/\AConcerning clauses:\s*/i, "")
-       .split(/\n-\s*|(?<!\A)\s+-\s+/)
-       .map { |item| item.strip.sub(/\A-\s*/, "") }
-       .reject(&:blank?) %>
+                .sub(/\AConcerning clauses:\s*/i, "")
+                .split(/\n-\s*|(?<!\A)\s+-\s+/)
+                .map { |item| item.strip.sub(/\A-\s*/, "") }
+                .reject(&:blank?) %>
               <% items.each do |item| %>
                 <%# <% section.sub(/\AConcerning clauses:\s*/i, "").split(/\n-\s*|(?<!\A)\s+-\s+/).map(&:strip).reject(&:blank?).each do |item| %>
                   <li><i class="fa-solid fa-unlock"></i><span><%= item %></span></li>
@@ -160,21 +160,21 @@
               <p class="analysis-opening"><%= section %></p>
             <% end %>
           <% end %>
-          <div class="company-links">
-            <% if @company.tos_url.present? %>
-              <%= link_to "Read the full Terms of Service →", @company.tos_url, target: "_blank", class: "company-link" %>
-            <% end %>
-            <% if @company.privacy_url.present? %>
-              <%= link_to "Read the full Privacy Policy →", @company.privacy_url, target: "_blank", class: "company-link" %>
-            <% end %>
-          </div>
         <% end %>
+        <div class="company-links">
+          <% if @company.tos_url.present? %>
+            <%= link_to "Read the full Terms of Service →", @company.tos_url, target: "_blank", class: "company-link" %>
+          <% end %>
+          <% if @company.privacy_url.present? %>
+            <%= link_to "Read the full Privacy Policy →", @company.privacy_url, target: "_blank", class: "company-link" %>
+          <% end %>
+        </div>
         <h4 class="section-heading">Safer Alternatives</h4>
         <% if @alternatives.any? %>
           <p class="section-intro">Similar services with a lower risk score.</p>
           <div class="alternatives-grid">
             <% @alternatives.each do |alt| %>
-              <%= link_to company_path(alt), class: "alternative-card" data: { turbo_prefetch: false } do %>
+              <%= link_to company_path(alt), class: "alternative-card", data: { turbo_prefetch: false } do %>
                 <div class="alternative-card__name"><%= alt.name %></div>
                 <%= render "companies/risk_badge", icon: "⚠", score: alt.risk_label %>
                 <div class="alternative-card__url"><%= alt.url %></div>

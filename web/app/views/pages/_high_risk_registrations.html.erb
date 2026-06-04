@@ -1,0 +1,11 @@
+<div class="high-risk-container" id="high-risk-registrations">
+  <% if high_risk_registrations.any? %>
+    <% high_risk_registrations.each do |registration| %>
+      <div class="dashboard-registrations-container p-2">
+        <%= render "companies/company_card", company: registration.company, registration: registration, from_dashboard: local_assigns.fetch(:from_dashboard, false) %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No high risk signed-up sites. Great!</p>
+  <% end %>
+</div>

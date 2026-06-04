@@ -20,17 +20,20 @@
   </div>
   <div class="dashboard-card">
     <h2 class="dashboard-card__name">Signed-Up Sites Risk Scores</h2>
-    <%= column_chart @risk_data,
-      colors: User::RISK_COLORS.values_at(*@risk_data.keys),
-      library: {
-        scales: {
-          x: { ticks: { color: "#FFD1DC" } },
-          y: { ticks: { color: "#FFD1DC" } }
+    <div
+      data-controller="chart"
+      data-chart-type-value="ColumnChart"
+      data-chart-data-value='<%= raw(@risk_data.to_json) %>'
+      data-chart-options-value='<%= raw({
+        colors: User::RISK_COLORS.values_at(*@risk_data.keys),
+        library: {
+          scales: {
+            x: { ticks: { color: "#FFD1DC" } },
+            y: { ticks: { color: "#FFD1DC" } }
+          }
         }
-      } %>
-    <%# <%= pie_chart @risk_data,
-<%# donut: true,
-<%# colors: User::RISK_COLORS.values_at(*@risk_data.keys) %>
-    <%# <p>insert status bar here</p> %>
+      }.to_json) %>'
+      style="height: 300px; width: 100%;"
+    ></div>
   </div>
 </div>
