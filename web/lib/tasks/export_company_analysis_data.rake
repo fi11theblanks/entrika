@@ -3,26 +3,26 @@
 namespace :company do
   desc "Export company data back to company_analysis_data.rb"
   task export: :environment do
-    puts "CompanyAnalysisData = {"
+    json_file = "#{__dir__}/company_info.json"
+    company_info = {}
 
     Company.order(:name).find_each do |company|
-      puts <<~RUBY
-        "#{company.name}" => {
-          risk_score: #{company.risk_score.inspect},
-          url: #{company.url.inspect},
-          tos_url: #{company.tos_url.inspect},
-          privacy_url: #{company.privacy_url.inspect},
-          tos_summary: #{company.tos_summary.inspect},
-          privacy_summary: #{company.privacy_summary.inspect},
-          tos_analysis: #{company.tos_analysis.inspect},
-          privacy_analysis: #{company.privacy_analysis.inspect},
-          general_warning: #{company.general_warning.inspect},
-          data_warning: #{company.data_warning.inspect},
-          tracking_warning: #{company.tracking_warning.inspect}
-        },
-      RUBY
+      company_info[company.name] = {
+        risk_score: company.risk_score,
+        url: company.url,
+        tos_url: company.tos_url,
+        privacy_url: company.privacy_url,
+        tos_summary: company.tos_summary,
+        privacy_summary: company.privacy_summary,
+        tos_analysis: company.tos_analysis,
+        privacy_analysis: company.privacy_analysis,
+        general_warning: company.general_warning,
+        data_warning: company.data_warning,
+        tracking_warning: company.tracking_warning
+      }
     end
-
-    puts "}"
+    File.open(json_file, "wb") do |file|
+      file.write(JSON.generate(company_info))
+    end
   end
 end

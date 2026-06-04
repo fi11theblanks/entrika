@@ -3,10 +3,10 @@ module TosAnalyzer
 
   def self.analyze_company(company)
     puts "Analyzing #{company.name}..."
-    Summary.new(company).analyze
-    Analysis.new(company).analyze
+    # Summary.new(company).analyze
+    # Analysis.new(company).analyze
     ExtensionSummary.new(company).analyze
-    RiskScore.new(company).analyze
+    # RiskScore.new(company).analyze
     puts "✓ #{company.name} done"
   rescue => e
     puts "✗ #{company.name} failed: #{e.message}"
@@ -29,9 +29,13 @@ module TosAnalyzer
     private
 
     def ask(schema, prompt, system: "You are a privacy analyst. Be plain-spoken and useful to a non-technical user. Never use em dashes.")
-      c = RubyLLM.chat(model: "gpt-4o")
-      c.with_instructions(system).with_schema(schema)
-      c.ask(prompt).content
+      chat = RubyLLM.chat(model: "claude-sonnet-4-6")
+      chat.with_instructions(system).with_schema(schema)
+      chat.ask(prompt).content
+    rescue RubyLLM::Error => e
+      Rails.logger.error "RubyLLM error: #{e.message}"
+      Rails.logger.error e.cause&.inspect
+      nil
     end
   end
 
@@ -144,6 +148,7 @@ module TosAnalyzer
   TEXT
 
   def analyze
+    return if @company.general_warning.present?
     result = ask(
       SCHEMA,
       <<~PROMPT
@@ -157,7 +162,7 @@ module TosAnalyzer
       PROMPT
     )
 
-    @company.update!(
+    @company.update(
       general_warning: result["general_warning"],
       data_warning: result["data_warning"],
       tracking_warning: result["tracking_warning"]

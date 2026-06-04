@@ -37,15 +37,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         console.log(data.privacy_analysis)
         analysisCard.classList.remove("text-center");
 
-        makeTruncable(
-          document.getElementById("privacy-analysis"),
-          data.privacy_analysis,
-        );
-        makeTruncable(
-          document.getElementById("privacy-summary"),
-          data.privacy_summary,
-        );
-        makeTruncable(document.getElementById("tos-summary"), data.tos_summary);
+        document.getElementById("snapshot-clauses").innerText = data.general_warning;
+        document.getElementById("snapshot-sharing").innerText = data.data_warning;
+        document.getElementById("snapshot-privacy").innerText = data.tracking_warning;
+
+        // makeTruncable(
+        //   document.getElementById("snapshot-sharing"),
+        //   data.data_warning,
+        // );
+        // makeTruncable(document.getElementById("snapshot-privacy"), data.tracking_warning);
         if (data.risk_label) {
           const hero = document.getElementById("risk-badge");
           const level = data.risk_label.split(" ")[0].toLowerCase();
@@ -58,9 +58,9 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const { clauses, sharing, privacy, verdict } = extractSnapshots(
           data.privacy_analysis,
         );
-        document.getElementById("snapshot-clauses").innerText = clauses ?? "";
-        document.getElementById("snapshot-sharing").innerText = sharing ?? "";
-        document.getElementById("snapshot-privacy").innerText = privacy ?? "";
+        // document.getElementById("snapshot-clauses").innerText = clauses ?? "";
+        // document.getElementById("snapshot-sharing").innerText = sharing ?? "";
+        // document.getElementById("snapshot-privacy").innerText = privacy ?? "";
         document.getElementById("snapshot-verdict").innerText = verdict ?? "";
         console.log("verdict:", verdict);
 
@@ -88,12 +88,15 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       }
 
       if (data.error) {
+        console.log(data.error)
         analysisCard.innerText = "Nothing Here Yet";
         analysisCard.style.paddingTop = "20px";
         tosCard.classList.add("d-none");
         companyLink.classList.add("d-none");
         registrationLink.classList.add("d-none");
+        console.log("error branch reached")
         runAnalysis.classList.remove("d-none");
+        console.log("classes after remove:", runAnalysis.className);
 
         // Analysis button action
         runAnalysis.addEventListener("click", (event) => {
