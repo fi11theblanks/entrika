@@ -16,9 +16,15 @@ class CompaniesController < ApplicationController
     @message = Message.new
     @registration = current_user&.registrations&.find_by(company: @company)
     if @company.risk_score.present?
-      @alternatives = AlternativeCompaniesService.new(@company).call
+      cached_ids = Rails.cache.read("alternatives/#{@company.id}")
+      if cached_ids.any?
+        @alternatives = Company.where(id: cached_ids)
+      else
+        @alternatives = Company.order(risk_score: :asc).first(3)
+        # ComputeAlternativesJob.perform_later(@company.id)
+      end
     else
-      @alternatives = []
+      @alternatives = Company.order(risk_score: :asc).first(3)
     end
   end
 
