@@ -3,10 +3,10 @@ module TosAnalyzer
 
   def self.analyze_company(company)
     puts "Analyzing #{company.name}..."
-    # Summary.new(company).analyze
-    # Analysis.new(company).analyze
+    Summary.new(company).analyze
+    Analysis.new(company).analyze
     ExtensionSummary.new(company).analyze
-    # RiskScore.new(company).analyze
+    RiskScore.new(company).analyze
     puts "✓ #{company.name} done"
   rescue => e
     puts "✗ #{company.name} failed: #{e.message}"

@@ -61,8 +61,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         // document.getElementById("snapshot-clauses").innerText = clauses ?? "";
         // document.getElementById("snapshot-sharing").innerText = sharing ?? "";
         // document.getElementById("snapshot-privacy").innerText = privacy ?? "";
-        document.getElementById("snapshot-verdict").innerText = verdict ?? "";
-        console.log("verdict:", verdict);
+        document.getElementById("snapshot-verdict").innerText = verdict ?? "Entrika currently doen't publish a clear verdict for this company.";
 
         companyLink.href = `${baseUrl}companies/${data.id}`;
       }
@@ -94,9 +93,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         tosCard.classList.add("d-none");
         companyLink.classList.add("d-none");
         registrationLink.classList.add("d-none");
-        console.log("error branch reached")
         runAnalysis.classList.remove("d-none");
-        console.log("classes after remove:", runAnalysis.className);
 
         // Analysis button action
         runAnalysis.addEventListener("click", (event) => {
@@ -113,9 +110,9 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
           })
             .then((response) => response.json())
             .then((dataOther) => {
-              console.log(dataOther);
-              if (dataOther.error) {
-                console.log(dataOther);
+              // console.log(dataOther);
+              if (!dataOther || dataOther.error) {
+                // console.log(dataOther);
                 analysisCard.innerText = "Could not perform analysys";
                 analysisCard.style.paddingTop = "20px";
                 runAnalysis.classList.add("disabled");
@@ -124,9 +121,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
               } else {
                 window.location.reload();
               }
-            });
-          // .catch((error) => console.error(error));
+            })
+            .catch((error) => console.error(error));
         });
+
         // displayCompanyInfo();
       } else if (data.registered) {
         displayCompanyInfo();
