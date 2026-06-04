@@ -32,7 +32,7 @@ class AlternativeCompaniesService
       #{candidates.map { |c| "ID #{c.id}: #{c.name}" }.join("\n")}
     PROMPT
 
-    chat = RubyLLM.chat(model: "gpt-4.1")
+    chat = RubyLLM.chat(model: "gpt-4o-mini")
     result = chat.with_instructions(
       "You classify internet companies according to their primary user use case so that companies in the same category represent realistic substitutes and competitors.
       For example:
@@ -49,7 +49,7 @@ class AlternativeCompaniesService
     ids = result["company_ids"] || []
     Company.where(id: ids).limit(3)
   rescue StandardError => e
-    Rails.logger.error("AlternativeCompaniesService error: #{e.message}")
+    Rails.logger.error("#{e.class}: #{e.message}\n#{e.backtrace.first(10).join("\n")}")
     []
   end
 end
