@@ -3,13 +3,13 @@
     <% status_options = Registration::STATUSES.map do |s|
       label = case s
               when 'unregistered'
-                '❓ Undecided'
+                '? Undecided'
               when 'registered'
                 '✓ Signed-up'
               when 'rejected'
                 '✕ Rejected'
               when 'canceled'
-                '🚫 Canceled'
+                '⊘ Canceled'
               else
                 s.humanize
               end
