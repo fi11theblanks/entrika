@@ -1,14 +1,12 @@
 <div class="dashboard-index">
   <header class="dashboard-header">
     <div class="dashboard-header__top">
-      <h1 class="dashboard-title">Dashboard - Overall Risk Assessment</h1>
+      <h1 class="dashboard-title">Dashboard - Overview</h1>
     </div>
   </header>
-
   <div id="dashboard-risk-summary">
     <%= render "pages/risk_summary" %>
   </div>
-
   <%# <div class="card">
     <p>AI Compliance Agent</p>
     <p>Customize how Entrika analyzes your documents. Set specific keywords
@@ -16,14 +14,29 @@
   </div> %>
   <header class="dashboard-header">
     <div class="dashboard-header__top">
-      <h2 class="dashboard-title">Recent Analyses</h2>
-      <%= link_to "View All Analyses", sitesanalyzed_path, class: "dashboard-link" %>
+      <h2 class="dashboard-title">High Risk Signed Up Sites</h2>
     </div>
   </header>
-  <% @sorted_registrations.each do |registration| %>
-    <div class="dashboard-registrations-container">
-      <%= render "companies/company_card", company: registration.company, registration: registration %>
-    </div>
+  <% if @high_risk_registrations.any? %>
+    <% @high_risk_registrations.each do |registration| %>
+      <div class="dashboard-registrations-container">
+        <%= render "companies/company_card", company: registration.company, registration: registration %>
+      </div>
+    <% end %>
+  <% else %>
+    <p>No high risk signed-up sites. Great!</p>
   <% end %>
-  <%= link_to "View More", sitesanalyzed_path, class: "dashboard-link" %>
+</header>
+<header class="dashboard-header">
+  <div class="dashboard-header__top">
+    <h2 class="dashboard-title">Recent Analyses</h2>
+    <%= link_to "View All Analyses", sitesanalyzed_path, class: "dashboard-link" %>
+  </div>
+</header>
+<% @sorted_registrations.each do |registration| %>
+  <div class="dashboard-registrations-container">
+    <%= render "companies/company_card", company: registration.company, registration: registration %>
+  </div>
+<% end %>
+<%= link_to "View More", sitesanalyzed_path, class: "dashboard-link" %>
 </div>

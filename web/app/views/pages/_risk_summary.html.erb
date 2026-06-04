@@ -1,5 +1,6 @@
 <div class="dashboard-card-container">
   <div class="dashboard-card">
+    <span class="dashboard-title">Personal Risk Score</span>
     <% if current_user.registered_risk_score == "Low Risk" %>
       <h2 class="dashboard-card__low"><%= current_user.registered_risk_score %></h2>
       <span class="dashboard-card__meta">You're engaging in very safe practices online.
@@ -19,9 +20,17 @@
   </div>
   <div class="dashboard-card">
     <h2 class="dashboard-card__name">Signed-Up Sites Risk Scores</h2>
-    <%= pie_chart @risk_data,
-donut: true,
-colors: User::RISK_COLORS.values_at(*@risk_data.keys) %>
+    <%= column_chart @risk_data,
+      colors: User::RISK_COLORS.values_at(*@risk_data.keys),
+      library: {
+        scales: {
+          x: { ticks: { color: "#FFD1DC" } },
+          y: { ticks: { color: "#FFD1DC" } }
+        }
+      } %>
+    <%# <%= pie_chart @risk_data,
+<%# donut: true,
+<%# colors: User::RISK_COLORS.values_at(*@risk_data.keys) %>
     <%# <p>insert status bar here</p> %>
   </div>
 </div>

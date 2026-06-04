@@ -14,7 +14,7 @@
           <%= submit_tag "Search", class: "dashboard-link btn btn-light" %>
         <% end %>
       </div>
-      <%= link_to "Return to Overall Risk Assessment", dashboard_path, class: "dashboard-link" %>
+      <%= link_to "Return to Overview", dashboard_path, class: "dashboard-link" %>
     </div>
   </header>
   <ul class="nav tabs-underlined" id="myTab" role="tablist">
@@ -57,12 +57,10 @@
         </header>
         <div id="<%= status %>-cards-container">
           <% target_registration = @registrations.find_by(id: params[:registration_id]) if params[:registration_id].present? && params[:tab] == status %>
-
           <%# Render the target registration first if it's in this tab %>
           <% if target_registration %>
             <%= render "companies/company_card", company: target_registration.company, registration: target_registration %>
           <% end %>
-
           <%# Render all other registrations in this status %>
           <% @registrations.where(status: status).where.not(id: params[:registration_id]).each do |registration| %>
             <%= render "companies/company_card", company: registration.company, registration: registration %>
