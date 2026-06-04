@@ -1,5 +1,10 @@
 <div id="<%= dom_id(registration, :status) %>" class="position-relative z-3">
-  <%= simple_form_for registration, local: false, url: registration_path(registration), method: :patch, data: { controller: 'registration-status' } do |f| %>
+  <% form_url = if local_assigns[:from_dashboard]
+    registration_path(registration, from_dashboard: true)
+  else
+    registration_path(registration)
+  end %>
+  <%= simple_form_for registration, url: form_url, method: :patch, data: { controller: 'registration-status' } do |f| %>
     <% status_options = Registration::STATUSES.map do |s|
       label = case s
               when 'unregistered'

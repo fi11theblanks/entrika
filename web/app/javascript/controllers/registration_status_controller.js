@@ -1,7 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  submit() {
-    this.element.requestSubmit()
+  submit(event) {
+    event.preventDefault()
+    this.element.submit()
   }
 }

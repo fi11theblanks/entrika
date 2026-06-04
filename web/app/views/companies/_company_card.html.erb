@@ -18,7 +18,7 @@
       </div>
     </div>
     <% if registration&.persisted? %>
-      <%= render "registrations/status_badge", registration: registration %>
+      <%= render "registrations/status_badge", registration: registration, from_dashboard: local_assigns[:from_dashboard] %>
     <% end %>
     <%= link_to "", company_path(company), class: "position-absolute top-0 bottom-0 start-0 w-100 z-0" %>
   </div>
