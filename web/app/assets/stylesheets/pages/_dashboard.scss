@@ -78,7 +78,7 @@
   width: 49%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
 
   &__name {
     font-size: clamp(2rem, 3.5vw, 3rem);
@@ -165,4 +165,16 @@
 
 .fa-arrow-rotate-right {
   &:hover { background-color: $gray-300; }
+}
+
+.high-risk-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.registrations-container {
+  display: grid;
+  justify-content: space-evenly;
+  grid-template-columns: auto auto;
 }

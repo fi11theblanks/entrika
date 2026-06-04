@@ -14,7 +14,7 @@
           <%= submit_tag "Search", class: "dashboard-link btn btn-light" %>
         <% end %>
       </div>
-      <%= link_to "Return to Overall Risk Assessment", dashboard_path, class: "dashboard-link" %>
+      <%= link_to "Return to Overview", dashboard_path, class: "dashboard-link" %>
     </div>
   </header>
   <ul class="nav tabs-underlined" id="myTab" role="tablist">
@@ -36,7 +36,7 @@
   </ul>
   <div class="tab-content" id="myTabContent" data-controller="tab-scroll">
     <div class="tab-pane fade py-3 <%= params[:tab].blank? ? 'show active' : '' %>" id="sites-tab-pane" role="tabpanel" aria-labelledby="sites-tab" tabindex="0">
-      <div id="sites-cards-container">
+      <div class="registrations-container" id="sites-cards-container">
         <% @registrations.each do |registration| %>
           <%= render "companies/company_card", company: registration.company, registration: registration, context: "sites" %>
         <% end %>
@@ -55,14 +55,12 @@
             <span class="dashboard-registrations-text">Sites you had previously signed up for but then deleted your account</span>
           <% end %>
         </header>
-        <div id="<%= status %>-cards-container">
+        <div class="registrations-container" id="<%= status %>-cards-container">
           <% target_registration = @registrations.find_by(id: params[:registration_id]) if params[:registration_id].present? && params[:tab] == status %>
-
           <%# Render the target registration first if it's in this tab %>
           <% if target_registration %>
             <%= render "companies/company_card", company: target_registration.company, registration: target_registration %>
           <% end %>
-
           <%# Render all other registrations in this status %>
           <% @registrations.where(status: status).where.not(id: params[:registration_id]).each do |registration| %>
             <%= render "companies/company_card", company: registration.company, registration: registration %>

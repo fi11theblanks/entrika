@@ -9,8 +9,8 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
 
-  RISK_LABELS = { 1 => "Low", 2 => "Medium", 3 => "High" }
-  RISK_COLORS = { "Low" => "#2ecc71", "Medium" => "#f39c12", "High" => "#e74c3c" }
+  RISK_LABELS = { 1 => "Low Risk", 2 => "Medium Risk", 3 => "High Risk" }
+  RISK_COLORS = { "Low Risk" => "#2ecc71", "Medium Risk" => "#f39c12", "High Risk" => "#e74c3c" }
 
   def risk_score_chart_data
     RISK_LABELS.sort_by { |k, _| k }.filter_map do |k, label|
@@ -38,5 +38,9 @@ class User < ApplicationRecord
 
   def registered_sites
     Company.where(id: registered_companies)
+  end
+
+  def high_risk_registrations
+    registrations.where(status: 'registered').joins(:company).merge(Company.where(risk_score: 3.0))
   end
 end
