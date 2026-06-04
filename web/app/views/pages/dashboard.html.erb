@@ -24,10 +24,10 @@
           <%= render "companies/company_card", company: registration.company, registration: registration %>
         </div>
       <% end %>
-    </div>
-  <% else %>
-    <p>No high risk signed-up sites. Great!</p>
-  <% end %>
+    <% else %>
+      <p>No high risk signed-up sites. Great!</p>
+    <% end %>
+  </div>
 </header>
 <header class="dashboard-header">
   <div class="dashboard-header__top">
