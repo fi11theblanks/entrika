@@ -2,13 +2,10 @@
 <div class="row g-4">
   <div class="col-7">
     <%= render "company_card", company: @company, registration: @registration %>
-
     <h4 class="section-heading section-heading--tos">What you're agreeing to</h4>
     <p class="section-intro section-intro--tos"><%= @company.tos_summary %></p>
-
     <h4 class="section-heading section-heading--privacy">Privacy in plain English</h4>
     <p class="section-intro section-intro--privacy"><%= @company.privacy_summary %></p>
-
     <h4 class="section-heading section-heading--tos">Terms of Service: Breakdown</h4>
     <% tos_parts = @company.tos_analysis.to_s.split(/(?=(?:Clause \d|Red flag \d|Third-party sharing:|A real-world scenario:|Privacy advocate verdict:))/).map(&:strip).reject(&:blank?) %>
     <% tos_bullets = tos_parts.select { |p| p.match?(/\A(?:Clause \d|Red flag \d)/) } %>
@@ -52,21 +49,21 @@
       <% elsif section.start_with?("Known incidents:") %>
         <span class="analysis-section-label analysis-section-label--incidents">Known Incidents</span>
         <ul class="analysis-bullets analysis-bullets--incidents">
-          <% section.sub(/\AKnown incidents:\s*/i, "").split(/ - /).map(&:strip).reject(&:blank?).each do |item| %>
+          <% section.sub(/\AKnown incidents:\s*/i, "").split(/\n-\s*|(?<!\A)\s+-\s+/).map(&:strip).reject(&:blank?).each do |item| %>
             <li><i class="fa-solid fa-burst"></i><span><%= item %></span></li>
           <% end %>
         </ul>
       <% elsif section.start_with?("Data sharing:") %>
         <span class="analysis-section-label analysis-section-label--sharing">Data Sharing</span>
         <ul class="analysis-bullets analysis-bullets--sharing">
-          <% section.sub(/\AData sharing:\s*/i, "").split(/ - /).map(&:strip).reject(&:blank?).each do |item| %>
+          <% section.sub(/\AData sharing:\s*/i, "").split(/\n-\s*|(?<!\A)\s+-\s+/).map(&:strip).reject(&:blank?).each do |item| %>
             <li><i class="fa-solid fa-database"></i><span><%= item %></span></li>
           <% end %>
         </ul>
       <% elsif section.start_with?("Concerning clauses:") %>
         <span class="analysis-section-label analysis-section-label--clauses">Concerning Clauses</span>
         <ul class="analysis-bullets analysis-bullets--clauses">
-          <% section.sub(/\AConcerning clauses:\s*/i, "").split(/ - /).map(&:strip).reject(&:blank?).each do |item| %>
+          <% section.sub(/\AConcerning clauses:\s*/i, "").split(/\n-\s*|(?<!\A)\s+-\s+/).map(&:strip).reject(&:blank?).each do |item| %>
             <li><i class="fa-solid fa-circle-exclamation"></i><span><%= item %></span></li>
           <% end %>
         </ul>
@@ -127,15 +124,14 @@
       <% elsif section.start_with?("Concerning clauses:") %>
         <span class="analysis-section-label analysis-section-label--clauses">Privacy Issues</span>
         <ul class="analysis-bullets analysis-bullets--clauses">
-          <% section.sub(/\AConcerning clauses:\s*/i, "").split(/ - /).map(&:strip).reject(&:blank?).each do |item| %>
+          <% section.sub(/\AConcerning clauses:\s*/i, "").split(/\n-\s*|(?<!\A)\s+-\s+/).map(&:strip).reject(&:blank?).each do |item| %>
             <li><i class="fa-solid fa-unlock"></i><span><%= item %></span></li>
           <% end %>
         </ul>
       <% else %>
         <p class="analysis-opening"><%= section %></p>
       <% end %>
-    </div>
-    
+    <% end %>
     <div class="company-links">
       <% if @company.tos_url.present? %>
         <%= link_to "Read the full Terms of Service →", @company.tos_url, target: "_blank", class: "company-link" %>
@@ -144,22 +140,22 @@
         <%= link_to "Read the full Privacy Policy →", @company.privacy_url, target: "_blank", class: "company-link" %>
       <% end %>
     </div>
-
-    <h4 class="section-heading">Safer Alternatives</h4>
-    <% if @alternatives.any? %>
-      <p class="section-intro">Similar services with a lower risk score.</p>
-      <div class="alternatives-grid">
-        <% @alternatives.each do |alt| %>
-          <%= link_to company_path(alt), class: "alternative-card" do %>
-            <div class="alternative-card__name"><%= alt.name %></div>
-            <%= render "companies/risk_badge", icon: "⚠", score: alt.risk_label %>
-            <div class="alternative-card__url"><%= alt.url %></div>
-          <% end %>
+  <% end %>
+  <h4 class="section-heading">Safer Alternatives</h4>
+  <% if @alternatives.any? %>
+    <p class="section-intro">Similar services with a lower risk score.</p>
+    <div class="alternatives-grid">
+      <% @alternatives.each do |alt| %>
+        <%= link_to company_path(alt), class: "alternative-card" do %>
+          <div class="alternative-card__name"><%= alt.name %></div>
+          <%= render "companies/risk_badge", icon: "⚠", score: alt.risk_label %>
+          <div class="alternative-card__url"><%= alt.url %></div>
         <% end %>
-      </div>
-      <% else %>
-      <p class="section-intro">We don't yet have alternative sites that are lower risk than <%= @company.name %>. Analyze another to compare.</p>
-    <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="section-intro">We don't yet have alternative sites that are lower risk than <%= @company.name %>. Analyze another to compare.</p>
+  <% end %>
 </div>
 <div class="col-5">
   <div class="chat-card" style="height: 90vh; position: sticky; top: 2rem;">
@@ -191,5 +187,6 @@
       <%= render "messages/form", company: @company, message: @message %>
     </div>
   </div>
+</div>
 </div>
 </div>
