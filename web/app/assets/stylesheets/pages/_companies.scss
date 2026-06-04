@@ -119,13 +119,28 @@
   padding: 1rem 1.25rem;
   margin-bottom: 2rem;
   width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  &__right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+  }
 
   &__top {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
   }
 
   &__name {
@@ -143,9 +158,12 @@
     font-size: 0.775rem;
     color: rgba(242, 242, 242, 0.5);
     display: flex;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: .25rem;
 
     a { color: rgba(242, 242, 242, 0.7); text-decoration: none; &:hover { color: $near-black; } }
+
+    p { margin: 0; }
   }
 }
 

@@ -1,23 +1,25 @@
 <div id="<%= registration.present? ? "#{local_assigns[:context] || registration.status}-card-#{registration.id}" : "company-#{company.id}" %>">
   <div class="company-header-card position-relative">
-    <div class="d-flex justify-content-end mb-1">
-      <% if company.risk_score %>
-        <%= render "companies/risk_badge", icon: "⚠", score: company.risk_label %>
-      <% else %>
-        <%= render "companies/risk_badge", icon: "❔", score: "No risk score" %>
-      <% end %>
+    <div class="company-header-card__top">
+      <div class="company-header-card__left">
+        <h2 class="company-header-card__name"><%= company.name %></h2>
+        <div class="company-header-card__meta">
+          <%= link_to company.url, company.url, target: "_blank", class: "position-relative z-3" %>
+          <p>Updated <%= time_ago_in_words(company.updated_at) %></p>
+        </div>
+      </div>
+      <div class="company-header-card__right">
+        <%# <div class="d-flex justify-content-end mb-1"> %>
+        <% if company.risk_score %>
+          <%= render "companies/risk_badge", icon: "⚠", score: company.risk_label %>
+        <% else %>
+          <%= render "companies/risk_badge", icon: "❔", score: "No risk score" %>
+        <% end %>
+      </div>
     </div>
-    <h2 class="company-header-card__name"><%= company.name %></h2>
-    <div class="company-header-card__meta">
-      <%= link_to company.url, company.url, target: "_blank", class: "position-relative z-3" %>
-      <span>Updated <%= time_ago_in_words(company.updated_at) %></span>
-    </div>
-
-
     <% if registration&.persisted? %>
       <%= render "registrations/status_badge", registration: registration %>
     <% end %>
-
     <%= link_to "", company_path(company), class: "position-absolute top-0 bottom-0 start-0 w-100 z-0" %>
   </div>
 </div>
