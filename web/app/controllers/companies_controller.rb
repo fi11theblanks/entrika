@@ -21,7 +21,7 @@ class CompaniesController < ApplicationController
         @alternatives = Company.where(id: cached_ids)
       else
         @alternatives = Company.order(risk_score: :asc).first(3)
-        # ComputeAlternativesJob.perform_later(@company.id)
+        ComputeAlternativesJob.perform_later(@company.id)
       end
     else
       @alternatives = Company.order(risk_score: :asc).first(3)
