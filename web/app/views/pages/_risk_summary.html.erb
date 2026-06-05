@@ -19,21 +19,29 @@
     <% end %>
   </div>
   <div class="dashboard-card">
-    <h2 class="dashboard-card__name">Signed-Up Sites Risk Scores</h2>
+    <h2 class="dashboard-title">Signed-Up Sites Risk Scores</h2>
     <div
       data-controller="chart"
       data-chart-type-value="ColumnChart"
       data-chart-data-value='<%= raw(@risk_data.to_json) %>'
       data-chart-options-value='<%= raw({
         colors: User::RISK_COLORS.values_at(*@risk_data.keys),
-        library: {
-          scales: {
-            x: { ticks: { color: "#FFD1DC" } },
-            y: { ticks: { color: "#FFD1DC" } }
-          }
-        }
+library: {
+  scales: {
+    x: {
+      ticks: { color: "#FFD1DC" },
+      grid: { color: "rgba(255, 209, 220, 0.2)" },
+      border: { color: "rgba(255, 209, 220, 0.2)" }
+    },
+    y: {
+      ticks: { color: "#FFD1DC" },
+      grid: { color: "rgba(255, 209, 220, 0.2)" },
+      border: { color: "rgba(255, 209, 220, 0.2)" }
+    }
+  }
+}
       }.to_json) %>'
-      style="height: 300px; width: 100%;"
+      style="height: 85%; width: 95%;"
     ></div>
   </div>
 </div>

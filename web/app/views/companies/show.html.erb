@@ -104,7 +104,7 @@
         <span class="analysis-section-label analysis-section-label--sharing">Who Gets Your Data</span>
         <ul class="analysis-bullets analysis-bullets--sharing">
           <% priv_sharing.each do |m| %>
-            <li><i class="fa-solid fa-hand"></i><span><%= m.sub(/\AThird-party sharing:\s*/i, "") %></span></li>
+            <li><i class="fa-solid fa-hand"></i><span><%= m.sub(/\AThird-party sharing:\s*/i, "").sub(/\A./) { |c| c.upcase } %></span></li>
           <% end %>
         </ul>
       <% end %>
@@ -117,7 +117,7 @@
       <% if (priv_verdict = priv_parts.find { |p| p.start_with?("Privacy advocate verdict:") }) %>
         <div class="analysis-verdict">
           <span class="analysis-verdict__label">Verdict:</span>
-          <span><%= priv_verdict.sub(/\APrivacy advocate verdict:\s*/i, "") %></span>
+          <span><%= priv_verdict.sub(/\APrivacy advocate verdict:\s*/i, "").sub(/\A./) { |c| c.upcase } %></span>
         </div>
       <% end %>
     <% elsif @company.privacy_analysis.present? %>
