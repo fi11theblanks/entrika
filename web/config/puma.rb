@@ -41,4 +41,4 @@ plugin :tmp_restart
 # In other environments, only set the PID file if requested.
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 
-plugin :solid_queue
+# plugin :solid_queue
