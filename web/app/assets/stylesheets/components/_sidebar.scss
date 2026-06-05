@@ -133,6 +133,7 @@
     overflow: hidden;
     margin: 0;
     padding: 0;
+    display: none;
   }
 
   .sidebar-link {
@@ -231,26 +232,26 @@
 
 //Icons
 
-.sidebar.collapsed .fa-house {
-  padding-left: 5px;
-}
+// .sidebar.collapsed .fa-house {
+//   padding-left: 5px;
+// }
 
-.sidebar.collapsed .fa-book-open {
-  padding-left: 6px;
-}
+// .sidebar.collapsed .fa-book-open {
+//   padding-left: 6px;
+// }
 
-.sidebar.collapsed .fa-link {
-  padding-left: 5px;
-}
+// .sidebar.collapsed .fa-link {
+//   padding-left: 5px;
+// }
 
-.sidebar.collapsed .fa-rss {
-  padding-left: 6px;
-}
+// .sidebar.collapsed .fa-rss {
+//   padding-left: 6px;
+// }
 
-.sidebar.collapsed .avatar-sidebar {
-  margin-left: 16px;
-}
+// .sidebar.collapsed .avatar-sidebar {
+//   margin-left: 16px;
+// }
 
-.sidebar.collapsed .fa-gear {
-  margin-left: 5px;
-}
+// .sidebar.collapsed .fa-gear {
+//   margin-left: 5px;
+// }
