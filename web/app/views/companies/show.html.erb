@@ -6,7 +6,7 @@
     <p class="section-intro section-intro--tos"><%= @company.tos_summary %></p>
     <h4 class="section-heading section-heading--privacy">Privacy in plain English</h4>
     <p class="section-intro section-intro--privacy"><%= @company.privacy_summary %></p>
-    <h4 class="section-heading section-heading--tos">Terms of Service: Breakdown</h4>
+    <h4 class="section-heading section-heading--tos">Terms of Service Breakdown</h4>
     <% tos_parts = @company.tos_analysis.to_s.split(/(?=(?:Clause \d|Red flag \d|Third-party sharing:|A real-world scenario:|Privacy advocate verdict:))/).map(&:strip).reject(&:blank?) %>
     <% tos_bullets = tos_parts.select { |p| p.match?(/\A(?:Clause \d|Red flag \d)/) } %>
     <% if tos_bullets.any? %>
@@ -88,7 +88,7 @@
         <% end %>
       <% end %>
     <% end %>
-    <h4 class="section-heading section-heading--privacy">Privacy Policy: Breakdown</h4>
+    <h4 class="section-heading section-heading--privacy">Privacy Policy Breakdown</h4>
     <% priv_parts = @company.privacy_analysis.to_s.split(/(?=(?:Clause \d|Red flag \d|Third-party sharing:|A real-world scenario:|Privacy advocate verdict:))/).map(&:strip).reject(&:blank?) %>
     <% priv_bullets = priv_parts.select { |p| p.match?(/\A(?:Clause \d|Red flag \d)/) } %>
     <% if priv_bullets.any? %>
@@ -182,7 +182,7 @@
             <% end %>
           </div>
         <% else %>
-          <p class="section-intro">We don't yet have alternative sites that are lower risk than <%= @company.name %>. Analyze another to compare.</p>
+          <p class="section-intro">We have no alternative sites that are lower risk than <%= @company.name %>! <br> Analyze another to compare.</p>
         <% end %>
       </div>
       <div class="col-5">

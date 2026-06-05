@@ -23,7 +23,7 @@
           <%= link_to dashboard_path,
               class: "sidebar-link #{request.path.start_with?('/dashboard') ? 'is-active' : ''}",
               data: { label: "Dashboard" } do %>
-            <i class="fa-solid fa-book-open nav-icon"></i>
+            <i class="fa-solid fa-book-open nav-icon profile"></i>
             <span class="sidebar-link__label">Dashboard</span>
           <% end %>
           <%# <button class="sidebar-link"
@@ -82,7 +82,7 @@
                 data-bs-target="#settings-collapse"
                 aria-expanded="false"
                 data-label="Settings">
-            <%= image_tag "avatar.png", alt: "sample avatar", class: "nav-icon avatar-sidebar" %>
+            <i class="fa-solid fa-circle-user fa-lg nav-icon profile"></i>
             <span class="sidebar-link__label">Profile</span>
             <i class="fa-solid fa-chevron-right chevron"></i>
           </button>
