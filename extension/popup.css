@@ -105,7 +105,7 @@ a {
   color: #c42b2b;
 }
 .popup-risk-hero--moderate {
-  color: #b45309;
+  color: #ffcc00;
 }
 .popup-risk-hero--low {
   color: #1a7a42;
@@ -200,11 +200,15 @@ a {
   border: 1px solid #111;
   border-radius: 10px;
   padding: 12px;
+  background: #2c2020;
+  color: #fff;
+  border: 1px solid #111;
+  text-decoration: none;
 }
 
 #get-analysis:hover {
-  background: #333;
-  border-color: #333;
+  background: #6d5050;
+  border-color: #6d5050;
 }
 
 .popup-link.disabled {
