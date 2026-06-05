@@ -78,6 +78,7 @@
       <% if user_signed_in? %>
         <li class="mb-1">
           <button class="sidebar-link"
+                id="profileToggleBtn"
                 data-bs-toggle="collapse"
                 data-bs-target="#settings-collapse"
                 aria-expanded="false"
@@ -129,4 +130,12 @@
     sidebar.classList.remove('collapsed');
     localStorage.setItem('sidebarCollapsed', 'false');
   });
+
+  document.getElementById('profileToggleBtn').addEventListener('click', () => {
+  if (sidebar.classList.contains('collapsed')) {
+    sidebar.classList.remove('collapsed');
+    localStorage.setItem('sidebarCollapsed', 'false');
+    return;
+  }
+});
 </script>
