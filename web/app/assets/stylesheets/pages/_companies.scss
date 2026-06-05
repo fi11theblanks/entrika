@@ -585,14 +585,15 @@ textarea.chat-input {
   flex: 1;
   padding: 1rem;
   border-radius: 0.5rem;
-  border: 1px solid #333;
+  border: 1px solid $pink-accent;
   text-decoration: none;
   color: inherit;
+  background: $gray-100;
   transition: border-color 0.2s;
 }
 
 .alternative-card:hover {
-  border-color: #fff;
+  border-color: darken($pink-accent, 8%);
   color: inherit;
 }
 
