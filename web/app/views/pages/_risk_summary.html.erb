@@ -26,12 +26,20 @@
       data-chart-data-value='<%= raw(@risk_data.to_json) %>'
       data-chart-options-value='<%= raw({
         colors: User::RISK_COLORS.values_at(*@risk_data.keys),
-        library: {
-          scales: {
-            x: { ticks: { color: "#FFD1DC" } },
-            y: { ticks: { color: "#FFD1DC" } }
-          }
-        }
+library: {
+  scales: {
+    x: {
+      ticks: { color: "#FFD1DC" },
+      grid: { color: "rgba(255, 209, 220, 0.2)" },
+      border: { color: "rgba(255, 209, 220, 0.2)" }
+    },
+    y: {
+      ticks: { color: "#FFD1DC" },
+      grid: { color: "rgba(255, 209, 220, 0.2)" },
+      border: { color: "rgba(255, 209, 220, 0.2)" }
+    }
+  }
+}
       }.to_json) %>'
       style="height: 300px; width: 100%;"
     ></div>
