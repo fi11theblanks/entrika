@@ -78,6 +78,7 @@
       <% if user_signed_in? %>
         <li class="mb-1">
           <button class="sidebar-link"
+                id="profileToggleBtn"
                 data-bs-toggle="collapse"
                 data-bs-target="#settings-collapse"
                 aria-expanded="false"
@@ -128,5 +129,21 @@
   document.getElementById('searchIconCollapsed').addEventListener('click', () => {
     sidebar.classList.remove('collapsed');
     localStorage.setItem('sidebarCollapsed', 'false');
+  });
+
+  document.getElementById('profileToggleBtn').addEventListener('click', () => {
+  if (sidebar.classList.contains('collapsed')) {
+    sidebar.classList.remove('collapsed');
+    localStorage.setItem('sidebarCollapsed', 'false');
+    return;
+    }
+  });
+
+  var settingsCollapse = document.getElementById('settings-collapse');
+  settingsCollapse.addEventListener('show.bs.collapse', () => {
+    document.getElementById('profileToggleBtn').setAttribute('aria-expanded', 'true');
+  });
+  settingsCollapse.addEventListener('hide.bs.collapse', () => {
+    document.getElementById('profileToggleBtn').setAttribute('aria-expanded', 'false');
   });
 </script>
