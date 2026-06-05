@@ -12,7 +12,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
   // const baseUrl = "http://127.0.0.1:3000/";
   // const baseAPIUrl = "http://127.0.0.1:3000/api/v1/";
   const baseUrl = "http://entrika.online/";
-  const baseAPIUrl = "http://entrika.online/api/v1";
+  const baseAPIUrl = "http://entrika.online/api/v1/";
   const currentUrl = new URL(tabs[0].url).hostname;
   const domain = new URL(tabs[0].url).hostname.replace(/^www\./, "");
   const url = `${baseAPIUrl}companies/search?domain=${encodeURIComponent(domain)}`;
