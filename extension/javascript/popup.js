@@ -90,7 +90,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 
       if (data.error) {
         console.log(data.error)
-        analysisCard.innerText = "Nothing Here Yet";
+        analysisCard.innerHTML = "<strong>Nothing Here Yet</strong>";
         analysisCard.style.paddingTop = "20px";
         tosCard.classList.add("d-none");
         companyLink.classList.add("d-none");
