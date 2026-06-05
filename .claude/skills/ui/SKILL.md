@@ -263,5 +263,4 @@ animation: logo-eye 1.8s steps(11) infinite;
 1. Ask which page/component and any direction
 2. Read config + target files, take one screenshot
 3. Make changes (SCSS + ERB only)
-4. Recompile + restart server
-5. Take one final screenshot
+4. Take one final screenshot
