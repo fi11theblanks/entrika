@@ -1,25 +1,49 @@
 /* ── Reset ─────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: #a08888;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
 
 body {
   width: 360px;
-  background: #e0e0e0;
+  background: #e111;
   color: #111111;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.6;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar, html::-webkit-scrollbar {
+  display: none;
 }
 
 .popup-container {
-  background: #ffffff;
-  border: 6px solid #e0e0e0;
-  border-radius: 14px;
+  background: #a08888;
+  border: 2px solid #2c2020;
+  border-radius: 6px;
   overflow: hidden;
-  margin: 6px;
+  margin: 0 auto;
 }
 
-a { color: inherit; text-decoration: none; }
-.d-none { display: none !important; }
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.d-none {
+  display: none !important;
+}
 
 /* ── Header ────────────────────────────────────── */
 .popup-header {
@@ -47,7 +71,7 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Hero ───────────────────────────────────────── */
 .popup-hero {
-  background: #111;
+  background: #2c2020;
   align-items: center;
   border-radius: 10px;
   margin: 14px 12px;
@@ -67,7 +91,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 .popup-risk-hero {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   font-size: 55px;
   font-weight: 700;
   text-transform: uppercase;
@@ -76,19 +101,23 @@ a { color: inherit; text-decoration: none; }
   color: #111;
 }
 
-.popup-risk-hero--high     { color: #C42B2B; }
-.popup-risk-hero--moderate { color: #B45309; }
-.popup-risk-hero--low      { color: #1A7A42; }
+.popup-risk-hero--high {
+  color: #c42b2b;
+}
+.popup-risk-hero--moderate {
+  color: #b45309;
+}
+.popup-risk-hero--low {
+  color: #1a7a42;
+}
 
 /* ── Sections ──────────────────────────────────── */
 .popup-section {
-  background: #111;
+  background: #2c2020;
   border-radius: 10px;
   margin: 0 12px 10px;
   padding: 14px 16px;
 }
-
-
 
 .popup-section-label {
   font-size: 19px;
@@ -102,7 +131,7 @@ a { color: inherit; text-decoration: none; }
 
 .popup-section-body {
   font-size: 15px;
-  color: #aaa;
+  color: #e0e0e0;
   line-height: 1.6;
 }
 
@@ -125,7 +154,8 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: center;
   flex: 1;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
@@ -137,20 +167,28 @@ a { color: inherit; text-decoration: none; }
 }
 
 #company-link {
-  background: #111;
+  background: #2c2020;
   color: #fff;
   border: 1px solid #111;
+  text-decoration: none;
 }
 
-#company-link:hover { background: #333; border-color: #333; }
+#company-link:hover {
+  background: #6d5050;
+  border-color: #6d5050;
+}
 
 #registration-link {
-  background: #111;
+  background: #2c2020;
   color: #fff;
   border: 1px solid #111;
+  text-decoration: none;
 }
 
-#registration-link:hover { background: #333; border-color: #333; }
+#registration-link:hover {
+  background: #6d5050;
+  border-color: #6d5050;
+}
 
 /* ── Get analysis (company not found state) ──────── */
 #get-analysis {
@@ -164,21 +202,34 @@ a { color: inherit; text-decoration: none; }
   padding: 12px;
 }
 
-#get-analysis:hover { background: #333; border-color: #333; }
+#get-analysis:hover {
+  background: #333;
+  border-color: #333;
+}
 
 .popup-link.disabled {
   opacity: 0.4;
   pointer-events: none;
 }
 
-#dashboard-link{
-  text-decoration: none;
-  color: #111;
-  border: 1px solid;
+#dashboard-link {
+  /* text-decoration: none; */
+  color: #211a1a;
+  /* border: 1px solid; */
   padding: 0 5px;
   margin: 0 auto;
 }
 
-.risk-label--high     { color: #C42B2B; }
-.risk-label--moderate { color: #B45309; }
-.risk-label--low      { color: #1A7A42; }
+#dashboard-link:hover {
+  color: #6d5050;
+}
+
+.risk-label--high {
+  color: #c42b2b;
+}
+.risk-label--moderate {
+  color: #b45309;
+}
+.risk-label--low {
+  color: #1a7a42;
+}
