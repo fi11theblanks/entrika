@@ -136,6 +136,14 @@
     sidebar.classList.remove('collapsed');
     localStorage.setItem('sidebarCollapsed', 'false');
     return;
-  }
-});
+    }
+  });
+
+  var settingsCollapse = document.getElementById('settings-collapse');
+  settingsCollapse.addEventListener('show.bs.collapse', () => {
+    document.getElementById('profileToggleBtn').setAttribute('aria-expanded', 'true');
+  });
+  settingsCollapse.addEventListener('hide.bs.collapse', () => {
+    document.getElementById('profileToggleBtn').setAttribute('aria-expanded', 'false');
+  });
 </script>
