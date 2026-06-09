@@ -108,7 +108,7 @@ rails s
 ## Team Members
 - [Ayda Selen Pilancı](linkedin.com/in/ayda-selen-pilanci/)
 - [Alain Mimeault](https://www.linkedin.com/in/alain-mimeault-057a343aa/)
-- [Anna Costello](https://www.linkedin.com/in/dougberkley/)
+- [Anna Costello](linkedin.com/in/anna-costello-6095762b)
 - [Archie Millar](linkedin.com/in/archie-millar/)
 
 ## Contributing
